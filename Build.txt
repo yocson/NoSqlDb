@@ -1,0 +1,36 @@
+
+Build Instructions for DbCore prototype
+=======================================
+1. Right-Click on DbCore and select Set as StartUp Project
+2. Set DateTime to build as static library
+   a. DateTime > Properties > General > Project Defaults > Configuration Type > Static Library
+   b. DateTime > Properties > C/C++ > Preprocessor > Preprocessor Definitions > noTEST_DATETIME;
+3. Right-Click on DateTime and select Build
+4. Right-Click on DbCore and select Build
+
+Build Instructions for DateTime as standalone executable
+========================================================
+1. Right-Click on DateTime and select Set as StartUp Project
+2. Set DateTime to build as executable
+   a. DateTime > Properties > General > Project Defaults > Configuration Type > Application (.exe)
+   b. DateTime > Properties > C/C++ > Preprocessor > Preprocessor Definitions > TEST_DATETIME;
+3. Right-Click on DateTime and select Build
+
+Build Instructions for TestUtilities as standalone executable
+=============================================================
+1. Note that All of the Utilities in the solution's Utilities folder provide all their functionality
+   via their header files.
+2. For that reason Projects that use them don't have to build them, but simply include their header files.
+3. Right-Click on TestUtilities and select Set as StartUp Project
+4. TestUtilities > Properties > C/C++ > Preprocessor > Preprocessor Definitions > TEST_TESTUTILITIES;
+5. Right-Click on TestUtilities and select Build
+
+Build Instructions for StringUtilities as standalone executable
+=============================================================
+1. Note that All of the Utilities in the solution's Utilities folder provide all their functionality
+   via their header files.
+2. For that reason Projects that use them don't have to build them, but simply include their header files.
+3. Right-Click on StringUtilities and select Set as StartUp Project
+4. StringUtilities > Properties > C/C++ > Preprocessor > Preprocessor Definitions > TEST_STRINGUTILITIES;
+5. Right-Click on StringUtilities and select Build
+
