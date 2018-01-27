@@ -114,11 +114,33 @@ namespace NoSqlDb
     DbStore& dbStore() { return dbStore_; }
     DbStore dbStore() const { return dbStore_; }
     void dbStore(const DbStore& dbStore) { dbStore_ = dbStore; }
+
+	// methods to add and delete key-value pair
+	void addElem(Key key, DbElement<T> dbElem);
+	void deleteElem(Key key);
   
   private:
     DbStore dbStore_;
     bool doThrow_ = false;
   };
+
+  //----< add element to db>----------------------------------
+  template<typename T>
+  void DbCore<T>::addElem(Key key, DbElement<T> dbElem) 
+  {
+	  iterator iter = dbStore_.find(key);
+	  if (iter != dbStore_.end()) return;
+	  dbStore_.insert(make_pair(key, dbElem));
+  }
+
+
+  //----< delete element from db>----------------------------------
+  template<typename T>
+  void DbCore<T>::deleteElem(Key key)
+  {
+	  iterator iter = dbStore_.find(key);
+	  if (iter == dbStore_.end()) return;
+  }
 
   /////////////////////////////////////////////////////////////////////
   // DbCore<T> methods
