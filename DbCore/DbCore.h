@@ -140,6 +140,7 @@ namespace NoSqlDb
   {
 	  iterator iter = dbStore_.find(key);
 	  if (iter == dbStore_.end()) return;
+	  dbStore_.erase(key);
   }
 
   /////////////////////////////////////////////////////////////////////
