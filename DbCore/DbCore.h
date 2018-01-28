@@ -117,7 +117,9 @@ namespace NoSqlDb
 
 	// methods to add and delete key-value pair
 	void addElem(Key key, DbElement<T> dbElem);
-	void deleteElem(Key key);
+	void deleteElem(const Key& key);
+	void addChild(const Key& key, const Key& childKey);
+	void deleteChild(const Key& key, const Key& childKey);
   
   private:
     DbStore dbStore_;
@@ -128,20 +130,64 @@ namespace NoSqlDb
   template<typename T>
   void DbCore<T>::addElem(Key key, DbElement<T> dbElem) 
   {
-	  iterator iter = dbStore_.find(key);
-	  if (iter != dbStore_.end()) return;
+	  if (contains(key))
+	  {
+		  if (doThrow_)
+			  throw(std::exception("key exists in db"));
+	  }
 	  dbStore_.insert(make_pair(key, dbElem));
   }
 
 
   //----< delete element from db>----------------------------------
   template<typename T>
-  void DbCore<T>::deleteElem(Key key)
+  void DbCore<T>::deleteElem(const Key& key)
   {
-	  iterator iter = dbStore_.find(key);
-	  if (iter == dbStore_.end()) return;
+	  if (!contains(key))
+	  {
+		  if (doThrow_)
+			  throw(std::exception("key dose not exist in db"));
+		  else
+			  return;
+	  }
 	  dbStore_.erase(key);
   }
+
+  template<typename T>
+  void DbCore<T>::addChild(const Key& key, const Key& childKey)
+  {
+	  if (!contains(key))
+	  {
+		  if (doThrow_)
+			  throw(std::exception("key dose not exist in db"));
+		  else
+			  return;
+	  }
+	  if (!contains(childKey))
+	  {
+		  if (doThrow_)
+			  throw(std::exception("Chile key is invalid"));
+		  else
+			  return;
+	  }
+	  dbStore_[key].children().push_back(childKey);
+  }
+
+  template<typename T>
+  void DbCore<T>::deleteChild(const Key& key, const Key& childKey)
+  {
+	  if (!contains(key))
+	  {
+		  if (doThrow_)
+			  throw(std::exception("key dose not exist in db"));
+		  else
+			  return;
+	  }
+	  std::string::iterator iter = (dbStore_[key].children().begin(), dbStore_[key].children().end(), childKey);
+	  if (iter != dbStore_[key].children().end()) dbStore_[key].children().erase(iter);
+  }
+
+
 
   /////////////////////////////////////////////////////////////////////
   // DbCore<T> methods
