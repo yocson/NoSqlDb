@@ -77,7 +77,7 @@ public:
 	Query& selectName(const std::string &re);
 	Query& selectAuthor(const std::string &re);
 	Query& selectDescription(const std::string &re);
-	Query& selectDate(const DateTime &startTime);
+	Query& selectDate(const DateTime &startTime, const DateTime &endTime = DateTime().now());
 	Query& selectChildren(const Key &key) const;
 
 	Keys& keys() { return keys_; }
@@ -186,11 +186,11 @@ Query& Query::selectDescription(const std::string &re)
 }
 
 template<typename T>
-Query& Query::selectDate(const DateTime &startTime)
+Query& Query::selectDate(const DateTime &startTime, const DateTime &endTime = DateTime().now())
 {
 	Keys selectRes;
 	for (Key key : keys_) {
-		if (startTime <= db_[key].dateTime()) {
+		if (startTime <= db_[key].dateTime() && db_[key].dateTime() <= endTime) {
 			selectRes.push_back(key);
 		}
 	}
