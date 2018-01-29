@@ -50,6 +50,7 @@ public:
 	Condition& datetime(DateTime date);
 	Condition& name(std::string re);
 	Condition& key(std::string re);
+	Condition operator+(const Condition& conds) const;
 
 private:
 	friend class Query;

@@ -116,7 +116,10 @@ namespace NoSqlDb
     void dbStore(const DbStore& dbStore) { dbStore_ = dbStore; }
 
 	// methods to add and delete key-value pair
-	void addElem(Key key, DbElement<T> dbElem);
+	void addElem(const Key& key, DbElement<T> dbElem);
+	void addElem(const Key& key, std::string name, std::string author, std::string descrip, DateTime datetime, T t);
+	void editTextMata(const Key& key, std::string type, std::string newText);
+	void editDatetime(const Key& key, const DateTime& datetime);
 	void deleteElem(const Key& key);
 	void addChild(const Key& key, const Key& childKey);
 	void deleteChild(const Key& key, const Key& childKey);
@@ -128,7 +131,7 @@ namespace NoSqlDb
 
   //----< add element to db>----------------------------------
   template<typename T>
-  void DbCore<T>::addElem(Key key, DbElement<T> dbElem) 
+  void DbCore<T>::addElem(const Key& key, DbElement<T> dbElem)
   {
 	  if (contains(key))
 	  {
@@ -138,6 +141,62 @@ namespace NoSqlDb
 	  dbStore_.insert(make_pair(key, dbElem));
   }
 
+  template<typename T>
+  inline void DbCore<T>::addElem(const Key & key, std::string name, std::string author, std::string descrip, DateTime datetime, T t)
+  {
+	  if (contains(key))
+	  {
+		  if (doThrow_)
+			  throw(std::exception("key exists in db"));
+	  }
+	  DbElement dbElem;
+	  dbElem.name(name);
+	  dbElem.author(author);
+	  dbElem.descrip(descrip);
+	  dbElem.datetime(datetime);
+	  dbElem.payLoad(t);s
+	  dbStore_.insert(make_pair(key, dbElem));
+  }
+
+  template<typename T>
+  inline void DbCore<T>::editTextMata(const Key & key, std::string type, std::string newText)
+  {
+	  if (!contains(key))
+	  {
+		  if (doThrow_)
+			  throw(std::exception("key dose not exist in db"));
+		  else
+			  return;
+	  }
+	  if (type = "name") {
+		  dbStore_[key].name(newText);
+	  }
+	  else if (type = "author") {
+		  dbStore_[key].author(newText);
+	  }
+	  else if (type = "descrip") {
+		  dbStore_[key].descrip(newText);
+	  }
+	  else {
+		  if (doThrow_)
+			  throw(std::exception("invalid text type"));
+		  else
+			  return;
+	  }
+  }
+
+  template<typename T>
+  inline void DbCore<T>::editDatetime(const Key & key, const DateTime & datetime)
+  {
+	  if (!contains(key))
+	  {
+		  if (doThrow_)
+			  throw(std::exception("key dose not exist in db"));
+		  else
+			  return;
+	  }
+	  dbStore_[key].dateTime(datetime);
+  }
 
   //----< delete element from db>----------------------------------
   template<typename T>
