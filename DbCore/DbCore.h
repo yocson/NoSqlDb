@@ -117,12 +117,13 @@ namespace NoSqlDb
 
 	// methods to add and delete key-value pair
 	void addElem(const Key& key, DbElement<T> dbElem);
-	void addElem(const Key& key, std::string name, std::string author, std::string descrip, DateTime datetime, T t);
+	void addElem(const Key& key, std::string name, std::string descrip, DateTime datetime, T t);
 	void editTextMata(const Key& key, std::string type, std::string newText);
 	void editDatetime(const Key& key, const DateTime& datetime);
 	void deleteElem(const Key& key);
 	void addChild(const Key& key, const Key& childKey);
 	void deleteChild(const Key& key, const Key& childKey);
+	void replaceElem(const Key& key, DbElement<T> dbElem);
   
   private:
     DbStore dbStore_;
@@ -142,19 +143,18 @@ namespace NoSqlDb
   }
 
   template<typename T>
-  inline void DbCore<T>::addElem(const Key & key, std::string name, std::string author, std::string descrip, DateTime datetime, T t)
+  inline void DbCore<T>::addElem(const Key & key, std::string name, std::string descrip, DateTime datetime, T t)
   {
 	  if (contains(key))
 	  {
 		  if (doThrow_)
 			  throw(std::exception("key exists in db"));
 	  }
-	  DbElement dbElem;
+	  DbElement<T> dbElem;
 	  dbElem.name(name);
-	  dbElem.author(author);
 	  dbElem.descrip(descrip);
-	  dbElem.datetime(datetime);
-	  dbElem.payLoad(t);s
+	  dbElem.dateTime(datetime);
+	  dbElem.payLoad(t);
 	  dbStore_.insert(make_pair(key, dbElem));
   }
 
@@ -168,13 +168,10 @@ namespace NoSqlDb
 		  else
 			  return;
 	  }
-	  if (type = "name") {
+	  if (type == "name") {
 		  dbStore_[key].name(newText);
 	  }
-	  else if (type = "author") {
-		  dbStore_[key].author(newText);
-	  }
-	  else if (type = "descrip") {
+	  else if (type == "descrip") {
 		  dbStore_[key].descrip(newText);
 	  }
 	  else {
@@ -242,10 +239,22 @@ namespace NoSqlDb
 		  else
 			  return;
 	  }
-	  std::string::iterator iter = (dbStore_[key].children().begin(), dbStore_[key].children().end(), childKey);
+	  std::vector<std::string>::iterator iter = find(dbStore_[key].children().begin(), dbStore_[key].children().end(), childKey);
 	  if (iter != dbStore_[key].children().end()) dbStore_[key].children().erase(iter);
   }
 
+  template<typename T>
+  inline void DbCore<T>::replaceElem(const Key & key, DbElement<T> dbElem)
+  {
+	  if (!contains(key))
+	  {
+		  if (doThrow_)
+			  throw(std::exception("key does not exist in db"));
+		  else
+			  return;
+	  }
+	  dbStore_[key] = dbElem;
+  }
 
 
   /////////////////////////////////////////////////////////////////////

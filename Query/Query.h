@@ -45,7 +45,6 @@ class Condition
 public:
 	Condition() { dateSelected = false; }
 
-	Condition& author(std::string re);
 	Condition& description(std::string re);
 	Condition& datetime(DateTime date);
 	Condition& name(std::string re);
@@ -54,7 +53,6 @@ public:
 
 private:
 	friend class Query;
-	std::string author_re;
 	std::string description_re;
 	std::string name_re;
 	std::string key_re;
@@ -74,9 +72,9 @@ public:
 	Query& from(const Keys& key);
 
 	Query& select(const Condition &c);
+	Query& queryKey(const Key &key);
 	Query& selectKey(const std::string &re);
 	Query& selectName(const std::string &re);
-	Query& selectAuthor(const std::string &re);
 	Query& selectDescription(const std::string &re);
 	Query& selectDate(const DateTime &startTime, const DateTime &endTime = DateTime().now());
 	Query& selectChildren(const Key &key) const;
@@ -121,7 +119,6 @@ Query& Query::select(const Condition &c)
 {
 	selectKey(c.key_re);
 	selectName(c.name_re);
-	selectAuthor(c.author_re);
 	selectDescription(c.description_re);
 	if (c.dateSelected) selectDate(c.datetime);
 	return *this;
@@ -149,21 +146,6 @@ Query& Query::selectName(const std::string &re)
 	Keys selectRes;
 	for (Key key : keys_) {
 		if (std::regex_match(db_[key].name(), e)) {
-			selectRes.push_back(key);
-		}
-	}
-	keys_ = selectRes;
-	return *this;
-}
-
-template<typename T>
-Query& Query::selectAuthor(const std::string &re)
-{
-	if (re.length() == 0) return *this;
-	std::regex e(re);
-	Keys selectRes;
-	for (Key key : keys_) {
-		if (std::regex_match(db_[key].author(), e)) {
 			selectRes.push_back(key);
 		}
 	}
