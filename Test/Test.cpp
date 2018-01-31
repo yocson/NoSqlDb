@@ -255,10 +255,20 @@ bool TEST::testR6()
 	showDb(db);
 	putLine();
 	Query<std::string> q1(db);
+	std::cout << "\n  showing selected:";
 	q1.selectKey("Fawcett").show();
 	Condition c1;
-	c1.name("Jim");
+	c1.name("nameaaa");
 	q1.reset();
+	std::cout << "\n  showing selected:";
 	q1.select(c1).show();
+	Condition c2;
+	c2.name("namebbb");
+	std::cout << "\n  showing selected:";
+	Condition c3;
+	c3.description("Instructor for CSE687");
+	q1.reset();
+	q1.select(c1 + c2 + c3).show();
+
 	return true;
 }

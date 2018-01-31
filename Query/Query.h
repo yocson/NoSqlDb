@@ -44,13 +44,14 @@
 class Condition
 {
 public:
-	Condition() { dateSelected = false; }
+	Condition() { dateSelected = false; isUnion = false; }
 
 	Condition& description(std::string re);
 	Condition& datetime(DateTime date);
 	Condition& name(std::string re);
 	Condition& key(std::string re);
 	Condition operator+(const Condition& conds) const;
+
 
 private:
 	template<typename T>
@@ -61,6 +62,7 @@ private:
 	std::string key_re;
 	DateTime date_;
 	bool dateSelected;
+	bool isUnion;
 };
 
 
@@ -93,6 +95,7 @@ private:
 };
 
 
+
 /////////////////////////////////////////////////////////////////////
 // init methods
 
@@ -119,10 +122,25 @@ void Query<T>::reset()
 template<typename T>
 Query<T>& Query<T>::select(const Condition &c)
 {
-	selectKey(c.key_re);
-	selectName(c.name_re);
-	selectDescription(c.description_re);
-	if (c.dateSelected) selectDate(c.date_);
+	if (!c.isUnion) {
+		selectKey(c.key_re);
+		selectName(c.name_re);
+		selectDescription(c.description_re);
+		if (c.dateSelected) selectDate(c.date_);
+	}
+	else {
+		Keys selectRes;
+		std::regex name_re(c.name_re);
+		std::regex descip_re(c.description_re);
+		std::regex key_re(c.key_re);
+		for (Key key : keys_) {
+			if ((std::regex_match(db_[key].name(), name_re)) || (std::regex_match(db_[key].descrip(), descip_re)) || (std::regex_match(key, key_re) || db_[key].dateTime() > c.date_ && db_[key].dateTime() < DateTime().now())){
+				selectRes.push_back(key);
+			}
+		}
+		keys_ = selectRes;
+	}
+
 	return *this;
 }
 
