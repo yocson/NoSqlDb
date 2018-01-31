@@ -39,6 +39,7 @@
 #include <vector>
 #include <regex>
 #include "../DbCore/DbCore.h"
+#include "../DateTime/DateTime.h"
 
 class Condition
 {
@@ -52,7 +53,9 @@ public:
 	Condition operator+(const Condition& conds) const;
 
 private:
+	template<typename T>
 	friend class Query;
+
 	std::string description_re;
 	std::string name_re;
 	std::string key_re;
@@ -61,13 +64,13 @@ private:
 };
 
 
+template<typename T>
 class Query
 {
 public:
 	using Key = std::string;
 	using Keys = std::vector<Key>;
 
-	template<typename T>
 	Query(NoSqlDb::DbCore<T>& db);
 	Query& from(const Keys& key);
 
@@ -86,7 +89,6 @@ public:
 
 private:
 	Keys keys_;
-	template<typename T>
 	NoSqlDb::DbCore<T>& db_;
 };
 
@@ -95,19 +97,18 @@ private:
 // init methods
 
 template<typename T>
-Query::Query(const NoSqlDb::DbCore<T>& db)
+Query<T>::Query(NoSqlDb::DbCore<T>& db):db_(db), keys_(db.keys())
 {
-	keys_ = db.keys();
-	db_ = db;
 }
 
-Query& Query::from(const Keys& keys)
+template<typename T>
+Query<T>& Query<T>::from(const Keys& keys)
 {
 	keys_ = keys;
 }
 
 template<typename T>
-void Query::reset()
+void Query<T>::reset()
 {
 	keys_ = db_.keys();
 }
@@ -115,16 +116,29 @@ void Query::reset()
 /////////////////////////////////////////////////////////////////////
 // selection methods
 
-Query& Query::select(const Condition &c)
+template<typename T>
+Query<T>& Query<T>::select(const Condition &c)
 {
 	selectKey(c.key_re);
 	selectName(c.name_re);
 	selectDescription(c.description_re);
-	if (c.dateSelected) selectDate(c.datetime);
+	if (c.dateSelected) selectDate(c.date_);
 	return *this;
 }
 
-Query& Query::selectKey(const std::string &re)
+template<typename T>
+inline Query<T> & Query<T>::queryKey(const Key & key)
+{
+	if (db_.contains(key)) {
+		Keys selectRes;
+		selectRes.push_back(key);
+		Keys_ = selectRes;
+	}
+	return *this;
+}
+
+template<typename T>
+Query<T>& Query<T>::selectKey(const std::string &re)
 {
 	if (re.length() == 0) return *this;
 	std::regex e(re);
@@ -139,7 +153,7 @@ Query& Query::selectKey(const std::string &re)
 }
 
 template<typename T>
-Query& Query::selectName(const std::string &re)
+Query<T>& Query<T>::selectName(const std::string &re)
 {
 	if (re.length() == 0) return *this;
 	std::regex e(re);
@@ -154,7 +168,7 @@ Query& Query::selectName(const std::string &re)
 }
 
 template<typename T>
-Query& Query::selectDescription(const std::string &re)
+Query<T>& Query<T>::selectDescription(const std::string &re)
 {
 	if (re.length() == 0) return *this;
 	std::regex e(re);
@@ -169,11 +183,11 @@ Query& Query::selectDescription(const std::string &re)
 }
 
 template<typename T>
-Query& Query::selectDate(const DateTime &startTime, const DateTime &endTime = DateTime().now())
+Query<T>& Query<T>::selectDate(const DateTime &startTime, const DateTime &endTime)
 {
 	Keys selectRes;
 	for (Key key : keys_) {
-		if (startTime <= db_[key].dateTime() && db_[key].dateTime() <= endTime) {
+		if (db_[key].dateTime() < startTime && db_[key].dateTime() < endTime) {
 			selectRes.push_back(key);
 		}
 	}
@@ -183,7 +197,7 @@ Query& Query::selectDate(const DateTime &startTime, const DateTime &endTime = Da
 
 
 template<typename T>
-Query& Query::selectChildren(const Key &key) const {
+Query<T>& Query<T>::selectChildren(const Key &key) const {
 	keys_ =  db_[key].children();
 	return *this;
 }
@@ -191,10 +205,10 @@ Query& Query::selectChildren(const Key &key) const {
 /////////////////////////////////////////////////////////////////////
 // display methods
 
-
-void Query::show(std::ostream& out = std::cout)
+template<typename T>
+void Query<T>::show(std::ostream& out)
 {
 	for (Key key : keys_) {
-		std::cout << key << std::endl;
+		out << key << std::endl;
 	}
 }

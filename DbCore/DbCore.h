@@ -117,7 +117,7 @@ namespace NoSqlDb
 
 	// methods to add and delete key-value pair
 	void addElem(const Key& key, DbElement<T> dbElem);
-	void addElem(const Key& key, std::string name, std::string descrip, DateTime datetime, T t);
+	void addElem(const Key& key, std::string name, std::string descrip, T t, DateTime datetime=DateTime().now());
 	void editTextMata(const Key& key, std::string type, std::string newText);
 	void editDatetime(const Key& key, const DateTime& datetime);
 	void deleteElem(const Key& key);
@@ -143,7 +143,7 @@ namespace NoSqlDb
   }
 
   template<typename T>
-  inline void DbCore<T>::addElem(const Key & key, std::string name, std::string descrip, DateTime datetime, T t)
+  inline void DbCore<T>::addElem(const Key & key, std::string name, std::string descrip, T t, DateTime datetime)
   {
 	  if (contains(key))
 	  {
