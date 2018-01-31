@@ -267,8 +267,11 @@ bool TEST::testR6()
 	std::cout << "\n  showing selected:";
 	Condition c3;
 	c3.description("Instructor for CSE687");
-	q1.reset();
-	q1.select(c1 + c2 + c3).show();
+	//q1.reset();
+	//q1.select(c1 + c2 + c3).show();
+	Query<std::string> q3(db);
+	std::cout << "\n  union select, show return aa, fawcett";
+	q3.unionSelect(c1, c3).show();
 
 	return true;
 }

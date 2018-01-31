@@ -38,13 +38,14 @@
 #include <iostream>
 #include <vector>
 #include <regex>
+#include <set>
 #include "../DbCore/DbCore.h"
 #include "../DateTime/DateTime.h"
 
 class Condition
 {
 public:
-	Condition() { dateSelected = false; isUnion = false; }
+	Condition() { dateSelected = false; }
 
 	Condition& description(std::string re);
 	Condition& datetime(DateTime date);
@@ -62,7 +63,7 @@ private:
 	std::string key_re;
 	DateTime date_;
 	bool dateSelected;
-	bool isUnion;
+	//bool isUnion;
 };
 
 
@@ -74,7 +75,7 @@ public:
 	using Keys = std::vector<Key>;
 
 	Query(NoSqlDb::DbCore<T>& db);
-	Query& from(const Keys& key);
+	Query& from(const Keys& keys);
 
 	Query& select(const Condition &c);
 	Query& queryKey(const Key &key);
@@ -83,6 +84,9 @@ public:
 	Query& selectDescription(const std::string &re);
 	Query& selectDate(const DateTime &startTime, const DateTime &endTime = DateTime().now());
 	Query& selectChildren(const Key &key) const;
+	
+	Query& unionFrom(const Keys& keys1, const Keys& keys2);
+	Query& unionSelect(const Condition &c1, const Condition &c2);
 
 	Keys& keys() { return keys_; }
 
@@ -122,24 +126,29 @@ void Query<T>::reset()
 template<typename T>
 Query<T>& Query<T>::select(const Condition &c)
 {
-	if (!c.isUnion) {
-		selectKey(c.key_re);
-		selectName(c.name_re);
-		selectDescription(c.description_re);
-		if (c.dateSelected) selectDate(c.date_);
-	}
+	selectKey(c.key_re);
+	selectName(c.name_re);
+	selectDescription(c.description_re);
+	if (c.dateSelected) selectDate(c.date_);
+
+	/*
 	else {
 		Keys selectRes;
 		std::regex name_re(c.name_re);
 		std::regex descip_re(c.description_re);
 		std::regex key_re(c.key_re);
 		for (Key key : keys_) {
-			if ((std::regex_match(db_[key].name(), name_re)) || (std::regex_match(db_[key].descrip(), descip_re)) || (std::regex_match(key, key_re) || db_[key].dateTime() > c.date_ && db_[key].dateTime() < DateTime().now())){
+			if ((std::regex_match(db_[key].name(), name_re)) || 
+				(std::regex_match(db_[key].descrip(), descip_re)) || 
+				(std::regex_match(key, key_re) || 
+				db_[key].dateTime() > c.date_ && db_[key].dateTime() < DateTime().now()))
+			{
 				selectRes.push_back(key);
 			}
 		}
 		keys_ = selectRes;
 	}
+	*/
 
 	return *this;
 }
@@ -217,6 +226,36 @@ Query<T>& Query<T>::selectDate(const DateTime &startTime, const DateTime &endTim
 template<typename T>
 Query<T>& Query<T>::selectChildren(const Key &key) const {
 	keys_ =  db_[key].children();
+	return *this;
+}
+
+template<typename T>
+inline Query<T> & Query<T>::unionFrom(const Keys & keys1, const Keys & keys2)
+{
+	std::set<Key> unionSet;
+	for (auto key : keys1) {
+		unionSet.insert(key);
+	}
+	for (auto key : keys2) {
+		unionSet.insert(key);
+	}
+	Keys unionKeys;
+	for (auto it = unionSet.begin(); it != unionSet.end(); it++) {
+		unionKeys.push_back(*it);
+	}
+	keys_ = unionKeys;
+	return *this;
+}
+
+template<typename T>
+inline Query<T> & Query<T>::unionSelect(const Condition & c1, const Condition & c2)
+{
+	Keys tempKeys;
+	select(c1);
+	tempKeys = keys_;
+	reset();
+	select(c2);
+	unionFrom(keys_, tempKeys);
 	return *this;
 }
 

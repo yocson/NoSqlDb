@@ -25,7 +25,7 @@ Condition& Condition::key(std::string re)
 	return *this;
 }
 
-//union condtions
+//union condtions: Wrong
 Condition Condition::operator+(const Condition& conds) const
 {
 	Condition temp;
@@ -43,7 +43,6 @@ Condition Condition::operator+(const Condition& conds) const
 	temp.name_re = res[0];
 	temp.description_re = res[1];
 	temp.key_re = res[2];
-	temp.isUnion = true;
 	return temp;
 }
 
