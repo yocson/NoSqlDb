@@ -285,6 +285,7 @@ bool TEST::testR8()
 
 	db.ReadFromXML("../test.xml");
 	showDb(db);
+	showKeys(db);
 
 	return true;
 }

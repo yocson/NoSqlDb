@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////
 // XmlParser.cpp - build XML parse tree                          //
-// ver 1.3                                                       //
+// ver 1.4                                                       //
 // Application: Support for XmlDocument, Summer 2015             //
 // Platform:    Dell XPS 2720, Win 8.1 Pro, Visual Studio 2013   //
 // Author:      Jim Fawcett, CST 4-187, 443-3948                 //
@@ -230,6 +230,17 @@ XmlParser::sPtr XmlParser::createTextElem()
 {
   XmlParts& xmlParts = *pXmlParts_;
   std::string text = dequoteText(xmlParts[0]);
+ 
+  // trim trailing whitespace
+  std::locale loc;
+  while (true)
+  {
+    if (isspace(*(--text.end()), loc))
+      text.erase(--text.end());
+    else
+      break;
+  }
+  
   sPtr pTextElem = makeTextElement(text);
   if (verbose_)
   {
@@ -337,27 +348,13 @@ int main()
 {
   Utils::Title("Testing XmlParser");
   putline();
-  std::string src = "../XmlElementParts/AlternateTest.xml";
+  std::string src = "../XmlElementParts/LectureNote.xml";
   XmlParser parser(src);
   parser.verbose();
   Utils::title("Compressed form of formatted XML:");
   std::cout << "\n" << src << "\n";
   Utils::title("Parsing compressed XML:");
   XmlDocument* pDoc = parser.buildDocument();
-  std::vector<XmlDocument::sPtr> res = pDoc->elements("courses").select();
-  Utils::title("Parsing");
-  for (auto elem : res) {
-	  //std::cout << elem->tag() << std::endl;
-	  for (auto at : elem->attribute())
-	  {
-		  std::cout << at.first;
-		  std::cout << at.second;
-	  }
-	  std::vector<std::shared_ptr<AbstractXmlElement>> chid = elem->children();
-	  for (auto chi : chid) {
-		  std::cout << chi->value();
-	  }
-  }
   Utils::title("Resulting XML Parse Tree:");
   std::cout << "\n" << pDoc->toString();
   std::cout << "\n\n";

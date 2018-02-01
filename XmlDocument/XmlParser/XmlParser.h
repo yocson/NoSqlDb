@@ -2,7 +2,7 @@
 #define XMLPARSER_H
 ///////////////////////////////////////////////////////////////////
 // XmlParser.h - build XML parse tree                            //
-// ver 1.3                                                       //
+// ver 1.4                                                       //
 // Application: Support for XmlDocument, Summer 2015             //
 // Platform:    Dell XPS 2720, Win 8.1 Pro, Visual Studio 2013   //
 // Author:      Jim Fawcett, CST 4-187, 443-3948                 //
@@ -35,6 +35,8 @@
 *
 * Maintenance History:
 * --------------------
+* ver 1.4 : 31 Jan 18
+* - added trimming of text end in XmlParser::createTextElement()
 * Ver 1.3 : 01 Jun 15
 * - made constr src string const
 * - added src_ member string

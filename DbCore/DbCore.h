@@ -266,15 +266,31 @@ namespace NoSqlDb
 	  XmlProcessing::XmlParser parser(src);
 	  parser.verbose();
 	  XmlProcessing::XmlDocument* pDoc = parser.buildDocument();
-	  std::vector<XmlProcessing::XmlDocument::sPtr> res = pDoc->elements("record").select();
-	  for (auto elem : res) {
-		  DbElement<T> temp;
-		  std::vector<std::shared_ptr<XmlProcessing::AbstractXmlElement>> texts = elem->children();
-		  temp.payLoad(texts[1]->children()[0]->value());
-		  temp.name(elem->attribute()[0].second);
-		  temp.descrip(elem->attribute()[1].second);
-		  temp.dateTime(elem->attribute()[2].second);
-		  addElem(texts[0]->value(), temp);
+	  std::vector<XmlProcessing::XmlDocument::sPtr> records = pDoc->descendents("record").select();
+	  for (auto record : records) {
+		  DbElement<T> tempElem;
+		  Key key;
+		  std::vector<std::shared_ptr<XmlProcessing::AbstractXmlElement>> contents = record->children();
+		  for (auto content : contents) {
+			  if (content->tag() == "key") {
+				  key = content->children()[0]->value();
+			  } 
+			  if (content->tag() == "value") {
+				  for (auto attr : content->attribute()) {
+					  if (attr.first == "name") {
+						  tempElem.name(attr.second);
+					  }
+					  if (attr.first == "descrip") {
+						  tempElem.descrip(attr.second);
+					  }
+					  if (attr.first == "dateTime") {
+						  tempElem.dateTime(attr.second);
+					  }
+				  }
+				  tempElem.payLoad(content->children()[0]->value());
+			  }
+		  }
+		  addElem(key, tempElem);
 	  }
   }
 

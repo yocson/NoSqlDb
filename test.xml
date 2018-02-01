@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <!--  XML test case --> 
+<dbrecord>
 <record>
-	<key name="Frank" descrip="111111111111111" dateTime="Wed Jan 31 22:52:40 2018">
-		Frank Wang
-		<payload>Yocson</payload>
-	</key>
-	<key name="Jeremy" descrip="2222222222222" dateTime="Wed Jan 31 22:52:40 2018">
-		Jeremy Lin
-		<payload>ColdSilence</payload>
-	</key>
-	<key name="Jessica" descrip="3333333333333" dateTime="Wed Jan 31 22:52:40 2018">
-		Jessica Zhang
-		<payload>LinkedIner</payload>
-	</key>
+	<key>Frank Wang</key>
+	<value name="Frank" descrip="111111111111111" dateTime="Wed Jan 31 22:52:40 2018">Yocson</value>
 </record>
+<record>
+	<key>Jeremy Lin</key>
+	<value name="Jeremy" descrip="2222222222222" dateTime="Wed Jan 31 22:52:40 2018">ColdSilence</value>
+</record>
+<record>
+	<key>Jessica Zhang</key>
+	<value name="Jessica" descrip="3333333333333" 
+dateTime="Wed Jan 31 22:52:40 2018">LinkedIner</value>
+</record>
+</dbrecord>
