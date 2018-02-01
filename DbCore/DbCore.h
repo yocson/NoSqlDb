@@ -127,7 +127,8 @@ namespace NoSqlDb
 	void deleteChild(const Key& key, const Key& childKey);
 	void replaceElem(const Key& key, DbElement<T> dbElem);
 
-	void ReadFromXML(const std::string src);
+	void ReadFromXML(const std::string& src);
+	void SaveToXML(const std::string& src);
   
   private:
     DbStore dbStore_;
@@ -261,12 +262,12 @@ namespace NoSqlDb
   }
 
   template<typename T>
-  inline void DbCore<T>::ReadFromXML(const std::string src)
+  void DbCore<T>::ReadFromXML(const std::string &src)
   {
 	  XmlProcessing::XmlParser parser(src);
 	  parser.verbose();
 	  XmlProcessing::XmlDocument* pDoc = parser.buildDocument();
-	  std::vector<XmlProcessing::XmlDocument::sPtr> records = pDoc->descendents("record").select();
+	  std::vector<XmlProcessing::XmlDocument::sPtr> records = pDoc->descendents("dbRecord").select();
 	  for (auto record : records) {
 		  DbElement<T> tempElem;
 		  Key key;
@@ -280,7 +281,7 @@ namespace NoSqlDb
 					  if (attr.first == "name") {
 						  tempElem.name(attr.second);
 					  }
-					  if (attr.first == "descrip") {
+					  if (attr.first == "description") {
 						  tempElem.descrip(attr.second);
 					  }
 					  if (attr.first == "dateTime") {
@@ -292,6 +293,30 @@ namespace NoSqlDb
 		  }
 		  addElem(key, tempElem);
 	  }
+  }
+
+  template<typename T>
+  void DbCore<T>::SaveToXML(const std::string & src)
+  {
+	  using Sptr = std::shared_ptr<XmlProcessing::AbstractXmlElement>;
+	  Sptr pDb = XmlProcessing::makeTaggedElement("db");
+	  Sptr pDocElem = XmlProcessing::makeDocElement(pDb);
+	  XmlProcessing::XmlDocument xDoc(pDocElem);
+
+	  for (auto item : dbStore_) {
+		  Sptr pRecord = XmlProcessing::makeTaggedElement("dbRecord");
+		  pDb->addChild(pRecord);
+		  Sptr pKey = XmlProcessing::makeTaggedElement("key", item.first);
+		  pRecord->addChild(pKey);
+
+		  Sptr pValue = XmlProcessing::makeTaggedElement("value", item.second.payLoad());
+		  pValue->addAttrib("name", item.second.name());
+		  pValue->addAttrib("description", item.second.name());
+		  pValue->addAttrib("dateTime", item.second.dateTime());
+		  pRecord->addChild(pValue);
+	  }
+	  std::string Xml = xDoc.toString();
+	  std::cout << Xml << std::endl;
   }
 
 

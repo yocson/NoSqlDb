@@ -28,9 +28,14 @@ std::shared_ptr<AbstractXmlElement> XmlProcessing::makeDocElement(std::shared_pt
 
 //----< factory for tagged elements >----------------------------------------
 
-std::shared_ptr<AbstractXmlElement> XmlProcessing::makeTaggedElement(const std::string& tag)
+std::shared_ptr<AbstractXmlElement> XmlProcessing::makeTaggedElement(const std::string& tag, const std::string& text)
 {
   std::shared_ptr<AbstractXmlElement> ptr(new TaggedElement(tag));
+  if (text.size() > 0)
+  {
+    std::shared_ptr<AbstractXmlElement> ptrText(new TextElement(text));
+    ptr->addChild(ptrText);
+  }
   return ptr;
 }
 //----< factory for text elements >------------------------------------------

@@ -118,7 +118,7 @@ namespace XmlProcessing
     virtual std::string tag() { return ""; }
     virtual std::string value() = 0;
     virtual std::string toString() = 0;
-	virtual std::vector<std::pair<std::string, std::string>> attribute() { return std::vector<std::pair<std::string, std::string>>();  }
+	virtual std::vector<std::pair<std::string, std::string>> attribute() { return std::vector<std::pair<std::string, std::string>>(); }
     virtual ~AbstractXmlElement();
   protected:
     static size_t count;
@@ -211,7 +211,7 @@ namespace XmlProcessing
     return children_;
   }
   inline std::string TaggedElement::tag() { return tag_; }
-  std::shared_ptr<AbstractXmlElement> makeTaggedElement(const std::string& tag);
+  std::shared_ptr<AbstractXmlElement> makeTaggedElement(const std::string& tag, const std::string& body = "");
 
   /////////////////////////////////////////////////////////////////////////////
   // CommentElement - represents XML comments, e.g., <!-- comment text -->
