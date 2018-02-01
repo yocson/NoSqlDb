@@ -39,7 +39,6 @@
 #include <iostream>
 #include <iomanip>
 #include "../DateTime/DateTime.h"
-#include "../XmlParser/XmlParser.h"
 
 namespace NoSqlDb
 {

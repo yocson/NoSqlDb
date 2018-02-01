@@ -118,7 +118,7 @@ namespace XmlProcessing
     virtual std::string tag() { return ""; }
     virtual std::string value() = 0;
     virtual std::string toString() = 0;
-	virtual std::vector<std::pair<std::string, std::string>>& attribute() { return std::vector<std::pair<std::string, std::string>>();  }
+	virtual std::vector<std::pair<std::string, std::string>> attribute() { return std::vector<std::pair<std::string, std::string>>();  }
     virtual ~AbstractXmlElement();
   protected:
     static size_t count;
@@ -199,7 +199,7 @@ namespace XmlProcessing
     virtual std::string tag();
     virtual std::string value();
     virtual std::string toString();
-	virtual std::vector<std::pair<std::string, std::string>>& attribute() { return attribs_; }
+	virtual std::vector<std::pair<std::string, std::string>> attribute() { return attribs_; }
   private:
     std::string tag_;
     std::vector<std::shared_ptr<AbstractXmlElement>> children_;
