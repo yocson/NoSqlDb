@@ -25,7 +25,7 @@ Condition& Condition::key(std::string re)
 	return *this;
 }
 
-//union condtions: Wrong
+//union condtions: Wrong : to remove
 Condition Condition::operator+(const Condition& conds) const
 {
 	Condition temp;
