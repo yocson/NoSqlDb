@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<!--  XML test case --> 
+<record>
+	<key name="Frank" descrip="111111111111111" dateTime="Wed Jan 31 22:52:40 2018">
+		Frank Wang
+		<payload>Yocson</payload>
+	</key>
+	<key name="Jeremy" descrip="2222222222222" dateTime="Wed Jan 31 22:52:40 2018">
+		Jeremy Lin
+		<payload>ColdSilence</payload>
+	</key>
+	<key name="Jessica" descrip="3333333333333" dateTime="Wed Jan 31 22:52:40 2018">
+		Jessica Zhang
+		<payload>LinkedIner</payload>
+	</key>
+</record>

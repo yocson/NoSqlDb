@@ -158,6 +158,9 @@
     <ProjectReference Include="..\DateTime\DateTime.vcxproj">
       <Project>{c1e1f450-b7e1-4796-84d5-7d3c831dff68}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\XmlDocument\XmlDocument\XmlDocument.vcxproj">
+      <Project>{0a82ecdc-7520-453a-8f2c-d813feee7537}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

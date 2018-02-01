@@ -14,5 +14,7 @@ namespace TEST {
 	bool testR5();
 
 	bool testR6();
+
+	bool testR8();
 }
 

@@ -27,6 +27,7 @@ int main()
 	TestExecutive::TestStr ts4{ TEST::testR4, "add element" };
 	TestExecutive::TestStr ts5{ TEST::testR5, "add element" };
 	TestExecutive::TestStr ts6{ TEST::testR6, "query" };
+	TestExecutive::TestStr ts8{ TEST::testR8, "xml" };
 
 	// register test structures with TestExecutive instance, ex
 
@@ -37,6 +38,7 @@ int main()
 	ex.registerTest(ts4);
 	ex.registerTest(ts5);
 	ex.registerTest(ts6);
+	ex.registerTest(ts8);
 
 	// run tests
 

@@ -39,6 +39,8 @@
 #include <iostream>
 #include <iomanip>
 #include "../DateTime/DateTime.h"
+#include "../XmlDocument/XmlParser/XmlParser.h"
+#include "../XmlDocument/XmlDocument/XmlDocument.h"
 
 namespace NoSqlDb
 {
@@ -124,6 +126,8 @@ namespace NoSqlDb
 	void addChild(const Key& key, const Key& childKey);
 	void deleteChild(const Key& key, const Key& childKey);
 	void replaceElem(const Key& key, DbElement<T> dbElem);
+
+	void ReadFromXML(const std::string src);
   
   private:
     DbStore dbStore_;
@@ -254,6 +258,24 @@ namespace NoSqlDb
 			  return;
 	  }
 	  dbStore_[key] = dbElem;
+  }
+
+  template<typename T>
+  inline void DbCore<T>::ReadFromXML(const std::string src)
+  {
+	  XmlProcessing::XmlParser parser(src);
+	  parser.verbose();
+	  XmlProcessing::XmlDocument* pDoc = parser.buildDocument();
+	  std::vector<XmlProcessing::XmlDocument::sPtr> res = pDoc->elements("record").select();
+	  for (auto elem : res) {
+		  DbElement<T> temp;
+		  std::vector<std::shared_ptr<XmlProcessing::AbstractXmlElement>> texts = elem->children();
+		  temp.payLoad(texts[1]->children()[0]->value());
+		  temp.name(elem->attribute()[0].second);
+		  temp.descrip(elem->attribute()[1].second);
+		  temp.dateTime(elem->attribute()[2].second);
+		  addElem(texts[0]->value(), temp);
+	  }
   }
 
 

@@ -275,3 +275,16 @@ bool TEST::testR6()
 
 	return true;
 }
+
+bool TEST::testR8()
+{
+	Utilities::title("Demonstrating Requirement #8 - xml");
+
+	DbProvider dbp;
+	DbCore<std::string> db = dbp.db();
+
+	db.ReadFromXML("../test.xml");
+	showDb(db);
+
+	return true;
+}
