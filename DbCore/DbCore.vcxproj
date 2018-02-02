@@ -149,10 +149,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DbCore.cpp" />
+    <ClCompile Include="FIleInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Utilities\TestUtilities\TestUtilities.h" />
     <ClInclude Include="DbCore.h" />
+    <ClInclude Include="FileInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DateTime\DateTime.vcxproj">

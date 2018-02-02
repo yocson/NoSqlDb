@@ -63,7 +63,6 @@ private:
 	std::string key_re;
 	DateTime date_;
 	bool dateSelected;
-	//bool isUnion;
 };
 
 
@@ -74,11 +73,13 @@ public:
 	using Key = std::string;
 	using Keys = std::vector<Key>;
 
-	Query(NoSqlDb::DbCore<T>& db);
+	Query<T>(NoSqlDb::DbCore<T>& db);
 	Query& from(const Keys& keys);
 
+	Query& select(T t);
+
 	Query& select(const Condition &c);
-	Query& queryKey(const Key &key);
+	Query& exactKey(const Key &key);
 	Query& selectKey(const std::string &re);
 	Query& selectName(const std::string &re);
 	Query& selectDescription(const std::string &re);
@@ -131,30 +132,11 @@ Query<T>& Query<T>::select(const Condition &c)
 	selectDescription(c.description_re);
 	if (c.dateSelected) selectDate(c.date_);
 
-	/*
-	else {
-		Keys selectRes;
-		std::regex name_re(c.name_re);
-		std::regex descip_re(c.description_re);
-		std::regex key_re(c.key_re);
-		for (Key key : keys_) {
-			if ((std::regex_match(db_[key].name(), name_re)) || 
-				(std::regex_match(db_[key].descrip(), descip_re)) || 
-				(std::regex_match(key, key_re) || 
-				db_[key].dateTime() > c.date_ && db_[key].dateTime() < DateTime().now()))
-			{
-				selectRes.push_back(key);
-			}
-		}
-		keys_ = selectRes;
-	}
-	*/
-
 	return *this;
 }
 
 template<typename T>
-inline Query<T> & Query<T>::queryKey(const Key & key)
+inline Query<T> & Query<T>::exactKey(const Key & key)
 {
 	if (db_.contains(key)) {
 		Keys selectRes;

@@ -42,6 +42,7 @@
 #include "../DateTime/DateTime.h"
 #include "../XmlDocument/XmlParser/XmlParser.h"
 #include "../XmlDocument/XmlDocument/XmlDocument.h"
+#include "FileInfo.h"
 
 namespace NoSqlDb
 {
@@ -290,7 +291,7 @@ namespace NoSqlDb
 					  }
 				  }
 				  for (auto value : content->children()) {
-					  if (value->tag() == "payload") tempElem.payLoad(value->children()[0]->value());
+					  if (value->tag() == "fileInfo") tempElem.payLoad(FileInfo(value));
 					  if (value->tag() == "children") {
 						  Children children;
 						  for (auto child : value->children()) {
@@ -320,7 +321,8 @@ namespace NoSqlDb
 		  pRecord->addChild(pKey);
 
 		  Sptr pValue = XmlProcessing::makeTaggedElement("value");
-		  Sptr pPayload = XmlProcessing::makeTaggedElement("payload",  item.second.payLoad());
+		  //Sptr pPayload = XmlProcessing::makeTaggedElement("payload");
+		  Sptr pPayload = item.second.payLoad().toXML();
 		  pValue->addChild(pPayload);
 		  pValue->addAttrib("name", item.second.name());
 		  pValue->addAttrib("description", item.second.descrip());
@@ -330,7 +332,7 @@ namespace NoSqlDb
 		  if (item.second.children().size()) {
 			  Sptr pChildren = XmlProcessing::makeTaggedElement("children");
 			  for (auto child : item.second.children()) {
-				  Sptr pChild = XmlProcessing::makeTaggedElement("key", child);
+				  Sptr pChild = XmlProcessing::makeTaggedElement("childKey", child);
 				  pChildren->addChild(pChild);
 			  }
 			  pValue->addChild(pChildren);

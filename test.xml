@@ -4,20 +4,29 @@
 <dbRecord>
 	<key>Frank Wang</key>
 	<value name="Frank" description="111111111111111" dateTime="Wed Jan 31 22:52:40 2018">
-	<payload>
-	Yocson
-	</payload>
+		<fileInfo>
+			<filePath>C://main.cpp</filePath>
+			<categories>
+				<category>OOD</category>
+				<category>CA</category>
+			</categories>
+		</fileInfo>
 	</value>
 </dbRecord>
 <dbRecord>
 	<key>Jeremy Lin</key>
 	<value name="Jeremy" description="2222222222222" dateTime="Wed Jan 31 22:52:40 2018">
-	<payload>
-		ColdSilence
-	</payload>
+		<fileInfo>
+			<filePath>C://main.cpp</filePath>
+			<categories>
+				<category>OOD</category>
+				<category>CA</category>
+			</categories>
+		</fileInfo>
+
 	<children>
-		<key>Frank Wang</key>
-		<key>Jessica Zhang</key>
+		<childKey>Frank Wang</childKey>
+		<childKey>Jessica Zhang</childKey>
 	</children>
 	</value>
 </dbRecord>
@@ -25,9 +34,13 @@
 	<key>Jessica Zhang</key>
 	<value name="Jessica" description="3333333333333" 
 dateTime="Wed Jan 31 22:52:40 2018">
-	<payload>
-	LinkedIner
-	</payload>
+			<fileInfo>
+				<filePath>C://main.cpp</filePath>
+				<categories>
+					<category>OOD</category>
+					<category>CA</category>
+				</categories>
+			</fileInfo>
 	</value>
 </dbRecord>
 </db>

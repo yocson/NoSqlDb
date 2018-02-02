@@ -2,22 +2,21 @@
   <db>
     <dbRecord>
       <key>
-        Fawcett
-      </key>
-      <value name="Jim" description="Instructor for CSE687" dateTime="Fri Feb  2 08:56:48 2018">
-        <payload>
-          The good news is ...
-        </payload>
-      </value>
-    </dbRecord>
-    <dbRecord>
-      <key>
         Frank Wang
       </key>
       <value name="Frank" description="111111111111111" dateTime="Wed Jan 31 22:52:40 2018">
-        <payload>
-          Yocson
-        </payload>
+        <fileInfo>
+          <filePath>
+          </filePath>
+          <categories>
+            <category>
+              OOD
+            </category>
+            <category>
+              CA
+            </category>
+          </categories>
+        </fileInfo>
       </value>
     </dbRecord>
     <dbRecord>
@@ -25,16 +24,25 @@
         Jeremy Lin
       </key>
       <value name="Jeremy" description="2222222222222" dateTime="Wed Jan 31 22:52:40 2018">
-        <payload>
-          ColdSilence
-        </payload>
+        <fileInfo>
+          <filePath>
+          </filePath>
+          <categories>
+            <category>
+              OOD
+            </category>
+            <category>
+              CA
+            </category>
+          </categories>
+        </fileInfo>
         <children>
-          <key>
+          <childKey>
             Frank Wang
-          </key>
-          <key>
+          </childKey>
+          <childKey>
             Jessica Zhang
-          </key>
+          </childKey>
         </children>
       </value>
     </dbRecord>
@@ -43,9 +51,18 @@
         Jessica Zhang
       </key>
       <value name="Jessica" description="3333333333333" dateTime="Wed Jan 31 22:52:40 2018">
-        <payload>
-          LinkedIner
-        </payload>
+        <fileInfo>
+          <filePath>
+          </filePath>
+          <categories>
+            <category>
+              OOD
+            </category>
+            <category>
+              CA
+            </category>
+          </categories>
+        </fileInfo>
       </value>
     </dbRecord>
   </db>

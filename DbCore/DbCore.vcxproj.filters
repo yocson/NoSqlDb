@@ -18,12 +18,18 @@
     <ClCompile Include="DbCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FIleInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DbCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Utilities\TestUtilities\TestUtilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

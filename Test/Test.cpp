@@ -6,6 +6,7 @@
 #include "../DbCore/DbCore.h"
 #include "../Query/Query.h"
 #include "Test.h"
+#include "../DbCore/FileInfo.h"
 
 using namespace NoSqlDb;
 
@@ -283,12 +284,14 @@ bool TEST::testR8()
 	DbProvider dbp;
 	DbCore<std::string> db = dbp.db();
 
-	db.ReadFromXML("../test.xml");
+	DbCore<FileInfo> dbFile;
+
+	dbFile.ReadFromXML("../test.xml");
 	showDb(db);
 	showKeys(db);
 
-	db.SaveToXML("../test2.xml");
-	db.ReadFromXML("../test2.xml");
+	dbFile.SaveToXML("../test2.xml");
+	dbFile.ReadFromXML("../test2.xml");
 	showDb(db);
 	showKeys(db);
 
