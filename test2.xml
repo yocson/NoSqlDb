@@ -4,8 +4,10 @@
       <key>
         Fawcett
       </key>
-      <value name="Jim" description="Instructor for CSE687" dateTime="Thu Feb  1 21:22:14 2018">
-        The good news is ...
+      <value name="Jim" description="Instructor for CSE687" dateTime="Fri Feb  2 08:56:48 2018">
+        <payload>
+          The good news is ...
+        </payload>
       </value>
     </dbRecord>
     <dbRecord>
@@ -13,7 +15,9 @@
         Frank Wang
       </key>
       <value name="Frank" description="111111111111111" dateTime="Wed Jan 31 22:52:40 2018">
-        Yocson
+        <payload>
+          Yocson
+        </payload>
       </value>
     </dbRecord>
     <dbRecord>
@@ -21,23 +25,27 @@
         Jeremy Lin
       </key>
       <value name="Jeremy" description="2222222222222" dateTime="Wed Jan 31 22:52:40 2018">
-        ColdSilence
+        <payload>
+          ColdSilence
+        </payload>
+        <children>
+          <key>
+            Frank Wang
+          </key>
+          <key>
+            Jessica Zhang
+          </key>
+        </children>
       </value>
-      <children>
-        <key>
-          Frank Wang
-        </key>
-        <key>
-          Jessica Zhang
-        </key>
-      </children>
     </dbRecord>
     <dbRecord>
       <key>
         Jessica Zhang
       </key>
       <value name="Jessica" description="3333333333333" dateTime="Wed Jan 31 22:52:40 2018">
-        LinkedIner
+        <payload>
+          LinkedIner
+        </payload>
       </value>
     </dbRecord>
   </db>

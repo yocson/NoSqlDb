@@ -288,6 +288,9 @@ bool TEST::testR8()
 	showKeys(db);
 
 	db.SaveToXML("../test2.xml");
+	db.ReadFromXML("../test2.xml");
+	showDb(db);
+	showKeys(db);
 
 	return true;
 }

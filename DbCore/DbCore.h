@@ -289,14 +289,16 @@ namespace NoSqlDb
 						  tempElem.dateTime(attr.second);
 					  }
 				  }
-				  tempElem.payLoad(content->children()[0]->value());
+				  for (auto value : content->children()) {
+					  if (value->tag() == "payload") tempElem.payLoad(value->children()[0]->value());
+					  if (value->tag() == "children") {
+						  Children children;
+						  for (auto child : value->children()) {
+							  children.push_back(child->children()[0]->value());
+						  }
+						  tempElem.children(children);
+					  }
 				  }
-			  if (content->tag() == "children") {
-				  Children children;
-				  for (auto child : content->children()) {
-					  children.push_back(child->children()[0]->value());
-				  }
-				  tempElem.children(children);
 			  }
 		  }
 		  addElem(key, tempElem);
@@ -317,7 +319,9 @@ namespace NoSqlDb
 		  Sptr pKey = XmlProcessing::makeTaggedElement("key", item.first);
 		  pRecord->addChild(pKey);
 
-		  Sptr pValue = XmlProcessing::makeTaggedElement("value", item.second.payLoad());
+		  Sptr pValue = XmlProcessing::makeTaggedElement("value");
+		  Sptr pPayload = XmlProcessing::makeTaggedElement("payload",  item.second.payLoad());
+		  pValue->addChild(pPayload);
 		  pValue->addAttrib("name", item.second.name());
 		  pValue->addAttrib("description", item.second.descrip());
 		  pValue->addAttrib("dateTime", item.second.dateTime());
@@ -329,7 +333,7 @@ namespace NoSqlDb
 				  Sptr pChild = XmlProcessing::makeTaggedElement("key", child);
 				  pChildren->addChild(pChild);
 			  }
-			  pRecord->addChild(pChildren);
+			  pValue->addChild(pChildren);
 		  }
 	  }
 	  std::string Xml = xDoc.toString();
