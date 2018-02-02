@@ -287,7 +287,7 @@ bool TEST::testR8()
 	showDb(db);
 	showKeys(db);
 
-	db.SaveToXML("a");
+	db.SaveToXML("../test2.xml");
 
 	return true;
 }

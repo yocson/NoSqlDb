@@ -38,6 +38,7 @@
 #include <vector>
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 #include "../DateTime/DateTime.h"
 #include "../XmlDocument/XmlParser/XmlParser.h"
 #include "../XmlDocument/XmlDocument/XmlDocument.h"
@@ -332,7 +333,16 @@ namespace NoSqlDb
 		  }
 	  }
 	  std::string Xml = xDoc.toString();
+	  std::ofstream file(src);
+	  if (!file.is_open()) {
+		  if (doThrow_)
+			  throw(std::exception("fail to open file"));
+		  else
+			  return;
+	  }
 	  std::cout << Xml << std::endl;
+	  file << Xml << std::endl;
+	  file.close();
   }
 
 

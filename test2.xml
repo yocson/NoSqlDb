@@ -1,0 +1,43 @@
+
+  <db>
+    <dbRecord>
+      <key>
+        Fawcett
+      </key>
+      <value name="Jim" description="Instructor for CSE687" dateTime="Thu Feb  1 21:22:14 2018">
+        The good news is ...
+      </value>
+    </dbRecord>
+    <dbRecord>
+      <key>
+        Frank Wang
+      </key>
+      <value name="Frank" description="111111111111111" dateTime="Wed Jan 31 22:52:40 2018">
+        Yocson
+      </value>
+    </dbRecord>
+    <dbRecord>
+      <key>
+        Jeremy Lin
+      </key>
+      <value name="Jeremy" description="2222222222222" dateTime="Wed Jan 31 22:52:40 2018">
+        ColdSilence
+      </value>
+      <children>
+        <key>
+          Frank Wang
+        </key>
+        <key>
+          Jessica Zhang
+        </key>
+      </children>
+    </dbRecord>
+    <dbRecord>
+      <key>
+        Jessica Zhang
+      </key>
+      <value name="Jessica" description="3333333333333" dateTime="Wed Jan 31 22:52:40 2018">
+        LinkedIner
+      </value>
+    </dbRecord>
+  </db>
