@@ -3,15 +3,19 @@
 <db>
 <dbRecord>
 	<key>Frank Wang</key>
-	<value name="Frank" descrip="111111111111111" dateTime="Wed Jan 31 22:52:40 2018">Yocson</value>
+	<value name="Frank" description="111111111111111" dateTime="Wed Jan 31 22:52:40 2018">Yocson</value>
 </dbRecord>
 <dbRecord>
 	<key>Jeremy Lin</key>
-	<value name="Jeremy" descrip="2222222222222" dateTime="Wed Jan 31 22:52:40 2018">ColdSilence</value>
+	<value name="Jeremy" description="2222222222222" dateTime="Wed Jan 31 22:52:40 2018">ColdSilence</value>
+	<children>
+		<key>Frank Wang</key>
+		<key>Jessica Zhang</key>
+	</children>
 </dbRecord>
 <dbRecord>
 	<key>Jessica Zhang</key>
-	<value name="Jessica" descrip="3333333333333" 
+	<value name="Jessica" description="3333333333333" 
 dateTime="Wed Jan 31 22:52:40 2018">LinkedIner</value>
 </dbRecord>
 </db>
