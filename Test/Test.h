@@ -13,8 +13,8 @@ namespace TEST {
 		bool testR8();
 
 	private:
-		NoSqlDb::DbCore<FileInfo> testDb;
-		NoSqlDb::DbCore<std::string> db;
+		static NoSqlDb::DbCore<FileInfo> testDb;
+		static NoSqlDb::DbCore<std::string> db;
 	};
 
 }

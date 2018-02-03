@@ -18,6 +18,8 @@ int main()
 
 	TestExecutive ex;
 	Test tt;
+	//NoSqlDb::DbCore<FileInfo> testDb;
+	//NoSqlDb::DbCore<std::string> db;
 
 	// define test structures with test function and message
 
@@ -26,9 +28,9 @@ int main()
 	TestExecutive::TestStr ts3a{ std::bind(&Test::testR3a, tt), "Create DbElement<std::string>" };
 	TestExecutive::TestStr ts3b{ std::bind(&Test::testR3b, tt), "Create DbCore<std::string>" };
 	TestExecutive::TestStr ts4{ std::bind(&Test::testR4, tt), "add element" };
-	TestExecutive::TestStr ts5{ std::bind(&Test::testR5, tt), "add element" };
-	TestExecutive::TestStr ts6{ std::bind(&Test::testR6, tt), "query" };
-	TestExecutive::TestStr ts8{ std::bind(&Test::testR8, tt), "xml" };
+	//TestExecutive::TestStr ts5{ std::bind(&Test::testR5, tt), "add element" };
+	//TestExecutive::TestStr ts6{ std::bind(&Test::testR6, tt), "query" };
+	//TestExecutive::TestStr ts8{ std::bind(&Test::testR8, tt), "xml" };
 
 	// register test structures with TestExecutive instance, ex
 
@@ -37,9 +39,9 @@ int main()
 	ex.registerTest(ts3a);
 	ex.registerTest(ts3b);
 	ex.registerTest(ts4);
-	ex.registerTest(ts5);
-	ex.registerTest(ts6);
-	ex.registerTest(ts8);
+	//ex.registerTest(ts5);
+	//ex.registerTest(ts6);
+	//ex.registerTest(ts8);
 
 	// run tests
 
@@ -50,7 +52,6 @@ int main()
 		std::cout << "\n  at least one test failed";
 
 	Utilities::putline(2);
-
 
 	getchar();
 	getchar();

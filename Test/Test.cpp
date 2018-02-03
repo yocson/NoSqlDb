@@ -16,6 +16,9 @@ auto putLine = [](size_t n = 1, std::ostream& out = std::cout)
 	Utilities::putline(n, out);
 };
 
+NoSqlDb::DbCore<FileInfo> Test::testDb;
+NoSqlDb::DbCore<std::string> Test::db;
+
 ///////////////////////////////////////////////////////////////////////
 // DbProvider class
 // - provides mechanism to share a test database between test functions
@@ -104,7 +107,7 @@ bool Test::testR3b()
 	//DbProvider dbp;
 	//DbCore<std::string> db = dbp.db();
 
-	DbElement<std::string> demoElem = db["Fawcett"];
+	DbElement<std::string> demoElem;
 
 	demoElem.name("Ammar");
 	demoElem.descrip("TA for CSE687");
@@ -170,23 +173,21 @@ bool Test::testR4()
 {
 	Utilities::title("Demonstrating Requirement #4 - add and delete pairs");
 
-	//DbProvider dbp;
-	//DbCore<std::string> db = dbp.db();
 
-
-	DbElement<std::string> demoElem = db["Fawcett"];
-	demoElem.name("Ammar");
-	demoElem.descrip("TA for CSE687");
-	demoElem.payLoad("You should try ...");
+	DbElement<std::string> demoElem;
+	demoElem.name("Calbee");
+	demoElem.descrip("You know what");
+	demoElem.payLoad("111111111");
 	db.addElem("xxx", demoElem);
 	if (!db.contains("xxx"))
 		return false;
 
-	db.addElem("yyy", "cool", "xxx", "asdfasdf");
+	db.addElem("yyy", "Lemon tea", "yyy", "asdfasdf");
 	if (!db.contains("yyy"))
 		return false;
 	putLine();
 	std::cout << "\n  showing all the database elements:";
+	std::cout << "\n  two elems added:";
 	showDb(db);
 	putLine();
 
