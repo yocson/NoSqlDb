@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 #include "../XmlDocument/XmlDocument/XmlDocument.h"
 
 class FileInfo
@@ -14,9 +15,11 @@ public:
 	FileInfo(){}
 	FileInfo(std::shared_ptr<XmlProcessing::AbstractXmlElement> payloadTag);
 	FileInfo(std::string);
-	std::string toString();
+	std::string toString() const;
 	Sptr toXML();
 	operator std::string();
+
+	friend std::ostream& operator<<(std::ostream& out, const FileInfo& f);
 
 private:
 	FilePath filePath_;

@@ -18,9 +18,15 @@ FileInfo::FileInfo(std::string)
 {
 }
 
-std::string FileInfo::toString()
+std::string FileInfo::toString() const
 {
-	return std::string();
+	std::string str;
+	str += "filePath: " + filePath_ + "\n";
+	str += "Categories: ";
+	for (std::string cate : category_) {
+		str += cate + ", ";
+	}
+	return str;
 }
 
 FileInfo::Sptr FileInfo::toXML()
@@ -35,4 +41,9 @@ FileInfo::Sptr FileInfo::toXML()
 	}
 	pFileInfo->addChild(pCategories);
 	return pFileInfo;
+}
+
+std::ostream& operator<<(std::ostream& out, const FileInfo& f) {
+	out << f.toString();
+	return out;
 }
