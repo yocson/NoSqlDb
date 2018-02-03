@@ -9,6 +9,7 @@
 #include "../DbCore/FileInfo.h"
 
 using namespace NoSqlDb;
+using namespace TEST;
 
 auto putLine = [](size_t n = 1, std::ostream& out = std::cout)
 {
@@ -20,22 +21,22 @@ auto putLine = [](size_t n = 1, std::ostream& out = std::cout)
 // - provides mechanism to share a test database between test functions
 //   without explicitly passing as a function argument.
 
-class DbProvider
-{
-public:
-	DbCore<std::string>& db() { return db_; }
-private:
-	static DbCore<std::string> db_;
-};
-
-DbCore<std::string> DbProvider::db_;
+//class DbProvider
+//{
+//public:
+//	DbCore<std::string>& db() { return db_; }
+//private:
+//	static DbCore<std::string> db_;
+//};
+//
+//DbCore<std::string> DbProvider::db_;
 
 ///////////////////////////////////////////////////////////////////////
 // test functions
 
 //----< demo requirement #1 >------------------------------------------
 
-bool TEST::testR1()
+bool Test::testR1()
 {
 	Utilities::title("Demonstrating Requirement #1");
 	std::cout << "\n  " << typeid(std::function<bool()>).name()
@@ -47,7 +48,7 @@ bool TEST::testR1()
 
 //----< demo requirement #2 >------------------------------------------
 
-bool TEST::testR2()
+bool Test::testR2()
 {
 	Utilities::title("Demonstrating Requirement #2");
 	std::cout << "\n  A visual examination of all the submitted code "
@@ -58,16 +59,16 @@ bool TEST::testR2()
 
 //----< demo first part of requirement #3 >----------------------------
 
-bool TEST::testR3a()
+bool Test::testR3a()
 {
 	Utilities::title("Demonstrating Requirement #3a - creating DbElement");
 	std::cout << "\n  Creating a db element with key \"Fawcett\":";
 
 	// create database to hold std::string payload
 
-	DbCore<std::string> db;
-	DbProvider dbp;
-	dbp.db() = db;
+	//DbCore<std::string> db;
+	//DbProvider dbp;
+	//dbp.db() = db;
 
 	// create some demo elements and insert into db
 
@@ -91,18 +92,17 @@ bool TEST::testR3a()
 	showElem(demoElem);
 
 	db["Fawcett"] = demoElem;
-	dbp.db() = db;
 	putLine();
 	return true;
 }
 //----< demo second part of requirement #3 >---------------------------
 
-bool TEST::testR3b()
+bool Test::testR3b()
 {
 	Utilities::title("Demonstrating Requirement #3b - creating DbCore");
 
-	DbProvider dbp;
-	DbCore<std::string> db = dbp.db();
+	//DbProvider dbp;
+	//DbCore<std::string> db = dbp.db();
 
 	DbElement<std::string> demoElem = db["Fawcett"];
 
@@ -166,12 +166,12 @@ bool TEST::testR3b()
 	return true;
 }
 
-bool TEST::testR4()
+bool Test::testR4()
 {
 	Utilities::title("Demonstrating Requirement #4 - add and delete pairs");
 
-	DbProvider dbp;
-	DbCore<std::string> db = dbp.db();
+	//DbProvider dbp;
+	//DbCore<std::string> db = dbp.db();
 
 
 	DbElement<std::string> demoElem = db["Fawcett"];
@@ -195,12 +195,12 @@ bool TEST::testR4()
 
 }
 
-bool TEST::testR5()
+bool Test::testR5()
 {
 	Utilities::title("Demonstrating Requirement #5 - edit");
 
-	DbProvider dbp;
-	DbCore<std::string> db = dbp.db();
+	//DbProvider dbp;
+	//DbCore<std::string> db = dbp.db();
 
 	DbElement<std::string> demoElem = db["Fawcett"];
 
@@ -242,15 +242,16 @@ bool TEST::testR5()
 	return true;
 }
 
-bool TEST::testR6()
+bool Test::testR6()
 {
 	Utilities::title("Demonstrating Requirement #6 - query");
 
-	DbProvider dbp;
-	DbCore<std::string> db = dbp.db();
+	//DbProvider dbp;
+	//DbCore<std::string> db = dbp.db();
 
 	db.addElem("aa", "nameaaa", "descriptionaaa", "zxcv");
 	db.addElem("bb", "namebbb", "desbb", "qwerty");
+	db.addChild("aa", "bb");
 	putLine();
 	std::cout << "\n  showing all the database elements:";
 	showDb(db);
@@ -273,16 +274,20 @@ bool TEST::testR6()
 	Query<std::string> q3(db);
 	std::cout << "\n  union select, show return aa, fawcett";
 	q3.unionSelect(c1, c3).show();
+	Query<std::string> q4(db);
+	std::cout << "\n  query children, show return aa";
+	q4.selectKeysWithChild("bb").show();
+
 
 	return true;
 }
 
-bool TEST::testR8()
+bool Test::testR8()
 {
 	Utilities::title("Demonstrating Requirement #8 - xml");
 
-	DbProvider dbp;
-	DbCore<std::string> db = dbp.db();
+	//DbProvider dbp;
+	//DbCore<std::string> db = dbp.db();
 
 	DbCore<FileInfo> dbFile;
 

@@ -294,11 +294,9 @@ namespace NoSqlDb
 		  std::vector<std::shared_ptr<XmlProcessing::AbstractXmlElement>> contents = record->children();
 		  for (auto content : contents) {
 			  if (content->tag() == "key") {
-				  if (mode != 0) {
-					  if (contains(content->children()[0]->value())) {
-						  skip = true;
-						  break;
-					  }
+				  if (contains(content->children()[0]->value())) {
+					  skip = true;
+					  break;
 				  }
 				  key = content->children()[0]->value();
 			  } 
@@ -360,7 +358,10 @@ namespace NoSqlDb
 					  Sptr pChild = XmlProcessing::makeTaggedElement("childKey", child);
 					  pChildren->addChild(pChild);
 				  }
-				  else item.second.children().erase(child);
+				  else {
+					  std::vector<Key>::iterator iter = find(item.second.children().begin(), item.second.children().end(), child);
+					  item.second.children().erase(iter);
+				  }
 			  }
 			  pValue->addChild(pChildren);
 		  }
@@ -509,10 +510,7 @@ namespace NoSqlDb
       out << "\n    child keys: ";
       for (auto key : children)
       {
-		  if (contains(key))
-			  out << " " << key;
-		  else
-			  children.erase(key);
+		  out << " " << key;
       }
     }
   }

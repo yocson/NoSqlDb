@@ -17,17 +17,18 @@ int main()
 	Utilities::putline();
 
 	TestExecutive ex;
+	Test tt;
 
 	// define test structures with test function and message
 
-	TestExecutive::TestStr ts1{ TEST::testR1, "Use C++11" };
-	TestExecutive::TestStr ts2{ TEST::testR2, "Use streams and new and delete" };
-	TestExecutive::TestStr ts3a{ TEST::testR3a, "Create DbElement<std::string>" };
-	TestExecutive::TestStr ts3b{ TEST::testR3b, "Create DbCore<std::string>" };
-	TestExecutive::TestStr ts4{ TEST::testR4, "add element" };
-	TestExecutive::TestStr ts5{ TEST::testR5, "add element" };
-	TestExecutive::TestStr ts6{ TEST::testR6, "query" };
-	TestExecutive::TestStr ts8{ TEST::testR8, "xml" };
+	TestExecutive::TestStr ts1{ std::bind(&Test::testR1, tt), "Use C++11" };
+	TestExecutive::TestStr ts2{ std::bind(&Test::testR2, tt), "Use streams and new and delete" };
+	TestExecutive::TestStr ts3a{ std::bind(&Test::testR3a, tt), "Create DbElement<std::string>" };
+	TestExecutive::TestStr ts3b{ std::bind(&Test::testR3b, tt), "Create DbCore<std::string>" };
+	TestExecutive::TestStr ts4{ std::bind(&Test::testR4, tt), "add element" };
+	TestExecutive::TestStr ts5{ std::bind(&Test::testR5, tt), "add element" };
+	TestExecutive::TestStr ts6{ std::bind(&Test::testR6, tt), "query" };
+	TestExecutive::TestStr ts8{ std::bind(&Test::testR8, tt), "xml" };
 
 	// register test structures with TestExecutive instance, ex
 

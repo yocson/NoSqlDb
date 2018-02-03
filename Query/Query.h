@@ -85,6 +85,7 @@ public:
 	Query& selectDescription(const std::string &re);
 	Query& selectDate(const DateTime &startTime, const DateTime &endTime = DateTime().now());
 	Query& selectChildren(const Key &key) const;
+	Query& selectKeysWithChild(const Key &key);
 	
 	Query& unionFrom(const Keys& keys1, const Keys& keys2);
 	Query& unionSelect(const Condition &c1, const Condition &c2);
@@ -212,7 +213,19 @@ Query<T>& Query<T>::selectChildren(const Key &key) const {
 }
 
 template<typename T>
-inline Query<T> & Query<T>::unionFrom(const Keys & keys1, const Keys & keys2)
+Query<T> & Query<T>::selectKeysWithChild(const Key & key)
+{
+	Keys selectRes;
+	for (Key key : keys_) {
+		if (find(db_[key].children().begin(), db_[key].children().end(), key) != db_[key].children().end())
+			selectRes.push_back(key);
+	}
+	keys_ = selectRes;
+	return *this;
+}
+
+template<typename T>
+Query<T> & Query<T>::unionFrom(const Keys & keys1, const Keys & keys2)
 {
 	std::set<Key> unionSet;
 	for (auto key : keys1) {
