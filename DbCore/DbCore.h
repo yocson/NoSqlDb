@@ -128,9 +128,13 @@ namespace NoSqlDb
 	void addChild(const Key& key, const Key& childKey);
 	void deleteChild(const Key& key, const Key& childKey);
 	void replaceElem(const Key& key, DbElement<T> dbElem);
+	//bool checkChild(const Keys& parentKey, const Key& childKey);
 
 	void ReadFromXML(const std::string& src);
 	void SaveToXML(const std::string& src);
+
+	//void restoreFromXML(const std::string& src);
+	//void augmentFromXML(const std::string& src);
   
   private:
     DbStore dbStore_;
@@ -166,7 +170,7 @@ namespace NoSqlDb
   }
 
   template<typename T>
-  inline void DbCore<T>::editTextMata(const Key & key, std::string type, std::string newText)
+  void DbCore<T>::editTextMata(const Key & key, std::string type, std::string newText)
   {
 	  if (!contains(key))
 	  {
@@ -263,6 +267,18 @@ namespace NoSqlDb
 	  dbStore_[key] = dbElem;
   }
 
+  //template<typename T>
+  //bool DbCore<T>::checkChild(const Keys& parentKey, const Key& childKey)
+  //{
+	 // if (contains(childKey)) {
+		//  return true;
+	 // }
+	 // else {
+		//  deleteChild(parentKey, childKey);
+		//  return false;
+	 // }
+  //}
+
   template<typename T>
   void DbCore<T>::ReadFromXML(const std::string &src)
   {
@@ -270,12 +286,20 @@ namespace NoSqlDb
 	  parser.verbose();
 	  XmlProcessing::XmlDocument* pDoc = parser.buildDocument();
 	  std::vector<XmlProcessing::XmlDocument::sPtr> records = pDoc->descendents("dbRecord").select();
+	  bool skip = false;
 	  for (auto record : records) {
 		  DbElement<T> tempElem;
 		  Key key;
+		  skip = false;
 		  std::vector<std::shared_ptr<XmlProcessing::AbstractXmlElement>> contents = record->children();
 		  for (auto content : contents) {
 			  if (content->tag() == "key") {
+				  if (mode != 0) {
+					  if (contains(content->children()[0]->value())) {
+						  skip = true;
+						  break;
+					  }
+				  }
 				  key = content->children()[0]->value();
 			  } 
 			  if (content->tag() == "value") {
@@ -302,7 +326,7 @@ namespace NoSqlDb
 				  }
 			  }
 		  }
-		  addElem(key, tempElem);
+		  if (skip != true) addElem(key, tempElem);  
 	  }
   }
 
@@ -332,8 +356,11 @@ namespace NoSqlDb
 		  if (item.second.children().size()) {
 			  Sptr pChildren = XmlProcessing::makeTaggedElement("children");
 			  for (auto child : item.second.children()) {
-				  Sptr pChild = XmlProcessing::makeTaggedElement("childKey", child);
-				  pChildren->addChild(pChild);
+				  if (contains(child)) {
+					  Sptr pChild = XmlProcessing::makeTaggedElement("childKey", child);
+					  pChildren->addChild(pChild);
+				  }
+				  else item.second.children().erase(child);
 			  }
 			  pValue->addChild(pChildren);
 		  }
@@ -350,6 +377,19 @@ namespace NoSqlDb
 	  file << Xml << std::endl;
 	  file.close();
   }
+
+  //template<typename T>
+  //void DbCore<T>::restoreFromXML(const std::string & src)
+  //{
+	 // dbStore_.clear();
+	 // ReadFromXML(src);
+  //}
+
+  //template<typename T>
+  //void DbCore<T>::augmentFromXML(const std::string & src)
+  //{
+	 // ReadFromXML(src, 1);
+  //}
 
 
   /////////////////////////////////////////////////////////////////////
@@ -469,7 +509,10 @@ namespace NoSqlDb
       out << "\n    child keys: ";
       for (auto key : children)
       {
-        out << " " << key;
+		  if (contains(key))
+			  out << " " << key;
+		  else
+			  children.erase(key);
       }
     }
   }

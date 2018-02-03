@@ -51,7 +51,6 @@ public:
 	Condition& datetime(DateTime date);
 	Condition& name(std::string re);
 	Condition& key(std::string re);
-	Condition operator+(const Condition& conds) const;
 
 
 private:
@@ -76,7 +75,8 @@ public:
 	Query<T>(NoSqlDb::DbCore<T>& db);
 	Query& from(const Keys& keys);
 
-	Query& select(T t);
+	template<typename F>
+	Query& select(F f);
 
 	Query& select(const Condition &c);
 	Query& exactKey(const Key &key);
@@ -136,7 +136,7 @@ Query<T>& Query<T>::select(const Condition &c)
 }
 
 template<typename T>
-inline Query<T> & Query<T>::exactKey(const Key & key)
+Query<T> & Query<T>::exactKey(const Key & key)
 {
 	if (db_.contains(key)) {
 		Keys selectRes;
