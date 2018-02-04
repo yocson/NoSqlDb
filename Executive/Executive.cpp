@@ -27,10 +27,13 @@ int main()
 	TestExecutive::TestStr ts2{ std::bind(&Test::testR2, tt), "Use streams and new and delete" };
 	TestExecutive::TestStr ts3a{ std::bind(&Test::testR3a, tt), "Create DbElement<std::string>" };
 	TestExecutive::TestStr ts3b{ std::bind(&Test::testR3b, tt), "Create DbCore<std::string>" };
-	TestExecutive::TestStr ts4{ std::bind(&Test::testR4, tt), "add element" };
-	//TestExecutive::TestStr ts5{ std::bind(&Test::testR5, tt), "add element" };
-	//TestExecutive::TestStr ts6{ std::bind(&Test::testR6, tt), "query" };
-	//TestExecutive::TestStr ts8{ std::bind(&Test::testR8, tt), "xml" };
+	TestExecutive::TestStr ts4a{ std::bind(&Test::testR4a, tt), "add element" };
+	TestExecutive::TestStr ts4b{ std::bind(&Test::testR4b, tt), "delete element" };
+	TestExecutive::TestStr ts5{ std::bind(&Test::testR5, tt), "edit element" };
+	TestExecutive::TestStr ts6{ std::bind(&Test::testR6, tt), "query" };
+	TestExecutive::TestStr ts7{ std::bind(&Test::testR7, tt), "union query" };
+	TestExecutive::TestStr ts8{ std::bind(&Test::testR8, tt), "xml" };
+	TestExecutive::TestStr ts9{ std::bind(&Test::testR9, tt), "query payload" };
 
 	// register test structures with TestExecutive instance, ex
 
@@ -38,10 +41,13 @@ int main()
 	ex.registerTest(ts2);
 	ex.registerTest(ts3a);
 	ex.registerTest(ts3b);
-	ex.registerTest(ts4);
-	//ex.registerTest(ts5);
-	//ex.registerTest(ts6);
-	//ex.registerTest(ts8);
+	ex.registerTest(ts4a);
+	ex.registerTest(ts4b);
+	ex.registerTest(ts5);
+	ex.registerTest(ts6);
+	ex.registerTest(ts7);
+	ex.registerTest(ts8);
+	ex.registerTest(ts9);
 
 	// run tests
 

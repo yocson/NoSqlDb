@@ -5,18 +5,22 @@
         Frank Wang
       </key>
       <value name="Frank" description="111111111111111" dateTime="Wed Jan 31 22:52:40 2018">
-        <fileInfo>
-          <filePath>
-          </filePath>
-          <categories>
-            <category>
-              OOD
-            </category>
-            <category>
-              CA
-            </category>
-          </categories>
-        </fileInfo>
+        <payLoad>
+          
+  <fileInfo>
+    <filePath>
+      C://main.cpp
+    </filePath>
+    <categories>
+      <category>
+        OOD
+      </category>
+      <category>
+        CA
+      </category>
+    </categories>
+  </fileInfo>
+        </payLoad>
       </value>
     </dbRecord>
     <dbRecord>
@@ -24,18 +28,19 @@
         Jeremy Lin
       </key>
       <value name="Jeremy" description="2222222222222" dateTime="Wed Jan 31 22:52:40 2018">
-        <fileInfo>
-          <filePath>
-          </filePath>
-          <categories>
-            <category>
-              OOD
-            </category>
-            <category>
-              CA
-            </category>
-          </categories>
-        </fileInfo>
+        <payLoad>
+          
+  <fileInfo>
+    <filePath>
+      C://main.cpp
+    </filePath>
+    <categories>
+      <category>
+        OOD
+      </category>
+    </categories>
+  </fileInfo>
+        </payLoad>
         <children>
           <childKey>
             Frank Wang
@@ -51,18 +56,22 @@
         Jessica Zhang
       </key>
       <value name="Jessica" description="3333333333333" dateTime="Wed Jan 31 22:52:40 2018">
-        <fileInfo>
-          <filePath>
-          </filePath>
-          <categories>
-            <category>
-              OOD
-            </category>
-            <category>
-              CA
-            </category>
-          </categories>
-        </fileInfo>
+        <payLoad>
+          
+  <fileInfo>
+    <filePath>
+      C://main.cpp
+    </filePath>
+    <categories>
+      <category>
+        OOD
+      </category>
+      <category>
+        CA
+      </category>
+    </categories>
+  </fileInfo>
+        </payLoad>
       </value>
     </dbRecord>
   </db>

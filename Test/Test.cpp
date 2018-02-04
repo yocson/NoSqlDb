@@ -120,19 +120,12 @@ bool Test::testR3b()
 	demoElem.payLoad("Dr. Fawcett said ...");
 	db["Sun"] = demoElem;
 
-	demoElem.payLoad("You didn't demonstrate Requirement #4");
-	demoElem.name("Nikhil");
-	db["Prashar"] = demoElem;
 
 	demoElem.payLoad("You didn't demonstrate Requirement #5");
 	demoElem.name("Pranjul");
 	db["Arora"] = demoElem;
 
-	demoElem.payLoad("You didn't demonstrate Requirement #6");
-	demoElem.name("Akash");
-	db["Anjanappa"] = demoElem;
-
-	if (db.size() != 6)
+	if (db.size() != 4)
 		return false;
 
 	std::cout << "\n  after adding elements with keys: ";
@@ -143,17 +136,10 @@ bool Test::testR3b()
 	std::cout << "\n  make all the new elements children of element with key \"Fawcett\"";
 	db["Fawcett"].children().push_back("Salman");
 	db["Fawcett"].children().push_back("Sun");
-	db["Fawcett"].children().push_back("Prashar");
 	db["Fawcett"].children().push_back("Arora");
-	db["Fawcett"].children().push_back("Anjanappa");
 
 	showHeader();
 	showElem(db["Fawcett"]);
-
-	db["Salman"].children().push_back("Sun");
-	db["Salman"].children().push_back("Prashar");
-	db["Salman"].children().push_back("Arora");
-	db["Salman"].children().push_back("Anjanappa");
 
 	// display the results
 
@@ -169,9 +155,9 @@ bool Test::testR3b()
 	return true;
 }
 
-bool Test::testR4()
+bool Test::testR4a()
 {
-	Utilities::title("Demonstrating Requirement #4 - add and delete pairs");
+	Utilities::title("Demonstrating Requirement #4a - add pairs");
 
 
 	DbElement<std::string> demoElem;
@@ -191,52 +177,52 @@ bool Test::testR4()
 	showDb(db);
 	putLine();
 
-
 	return true;
 
+}
+
+bool Test::testR4b()
+{
+	Utilities::title("Demonstrating Requirement #4b - delete pairs");
+
+	db.deleteElem("Fawcett");
+
+	if (db.contains("Fawcett")) return false;
+
+	std::cout << "\n  showing all the database elements:";
+	std::cout << "\n  Fawcett deleted:";
+	showDb(db);
+	putLine();
+	return true;
 }
 
 bool Test::testR5()
 {
 	Utilities::title("Demonstrating Requirement #5 - edit");
 
-	//DbProvider dbp;
-	//DbCore<std::string> db = dbp.db();
-
-	DbElement<std::string> demoElem = db["Fawcett"];
-
-	demoElem.name("Ammar");
-	demoElem.descrip("TA for CSE687");
-	demoElem.payLoad("You should try ...");
-	db.addElem("xxx", demoElem);
-	if (!db.contains("xxx"))
-		return false;
-
-	db.addElem("yyy", "cool", "xxx", "asdfasdf");
-	if (!db.contains("yyy"))
-		return false;
-
-	db.editTextMata("yyy", "name", "newName");
-	db.editTextMata("yyy", "descrip", "lallalala");
-	//db.deleteElem("Fawcett");
+	db.editTextMata("yyy", "name", "Lemon Tee New");
+	db.editTextMata("yyy", "descrip", "New Description");
 	putLine();
 	std::cout << "\n  showing all the database elements:";
 	showDb(db);
 	putLine();
 
-	db.addChild("Fawcett", "yyy");
-	showElem(db["Fawcett"]);
-	db.deleteChild("Fawcett", "yyy");
-	showElem(db["Fawcett"]);
+	std::cout << "\n  add child to yyy";
+	db.addChild("yyy", "xxx");
+	showElem(db["yyy"]);
+	std::cout << "\n  delete child from yyy";
+	db.deleteChild("yyy", "xxx");
+	showElem(db["yyy"]);
 	putLine();
 
-	DbElement<std::string> demoElem2 = db["Fawcett"];
-	demoElem2.name("hhhh");
-	demoElem2.descrip("TA for CSE687");
-	demoElem2.payLoad("You should not try ...");
-	db.replaceElem("Fawcett", demoElem2);
+	DbElement<std::string> demoElem2;
+	demoElem2.name("vita tee");
+	demoElem2.descrip("Pineapple tea");
+	demoElem2.payLoad("give me a chance");
+	db.replaceElem("yyy", demoElem2);
 	putLine();
 	std::cout << "\n  showing all the database elements:";
+	std::cout << "\n  yyy replaced";
 	showDb(db);
 	putLine();
 
@@ -247,37 +233,52 @@ bool Test::testR6()
 {
 	Utilities::title("Demonstrating Requirement #6 - query");
 
-	//DbProvider dbp;
-	//DbCore<std::string> db = dbp.db();
+	db.addElem("zzz", "bottel", "nothing to say", "HIHIHIHI");
 
-	db.addElem("aa", "nameaaa", "descriptionaaa", "zxcv");
-	db.addElem("bb", "namebbb", "desbb", "qwerty");
-	db.addChild("aa", "bb");
-	putLine();
-	std::cout << "\n  showing all the database elements:";
-	showDb(db);
-	putLine();
 	Query<std::string> q1(db);
-	std::cout << "\n  showing selected:";
-	q1.selectKey("Fawcett").show();
+	std::cout << "\n  showing selected key:" << std::endl;
+	q1.selectKey("yyy").show();
 	Condition c1;
-	c1.name("nameaaa");
+	c1.name("Calbee");
 	q1.reset();
-	std::cout << "\n  showing selected:";
+	std::cout << "\n  showing selected name:" << std::endl;
 	q1.select(c1).show();
 	Condition c2;
-	c2.name("namebbb");
-	std::cout << "\n  showing selected:";
+	c2.name("vita tee");
+	std::cout << "\n  showing selected descrip:" << std::endl;
 	Condition c3;
-	c3.description("Instructor for CSE687");
-	//q1.reset();
-	//q1.select(c1 + c2 + c3).show();
+	c3.description("nothing to say");
 	Query<std::string> q3(db);
-	std::cout << "\n  union select, show return aa, fawcett";
+
+	std::cout << "\n  union select, show return" << std::endl;
 	q3.unionSelect(c1, c3).show();
+
 	Query<std::string> q4(db);
-	std::cout << "\n  query children, show return aa";
-	q4.selectKeysWithChild("bb").show();
+	std::cout << "\n  query children, show return" << std::endl;
+	db.addChild("yyy", "zzz");
+	q4.selectKeysWithChild("zzz").show();
+
+
+
+
+	return true;
+}
+
+bool TEST::Test::testR7()
+{
+	Utilities::title("Demonstrating Requirement #7 - query");
+
+	Condition c1;
+	c1.name("Calbee");
+	Condition c2;
+	c2.description("nothing to say");
+	Query<std::string> q1(db);
+	q1.select(c1);
+	Query<std::string> q2(db);
+	q2.select(c2);
+	std::cout << "\n  union select, show return" << std::endl;
+	Query<std::string> q4(db);
+	q4.unionFrom(q1.keys(), q2.keys()).show();
 
 
 	return true;
@@ -287,19 +288,27 @@ bool Test::testR8()
 {
 	Utilities::title("Demonstrating Requirement #8 - xml");
 
-	//DbProvider dbp;
-	//DbCore<std::string> db = dbp.db();
 
-	DbCore<FileInfo> dbFile;
+	testDb.ReadFromXML("../test.xml");
+	showDb(testDb);
+	showKeys(testDb);
 
-	dbFile.ReadFromXML("../test.xml");
-	showDb(db);
-	showKeys(db);
+	testDb.SaveToXML("../test2.xml");
+	testDb.ReadFromXML("../test2.xml");
+	showDb(testDb);
+	showKeys(testDb);
 
-	dbFile.SaveToXML("../test2.xml");
-	dbFile.ReadFromXML("../test2.xml");
-	showDb(db);
-	showKeys(db);
+	return true;
+}
 
+bool TEST::Test::testR9()
+{
+	Utilities::title("Demonstrating Requirement #9 - query payload");
+	FileInfo f;
+	f.category().insert("CA");
+	Query<FileInfo> q1(testDb);
+	Utilities::putline(1);
+	q1.selectWithPayLoad(f).show();
+	
 	return true;
 }

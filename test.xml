@@ -4,25 +4,28 @@
 <dbRecord>
 	<key>Frank Wang</key>
 	<value name="Frank" description="111111111111111" dateTime="Wed Jan 31 22:52:40 2018">
-		<fileInfo>
+		<payLoad>
+			<fileInfo>
 			<filePath>C://main.cpp</filePath>
 			<categories>
 				<category>OOD</category>
 				<category>CA</category>
 			</categories>
-		</fileInfo>
+			</fileInfo>
+		</payLoad>
 	</value>
 </dbRecord>
 <dbRecord>
 	<key>Jeremy Lin</key>
 	<value name="Jeremy" description="2222222222222" dateTime="Wed Jan 31 22:52:40 2018">
-		<fileInfo>
+		<payLoad>
+			<fileInfo>
 			<filePath>C://main.cpp</filePath>
 			<categories>
 				<category>OOD</category>
-				<category>CA</category>
 			</categories>
-		</fileInfo>
+			</fileInfo>
+		</payLoad>
 
 	<children>
 		<childKey>Frank Wang</childKey>
@@ -34,6 +37,7 @@
 	<key>Jessica Zhang</key>
 	<value name="Jessica" description="3333333333333" 
 dateTime="Wed Jan 31 22:52:40 2018">
+			<payLoad>
 			<fileInfo>
 				<filePath>C://main.cpp</filePath>
 				<categories>
@@ -41,6 +45,8 @@ dateTime="Wed Jan 31 22:52:40 2018">
 					<category>CA</category>
 				</categories>
 			</fileInfo>
+			</payLoad>
+
 	</value>
 </dbRecord>
 </db>

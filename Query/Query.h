@@ -74,12 +74,9 @@ public:
 
 	Query<T>(NoSqlDb::DbCore<T>& db);
 	Query& from(const Keys& keys);
-
-	template<typename F>
-	Query& select(F f);
-
 	Query& select(const Condition &c);
-	Query& exactKey(const Key &key);
+	Query& selectWithPayLoad(T t);
+	//Query& exactKey(const Key &key);
 	Query& selectKey(const std::string &re);
 	Query& selectName(const std::string &re);
 	Query& selectDescription(const std::string &re);
@@ -137,15 +134,18 @@ Query<T>& Query<T>::select(const Condition &c)
 }
 
 template<typename T>
-Query<T> & Query<T>::exactKey(const Key & key)
+Query<T> & Query<T>::selectWithPayLoad(T t)
 {
-	if (db_.contains(key)) {
-		Keys selectRes;
-		selectRes.push_back(key);
-		Keys_ = selectRes;
+	Keys selectRes;
+	for (Key key : keys_) {
+		if (db_[key].payLoad().compare(t)) {
+			selectRes.push_back(key);
+		}
 	}
+	keys_ = selectRes;
 	return *this;
 }
+
 
 template<typename T>
 Query<T>& Query<T>::selectKey(const std::string &re)
@@ -216,8 +216,8 @@ template<typename T>
 Query<T> & Query<T>::selectKeysWithChild(const Key & key)
 {
 	Keys selectRes;
-	for (Key key : keys_) {
-		if (find(db_[key].children().begin(), db_[key].children().end(), key) != db_[key].children().end())
+	for (Key key_ : keys_) {
+		if (find(db_[key_].children().begin(), db_[key_].children().end(), key) != db_[key_].children().end())
 			selectRes.push_back(key);
 	}
 	keys_ = selectRes;
