@@ -1,11 +1,14 @@
 #include "Query.h"
 
+//----< set description >----------------------
+
 Condition& Condition::description(std::string re)
 {
 	description_re = re;
 	return *this;
 }
 
+//----< set dateTime >----------------------
 Condition& Condition::datetime(DateTime date)
 {
 	date_ = date;
@@ -13,12 +16,14 @@ Condition& Condition::datetime(DateTime date)
 	return *this;
 }
 
+//----< set name >----------------------
 Condition& Condition::name(const std::string re)
 {
 	name_re = re;
 	return *this;
 }
 
+//----< set key >----------------------
 Condition& Condition::key(std::string re)
 {
 	key_re = re;

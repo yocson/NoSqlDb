@@ -28,8 +28,10 @@
 
 #pragma once
 
-namespace TEST {
-	class Test {
+namespace TEST 
+{
+	class Test 
+	{
 	public:
 		bool testR1();
 		bool testR2();
