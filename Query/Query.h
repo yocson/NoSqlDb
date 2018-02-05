@@ -111,6 +111,7 @@ template<typename T>
 Query<T>& Query<T>::from(const Keys& keys)
 {
 	keys_ = keys;
+	return *this;
 }
 
 template<typename T>
@@ -197,7 +198,7 @@ Query<T>& Query<T>::selectDate(const DateTime &startTime, const DateTime &endTim
 {
 	Keys selectRes;
 	for (Key key : keys_) {
-		if (db_[key].dateTime() < startTime && db_[key].dateTime() < endTime) {
+		if (db_[key].dateTime() > startTime && db_[key].dateTime() < endTime) {
 			selectRes.push_back(key);
 		}
 	}
@@ -218,7 +219,7 @@ Query<T> & Query<T>::selectKeysWithChild(const Key & key)
 	Keys selectRes;
 	for (Key key_ : keys_) {
 		if (find(db_[key_].children().begin(), db_[key_].children().end(), key) != db_[key_].children().end())
-			selectRes.push_back(key);
+			selectRes.push_back(key_);
 	}
 	keys_ = selectRes;
 	return *this;
@@ -261,6 +262,7 @@ template<typename T>
 void Query<T>::show(std::ostream& out)
 {
 	for (Key key : keys_) {
-		out << key << std::endl;
+		out << key;
+		out << "  ";
 	}
 }

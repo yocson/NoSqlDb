@@ -4,7 +4,7 @@
       <key>
         SICP
       </key>
-      <value name="SICP" description="Harold Abelson" dateTime="Sun Feb  4 20:14:37 2018">
+      <value name="SICP" description="Harold Abelson" dateTime="Sun Feb  4 22:18:12 2018">
         <payLoad>
           The MIT Press
         </payLoad>
@@ -14,7 +14,7 @@
       <key>
         CPPL
       </key>
-      <value name="CPP Language" description="Bjarne Stroustrup" dateTime="Sun Feb  4 20:14:37 2018">
+      <value name="CPP Language" description="Bjarne Stroustrup" dateTime="Wed Jan 31 22:52:40 2018">
         <payLoad>
           Addison-Wesley Professional
         </payLoad>
@@ -32,7 +32,7 @@
       <key>
         EMCPP
       </key>
-      <value name="Modern CPP" description="Scott Meyers" dateTime="Sun Feb  4 20:14:37 2018">
+      <value name="Modern CPP" description="Scott Meyers" dateTime="Sun Feb  4 22:18:12 2018">
         <payLoad>
           O'Reilly Media
         </payLoad>
@@ -42,7 +42,7 @@
       <key>
         CPPP
       </key>
-      <value name="CPP Primer" description="Stanley B. Lippman" dateTime="Sun Feb  4 20:14:37 2018">
+      <value name="CPP Primer" description="Stanley B. Lippman" dateTime="Sun Feb  4 22:18:12 2018">
         <payLoad>
           Addison-Wesley Professional
         </payLoad>
@@ -52,7 +52,7 @@
       <key>
         TC
       </key>
-      <value name="CPP Templates" description="David Vandevoorde" dateTime="Sun Feb  4 20:14:38 2018">
+      <value name="CPP Templates" description="David Vandevoorde" dateTime="Sun Feb  4 22:18:13 2018">
         <payLoad>
           Addison-Wesley Professional
         </payLoad>
@@ -62,7 +62,7 @@
       <key>
         OCPP
       </key>
-      <value name="Optimized CPP" description="Kurt Guntheroth" dateTime="Sun Feb  4 20:14:38 2018">
+      <value name="Optimized CPP" description="Kurt Guntheroth" dateTime="Sun Feb  4 22:18:14 2018">
         <payLoad>
           O'Reilly Media
         </payLoad>

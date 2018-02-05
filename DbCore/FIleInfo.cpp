@@ -85,8 +85,8 @@ bool FileInfo::matchFilePath(const FilePath &fp) {
 	return true;
 }
 bool FileInfo::matchCategory(const Category &cate) {
-	std::string cat = *(cate.begin());
-	if (cat.length() > 0) {
+	if (cate.size() > 0) {
+		std::string cat = *(cate.begin());
 		std::regex e(cat);
 		for (auto cat_ : category_) {
 			if (std::regex_match(cat_, e)) return true;

@@ -135,7 +135,7 @@ bool Test::testR3b()
 
 bool Test::testR4a()
 {
-	Utilities::title("Demonstrating Requirement #4a - add pairs");
+	Utilities::title("Demonstrating Requirement #4a - Add pairs");
 
 
 	DbElement<std::string> demoElem;
@@ -161,14 +161,14 @@ bool Test::testR4a()
 
 bool Test::testR4b()
 {
-	Utilities::title("Demonstrating Requirement #4b - delete pairs");
+	Utilities::title("Demonstrating Requirement #4b - Delete pairs");
 
 	db.deleteElem("CA");
 
 	if (db.contains("CA")) return false;
 
 	std::cout << "\n  showing all the database elements:";
-	std::cout << "\n  Fawcett deleted:";
+	std::cout << "\n  CA deleted:";
 	showDb(db);
 	putLine();
 	return true;
@@ -176,19 +176,27 @@ bool Test::testR4b()
 
 bool Test::testR5()
 {
-	Utilities::title("Demonstrating Requirement #5 - edit");
+	Utilities::title("Demonstrating Requirement #5 - Edit");
 
 	db.editTextMata("TC", "name", "A Tour of CPP 2");
 	db.editTextMata("TC", "descrip", "Bjarne Stroustrup 2");
+	if (db["TC"].name() != "A Tour of CPP 2") return false;
+	if (db["TC"].descrip() != "Bjarne Stroustrup 2") return false;
 	putLine();
 	std::cout << "\n  showing all the database elements:";
+	std::cout << "\n  Element TC's name and description have been changed:";
 	showDb(db);
 	putLine();
 
-	std::cout << "\n  add child to yyy";
+	DateTime date("Wed Jan 31 22:52:40 2018");
+	db.editDatetime("CPPL", date);
+	std::cout << "\n  Element CPPL's dateTime edited";
+	showElem(db["CPPL"]);
+
+	std::cout << "\n  add child TC to CPPL";
 	db.addChild("CPPL", "TC");
 	showElem(db["CPPL"]);
-	std::cout << "\n  delete child from CPPL";
+	std::cout << "\n  delete child EMCPP from CPPL";
 	db.deleteChild("CPPL", "EMCPP");
 	showElem(db["CPPL"]);
 	putLine();
@@ -200,7 +208,7 @@ bool Test::testR5()
 	db.replaceElem("TC", demoElem2);
 	putLine();
 	std::cout << "\n  showing all the database elements:";
-	std::cout << "\n  yyy replaced";
+	std::cout << "\n  TC replaced by element whose name is CPP Templates";
 	showDb(db);
 	putLine();
 
@@ -209,81 +217,106 @@ bool Test::testR5()
 
 bool Test::testR6()
 {
-	Utilities::title("Demonstrating Requirement #6 - query");
+	Utilities::title("Demonstrating Requirement #6 - Basic Query");
 
 	db.addElem("OCPP", "Optimized CPP", "Kurt Guntheroth", "O'Reilly Media");
 
 	Query<std::string> q1(db);
-	std::cout << "\n  showing selected key:" << std::endl;
+	std::cout << "\n  Showing selected key whose key is OCPP:" << std::endl;
 	q1.selectKey("OCPP").show();
 	Condition c1;
 	c1.name("SICP");
 	q1.reset();
-	std::cout << "\n  showing selected name:" << std::endl;
+
+	std::cout << "\n  Showing selected name which is SICP:" << std::endl;
 	q1.select(c1).show();
 	Condition c2;
 	c2.name("Modern CPP");
-	std::cout << "\n  showing selected descrip:" << std::endl;
 	Condition c3;
-	c3.description("Kurt Guntheroth");
+	c3.description(".*Bjarne Stroustrup.*");
+	Query<std::string> q2(db);
+	Condition c4;
+	c4.key(".*CPP.*");
+
+	std::cout << "\n  selecte all keys with CPP inside" << std::endl;
+	q2.select(c4).show();
+
 	Query<std::string> q3(db);
 
-	std::cout << "\n  union select, show return" << std::endl;
+	std::cout << "\n  Union select name is SICP and description with Bjarne Stroustrup" << std::endl;
 	q3.unionSelect(c1, c3).show();
 
 	Query<std::string> q4(db);
-	std::cout << "\n  query children, show return" << std::endl;
-	q4.selectKeysWithChild("EMCPP").show();
+	std::cout << "\n  Query child TC" << std::endl;
+	q4.selectKeysWithChild("TC").show();
 
+	q4.reset();
+	std::cout << "\n  select date bewteen two time" << std::endl;
+	q4.selectDate(DateTime("Wed Jan 31 22:52:00 2018"), DateTime("Wed Jan 31 22:53:40 2018")).show();
+	
+	putLine();
 	return true;
 }
 
 bool TEST::Test::testR7()
 {
-	Utilities::title("Demonstrating Requirement #7 - query");
+	Utilities::title("Demonstrating Requirement #7 - Query AND and OR");
 
 	Condition c1;
 	c1.name(".*CPP.*");
 	Condition c2;
-	c2.description(".*Programming.*");
+	c2.description(".*Bjarne Stroustrup.*");
 	Query<std::string> q1(db);
 	q1.select(c1);
 	Query<std::string> q2(db);
-	q2.select(c2);
-	std::cout << "\n  union select, show return" << std::endl;
+	q2.from(q1.keys());
+	std::cout << "\n  AND query with name with CPP and descrip with Bjarne Stroustrup" << std::endl;
+	q2.select(c2).show();
+
+	Query<std::string> q3(db);
+	q3.select(c1);
 	Query<std::string> q4(db);
-	q4.unionFrom(q1.keys(), q2.keys()).show();
-
-
+	q4.select(c2);
+	std::cout << "\n  OR query with name with CPP or descrip with Bjarne Stroustrup" << std::endl;
+	q4.unionFrom(q3.keys(), q4.keys()).show();
+	putLine();
 	return true;
 }
 
 bool Test::testR8()
 {
-	Utilities::title("Demonstrating Requirement #8 - xml");
+	Utilities::title("Demonstrating Requirement #8 - Persistence");
 
+	std::cout << "\n  Save DB to books.xml" << std::endl;
 	db.SaveToXML("../books.xml");
 
-	testDb.ReadFromXML("../test.xml");
+	std::cout << "\n  Read from withFileInfo.xml" << std::endl;
+	testDb.ReadFromXML("../withFileInfo.xml");
 	showDb(testDb);
 	showKeys(testDb);
 
-	testDb.SaveToXML("../test2.xml");
-	testDb.ReadFromXML("../test2.xml");
+	testDb.SaveToXML("../withFileInfo2.xml");
+	testDb.ReadFromXML("../withFileInfo2.xml");
 	showDb(testDb);
-	showKeys(testDb);
-
+	putLine();
 	return true;
 }
 
 bool TEST::Test::testR9()
 {
 	Utilities::title("Demonstrating Requirement #9 - query payload");
-	FileInfo f;
-	f.category().insert("CA");
+
 	Query<FileInfo> q1(testDb);
+	FileInfo f1;
+	f1.category().insert("CPP");
 	Utilities::putline(1);
-	q1.selectWithPayLoad(f).show();
-	
+	std::cout << "\n  Query payload with category CPP" << std::endl;
+	q1.selectWithPayLoad(f1).show();
+	q1.reset();
+	FileInfo f2;
+	f2.filePath() = ".*cpp.*";
+	std::cout << "\n  Query payload with path containing cpp" << std::endl;
+	q1.selectWithPayLoad(f2).show();
+	putLine();
 	return true;
 }
