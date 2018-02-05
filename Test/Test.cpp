@@ -262,6 +262,7 @@ bool Test::testR8()
 {
 	Utilities::title("Demonstrating Requirement #8 - xml");
 
+	db.SaveToXML("../books.xml");
 
 	testDb.ReadFromXML("../test.xml");
 	showDb(testDb);

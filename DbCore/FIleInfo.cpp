@@ -15,8 +15,17 @@ FileInfo::FileInfo(std::string str)
 }
 
 FileInfo::operator std::string() {
-	Sptr pPayLoad = toXML();
-	return pPayLoad->toString();
+	std::string str;
+	std::string inde = "          ";
+	str = "<fileInfo>\n";
+	str += inde + "  <filePath>" + filePath_ + "</filePath>\n";
+	str += inde + "    <categories>\n";
+	for (auto cate : category_) {
+		str += inde + "      <category>" + cate + "</category>\n";
+	}
+	str += inde + "    </categories>\n";
+	str += inde + "</fileInfo>";
+	return str;
 }
 
 std::string FileInfo::toString() const

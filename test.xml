@@ -26,18 +26,17 @@
 			</categories>
 			</fileInfo>
 		</payLoad>
-
-	<children>
-		<childKey>Frank Wang</childKey>
-		<childKey>Jessica Zhang</childKey>
-	</children>
+		<children>
+			<childKey>Frank Wang</childKey>
+			<childKey>Jessica Zhang</childKey>
+		</children>
 	</value>
 </dbRecord>
 <dbRecord>
 	<key>Jessica Zhang</key>
 	<value name="Jessica" description="3333333333333" 
 dateTime="Wed Jan 31 22:52:40 2018">
-			<payLoad>
+		<payLoad>
 			<fileInfo>
 				<filePath>C://main.cpp</filePath>
 				<categories>
@@ -45,8 +44,7 @@ dateTime="Wed Jan 31 22:52:40 2018">
 					<category>CA</category>
 				</categories>
 			</fileInfo>
-			</payLoad>
-
+		</payLoad>
 	</value>
 </dbRecord>
 </db>

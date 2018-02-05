@@ -1,0 +1,71 @@
+
+  <db>
+    <dbRecord>
+      <key>
+        SICP
+      </key>
+      <value name="SICP" description="Harold Abelson" dateTime="Sun Feb  4 20:14:37 2018">
+        <payLoad>
+          The MIT Press
+        </payLoad>
+      </value>
+    </dbRecord>
+    <dbRecord>
+      <key>
+        CPPL
+      </key>
+      <value name="CPP Language" description="Bjarne Stroustrup" dateTime="Sun Feb  4 20:14:37 2018">
+        <payLoad>
+          Addison-Wesley Professional
+        </payLoad>
+        <children>
+          <childKey>
+            CPPP
+          </childKey>
+          <childKey>
+            TC
+          </childKey>
+        </children>
+      </value>
+    </dbRecord>
+    <dbRecord>
+      <key>
+        EMCPP
+      </key>
+      <value name="Modern CPP" description="Scott Meyers" dateTime="Sun Feb  4 20:14:37 2018">
+        <payLoad>
+          O'Reilly Media
+        </payLoad>
+      </value>
+    </dbRecord>
+    <dbRecord>
+      <key>
+        CPPP
+      </key>
+      <value name="CPP Primer" description="Stanley B. Lippman" dateTime="Sun Feb  4 20:14:37 2018">
+        <payLoad>
+          Addison-Wesley Professional
+        </payLoad>
+      </value>
+    </dbRecord>
+    <dbRecord>
+      <key>
+        TC
+      </key>
+      <value name="CPP Templates" description="David Vandevoorde" dateTime="Sun Feb  4 20:14:38 2018">
+        <payLoad>
+          Addison-Wesley Professional
+        </payLoad>
+      </value>
+    </dbRecord>
+    <dbRecord>
+      <key>
+        OCPP
+      </key>
+      <value name="Optimized CPP" description="Kurt Guntheroth" dateTime="Sun Feb  4 20:14:38 2018">
+        <payLoad>
+          O'Reilly Media
+        </payLoad>
+      </value>
+    </dbRecord>
+  </db>
