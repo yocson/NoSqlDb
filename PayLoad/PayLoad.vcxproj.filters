@@ -15,15 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DbCore.cpp">
+    <ClCompile Include="PayLoad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DbCore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Utilities\TestUtilities\TestUtilities.h">
+    <ClInclude Include="PayLoad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

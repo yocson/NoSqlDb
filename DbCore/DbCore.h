@@ -43,7 +43,6 @@
 #include "../DateTime/DateTime.h"
 #include "../XmlDocument/XmlParser/XmlParser.h"
 #include "../XmlDocument/XmlDocument/XmlDocument.h"
-#include "FileInfo.h"
 
 namespace NoSqlDb
 {

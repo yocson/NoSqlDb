@@ -127,6 +127,9 @@
     <ProjectReference Include="..\DbCore\DbCore.vcxproj">
       <Project>{9eddb1b5-90e6-4d4f-8b3b-dba3e3ffdb7a}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\PayLoad\PayLoad.vcxproj">
+      <Project>{9e44fe9d-897d-413e-9961-95ec734ceab5}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Query\Query.vcxproj">
       <Project>{523b7482-c101-4109-baa0-ccae63589726}</Project>
     </ProjectReference>

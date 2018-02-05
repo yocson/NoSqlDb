@@ -1,5 +1,6 @@
-#include "FileInfo.h"
+#include "PayLoad.h"
 #include <regex>
+using namespace PAYLOAD;
 
 FileInfo::FileInfo(std::shared_ptr<XmlProcessing::AbstractXmlElement> payloadTag)
 {
@@ -42,7 +43,7 @@ std::string FileInfo::toString() const
 void FileInfo::fromXML(Sptr payloadTag)
 {
 	for (auto payloadInfo : payloadTag->children()) {
-		if (payloadInfo->tag() == "filePath") 
+		if (payloadInfo->tag() == "filePath")
 			filePath_ = payloadInfo->children()[0]->value();
 		if (payloadInfo->tag() == "categories") {
 			for (auto category : payloadInfo->children())
@@ -65,7 +66,7 @@ FileInfo::Sptr FileInfo::toXML()
 	return pFileInfo;
 }
 
-std::ostream& operator<<(std::ostream& out, const FileInfo& f) {
+std::ostream& PAYLOAD::operator<<(std::ostream& out, const FileInfo& f) {
 	out << f.toString();
 	return out;
 }

@@ -6,7 +6,7 @@
 #include "../DbCore/DbCore.h"
 #include "../Query/Query.h"
 #include "Test.h"
-#include "../DbCore/FileInfo.h"
+#include "../PayLoad/PayLoad.h"
 
 using namespace NoSqlDb;
 using namespace TEST;
@@ -17,7 +17,7 @@ auto putLine = [](size_t n = 1, std::ostream& out = std::cout)
 };
 
 // declare static members
-NoSqlDb::DbCore<FileInfo> Test::testDb;
+NoSqlDb::DbCore<PAYLOAD::FileInfo> Test::testDb;
 NoSqlDb::DbCore<std::string> Test::db;
 
 
@@ -306,14 +306,14 @@ bool TEST::Test::testR9()
 {
 	Utilities::title("Demonstrating Requirement #9 - query payload");
 
-	Query<FileInfo> q1(testDb);
-	FileInfo f1;
+	Query<PAYLOAD::FileInfo> q1(testDb);
+	PAYLOAD::FileInfo f1;
 	f1.category().insert("CPP");
 	Utilities::putline(1);
 	std::cout << "\n  Query payload with category CPP" << std::endl;
 	q1.selectWithPayLoad(f1).show();
 	q1.reset();
-	FileInfo f2;
+	PAYLOAD::FileInfo f2;
 	f2.filePath() = ".*cpp.*";
 	std::cout << "\n  Query payload with path containing cpp" << std::endl;
 	q1.selectWithPayLoad(f2).show();

@@ -1,3 +1,4 @@
+#pragma once
 /////////////////////////////////////////////////////////////////////
 // Test.h - NoSql Test Functions                                   //
 // ver 1.0                                                         //
@@ -26,7 +27,7 @@
 * - first release
 */
 
-#pragma once
+#include "../PayLoad/PayLoad.h"
 
 namespace TEST 
 {
@@ -46,7 +47,7 @@ namespace TEST
 		bool testR9();
 
 	private:
-		static NoSqlDb::DbCore<FileInfo> testDb;
+		static NoSqlDb::DbCore<PAYLOAD::FileInfo> testDb;
 		static NoSqlDb::DbCore<std::string> db;
 	};
 
