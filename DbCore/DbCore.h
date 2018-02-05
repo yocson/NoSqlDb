@@ -454,12 +454,12 @@ namespace NoSqlDb
   {
     out << "\n  ";
     out << std::setw(26) << std::left << "DateTime";
-    out << std::setw(10) << std::left << "Name";
+    out << std::setw(15) << std::left << "Name";
     out << std::setw(25) << std::left << "Description";
     out << std::setw(25) << std::left << "Payload";
     out << "\n  ";
     out << std::setw(26) << std::left << "------------------------";
-    out << std::setw(10) << std::left << "--------";
+    out << std::setw(15) << std::left << "------------";
     out << std::setw(25) << std::left << "-----------------------";
     out << std::setw(25) << std::left << "-----------------------";
   }
@@ -470,7 +470,7 @@ namespace NoSqlDb
   {
     out << "\n  ";
     out << std::setw(26) << std::left << std::string(el.dateTime());
-    out << std::setw(10) << std::left << el.name();
+    out << std::setw(15) << std::left << el.name();
     out << std::setw(25) << std::left << el.descrip();
     out << std::setw(25) << std::left << el.payLoad();
     typename DbElement<T>::Children children = el.children();

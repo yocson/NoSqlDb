@@ -13,7 +13,7 @@ using namespace TEST;
 
 int main()
 {
-	Utilities::Title("Testing DbCore - He said, she said database");
+	Utilities::Title("Testing DbCore - Computer Books database");
 	Utilities::putline();
 
 	TestExecutive ex;
