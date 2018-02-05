@@ -1,5 +1,4 @@
 #pragma once
-
 /////////////////////////////////////////////////////////////////////
 // Query.h - Implements database query                             //
 // ver 1.0                                                         //
@@ -9,16 +8,21 @@
 * Package Operations:
 * -------------------
 * This package provides two classes:
-* -
+* - Class Condition, including all fields in a dbelement such as name, 
+*   description and datetime.
+*   As a friend class of Query, it can get access of private fields of 
+*	Condition.
+* - Class Query which is responsible for querying matatext, datetime, 
+*	key, and children relationship.
+*   it holds a reference to database and a collection of keys. It can be 
+*	initialized from a databese or a set of keys. You can reset the key 
+*	set by db reference.
+*   use show function to display all keys in collection.
+*   Query Supports AND and OR query manipulation. It can AND using the
+*	query result from another query. It can implement OR from two seperate
+*	key sets or from two seperate query instances.
 *
 *
-* -
-*
-*
-* The package also provides functions for displaying:
-* -
-* -
-* -
 
 * Required Files:
 * ---------------
@@ -42,11 +46,16 @@
 #include "../DbCore/DbCore.h"
 #include "../DateTime/DateTime.h"
 
+
+/////////////////////////////////////////////////////////////////////
+// Condition class
+// - provides fields of dbelement
 class Condition
 {
 public:
 	Condition() { dateSelected = false; }
 
+	//set functions
 	Condition& description(std::string re);
 	Condition& datetime(DateTime date);
 	Condition& name(std::string re);
@@ -64,7 +73,10 @@ private:
 	bool dateSelected;
 };
 
-
+/////////////////////////////////////////////////////////////////////
+// Query class
+// - provides core query operations
+// - supports AND and OR query operations
 template<typename T>
 class Query
 {
@@ -74,9 +86,12 @@ public:
 
 	Query<T>(NoSqlDb::DbCore<T>& db);
 	Query& from(const Keys& keys);
+
+	//general query by condtion class
 	Query& select(const Condition &c);
+
+	//specific seletion
 	Query& selectWithPayLoad(T t);
-	//Query& exactKey(const Key &key);
 	Query& selectKey(const std::string &re);
 	Query& selectName(const std::string &re);
 	Query& selectDescription(const std::string &re);
@@ -84,6 +99,7 @@ public:
 	Query& selectChildren(const Key &key) const;
 	Query& selectKeysWithChild(const Key &key);
 	
+	//union query
 	Query& unionFrom(const Keys& keys1, const Keys& keys2);
 	Query& unionSelect(const Condition &c1, const Condition &c2);
 
@@ -94,6 +110,7 @@ public:
 
 private:
 	Keys keys_;
+	// reference to db
 	NoSqlDb::DbCore<T>& db_;
 };
 
@@ -107,6 +124,7 @@ Query<T>::Query(NoSqlDb::DbCore<T>& db):db_(db), keys_(db.keys())
 {
 }
 
+//----< init key from other key sets >----------------------
 template<typename T>
 Query<T>& Query<T>::from(const Keys& keys)
 {
@@ -114,6 +132,7 @@ Query<T>& Query<T>::from(const Keys& keys)
 	return *this;
 }
 
+//----< set key set to the key in dbcore >----------------------
 template<typename T>
 void Query<T>::reset()
 {
@@ -123,6 +142,7 @@ void Query<T>::reset()
 /////////////////////////////////////////////////////////////////////
 // selection methods
 
+//----< select by condition instance >----------------------
 template<typename T>
 Query<T>& Query<T>::select(const Condition &c)
 {
@@ -134,6 +154,11 @@ Query<T>& Query<T>::select(const Condition &c)
 	return *this;
 }
 
+//----< select by payload type >----------------------
+// Use a payload instance as a select template
+// fields to be match are determined by payload itself
+// every uesr-defined payload type should implement 
+// a compare function, this also supports string match
 template<typename T>
 Query<T> & Query<T>::selectWithPayLoad(T t)
 {
@@ -147,7 +172,7 @@ Query<T> & Query<T>::selectWithPayLoad(T t)
 	return *this;
 }
 
-
+//----< select by key >----------------------
 template<typename T>
 Query<T>& Query<T>::selectKey(const std::string &re)
 {
@@ -163,6 +188,7 @@ Query<T>& Query<T>::selectKey(const std::string &re)
 	return *this;
 }
 
+//----< select by name >----------------------
 template<typename T>
 Query<T>& Query<T>::selectName(const std::string &re)
 {
@@ -178,6 +204,7 @@ Query<T>& Query<T>::selectName(const std::string &re)
 	return *this;
 }
 
+//----< select by description >----------------------
 template<typename T>
 Query<T>& Query<T>::selectDescription(const std::string &re)
 {
@@ -193,6 +220,7 @@ Query<T>& Query<T>::selectDescription(const std::string &re)
 	return *this;
 }
 
+//----< select by date, endTime is set to now() as default >----------------------
 template<typename T>
 Query<T>& Query<T>::selectDate(const DateTime &startTime, const DateTime &endTime)
 {
@@ -206,13 +234,14 @@ Query<T>& Query<T>::selectDate(const DateTime &startTime, const DateTime &endTim
 	return *this;
 }
 
-
+//----< select by children relationship, return children of the key >----------------------
 template<typename T>
 Query<T>& Query<T>::selectChildren(const Key &key) const {
 	keys_ =  db_[key].children();
 	return *this;
 }
 
+//----< select by child, return the "parent" keys of the query key >----------
 template<typename T>
 Query<T> & Query<T>::selectKeysWithChild(const Key & key)
 {
@@ -225,6 +254,10 @@ Query<T> & Query<T>::selectKeysWithChild(const Key & key)
 	return *this;
 }
 
+/////////////////////////////////////////////////////////////////////
+// union query methods
+
+//----< OR query from two key sets, key the unique ones >----------------------
 template<typename T>
 Query<T> & Query<T>::unionFrom(const Keys & keys1, const Keys & keys2)
 {
@@ -235,6 +268,7 @@ Query<T> & Query<T>::unionFrom(const Keys & keys1, const Keys & keys2)
 	for (auto key : keys2) {
 		unionSet.insert(key);
 	}
+
 	Keys unionKeys;
 	for (auto it = unionSet.begin(); it != unionSet.end(); it++) {
 		unionKeys.push_back(*it);
@@ -243,6 +277,7 @@ Query<T> & Query<T>::unionFrom(const Keys & keys1, const Keys & keys2)
 	return *this;
 }
 
+//----< OR query from two conditions>----------------------
 template<typename T>
 inline Query<T> & Query<T>::unionSelect(const Condition & c1, const Condition & c2)
 {

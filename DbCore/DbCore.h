@@ -1,8 +1,9 @@
 #pragma once
 /////////////////////////////////////////////////////////////////////
 // DbCore.h - Implements NoSql database prototype                  //
-// ver 1.0                                                         //
-// Jim Fawcett, CSE687 - Object Oriented Design, Spring 2018       //
+// ver 1.0														   //
+// Cheng Wang													   //	
+// Source: Jim Fawcett, CSE687 - Object Oriented Design, Spring 2018//
 /////////////////////////////////////////////////////////////////////
 /*
 * Package Operations:
@@ -122,26 +123,26 @@ namespace NoSqlDb
 	// methods to add and delete key-value pair
 	void addElem(const Key& key, DbElement<T> dbElem);
 	void addElem(const Key& key, std::string name, std::string descrip, T t, DateTime datetime=DateTime().now());
+	void deleteElem(const Key& key);
+	
+	// methods to edit dbelement
 	void editTextMata(const Key& key, std::string type, std::string newText);
 	void editDatetime(const Key& key, const DateTime& datetime);
-	void deleteElem(const Key& key);
 	void addChild(const Key& key, const Key& childKey);
 	void deleteChild(const Key& key, const Key& childKey);
 	void replaceElem(const Key& key, DbElement<T> dbElem);
 	//bool checkChild(const Keys& parentKey, const Key& childKey);
 
+	// methods for persistence
 	void ReadFromXML(const std::string& src);
 	void SaveToXML(const std::string& src);
 
-	//void restoreFromXML(const std::string& src);
-	//void augmentFromXML(const std::string& src);
-  
   private:
     DbStore dbStore_;
     bool doThrow_ = false;
   };
 
-  //----< add element to db>----------------------------------
+  //----< add element to db with dbelement>----------------------
   template<typename T>
   void DbCore<T>::addElem(const Key& key, DbElement<T> dbElem)
   {
@@ -153,6 +154,7 @@ namespace NoSqlDb
 	  dbStore_.insert(make_pair(key, dbElem));
   }
 
+  //----< add element to db with specific fields>----------------
   template<typename T>
   inline void DbCore<T>::addElem(const Key & key, std::string name, std::string descrip, T t, DateTime datetime)
   {
@@ -169,6 +171,7 @@ namespace NoSqlDb
 	  dbStore_.insert(make_pair(key, dbElem));
   }
 
+  //----< edit element textmate with specific type>----------------
   template<typename T>
   void DbCore<T>::editTextMata(const Key & key, std::string type, std::string newText)
   {
@@ -193,6 +196,7 @@ namespace NoSqlDb
 	  }
   }
 
+  //----< edit element datetime>----------------
   template<typename T>
   inline void DbCore<T>::editDatetime(const Key & key, const DateTime & datetime)
   {
@@ -220,6 +224,7 @@ namespace NoSqlDb
 	  dbStore_.erase(key);
   }
 
+  //----< add child relationship>----------------------------------
   template<typename T>
   void DbCore<T>::addChild(const Key& key, const Key& childKey)
   {
@@ -240,6 +245,7 @@ namespace NoSqlDb
 	  dbStore_[key].children().push_back(childKey);
   }
 
+  //----< delete child relationship>----------------------------------
   template<typename T>
   void DbCore<T>::deleteChild(const Key& key, const Key& childKey)
   {
@@ -254,6 +260,7 @@ namespace NoSqlDb
 	  if (iter != dbStore_[key].children().end()) dbStore_[key].children().erase(iter);
   }
 
+  //----< replace exsiting elem with a new elem>----------------------------------
   template<typename T>
   inline void DbCore<T>::replaceElem(const Key & key, DbElement<T> dbElem)
   {
@@ -267,6 +274,7 @@ namespace NoSqlDb
 	  dbStore_[key] = dbElem;
   }
 
+  //----< Persistence read from a exsiting xml file>-----------
   template<typename T>
   void DbCore<T>::ReadFromXML(const std::string &src)
   {
@@ -312,6 +320,7 @@ namespace NoSqlDb
 	  }
   }
 
+  //----< Persistence save datebase to a exsiting xml file>-----------
   template<typename T>
   void DbCore<T>::SaveToXML(const std::string & src)
   {
