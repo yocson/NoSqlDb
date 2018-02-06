@@ -2,11 +2,13 @@
 #include <regex>
 using namespace PAYLOAD;
 
+//----< constructor from a xmlelement pointer>-----------
 FileInfo::FileInfo(std::shared_ptr<XmlProcessing::AbstractXmlElement> payloadTag)
 {
 	fromXML(payloadTag);
 }
 
+//----< constructor from a string>-----------
 FileInfo::FileInfo(std::string str)
 {
 	XmlProcessing::XmlParser parser(str, XmlProcessing::XmlParser::sourceType::str);
@@ -15,6 +17,7 @@ FileInfo::FileInfo(std::string str)
 	fromXML(pFileInfo);
 }
 
+//----< cast to string >-----------
 FileInfo::operator std::string() {
 	std::string str;
 	std::string inde = "          ";
@@ -29,6 +32,7 @@ FileInfo::operator std::string() {
 	return str;
 }
 
+//----< transfer to string >-----------
 std::string FileInfo::toString() const
 {
 	std::string str;
@@ -40,6 +44,7 @@ std::string FileInfo::toString() const
 	return str;
 }
 
+//----< initialize the data from XML >-----------
 void FileInfo::fromXML(Sptr payloadTag)
 {
 	for (auto payloadInfo : payloadTag->children()) {
@@ -52,6 +57,7 @@ void FileInfo::fromXML(Sptr payloadTag)
 	}
 }
 
+//----< translate to XML >-----------
 FileInfo::Sptr FileInfo::toXML()
 {
 	Sptr pFileInfo = XmlProcessing::makeTaggedElement("fileInfo");
@@ -66,17 +72,20 @@ FileInfo::Sptr FileInfo::toXML()
 	return pFileInfo;
 }
 
+//----< overload cout >-----------
 std::ostream& PAYLOAD::operator<<(std::ostream& out, const FileInfo& f) {
 	out << f.toString();
 	return out;
 }
 
+//----< match the fields, call two private match functions respectively >-----------
 bool FileInfo::compare(const PayLoad & p)
 {
 	const FileInfo *f = dynamic_cast<const FileInfo *>(&p);
 	return matchFilePath(f->filePath()) && matchCategory(f->category());
 }
 
+//----< match the filepath using regular expression >-----------
 bool FileInfo::matchFilePath(const FilePath &fp) {
 	if (fp.length() > 0) {
 		std::regex e(fp);
@@ -85,6 +94,8 @@ bool FileInfo::matchFilePath(const FilePath &fp) {
 	}
 	return true;
 }
+
+//----< match the category using regular expression, assuming only one cate passing in >-----------
 bool FileInfo::matchCategory(const Category &cate) {
 	if (cate.size() > 0) {
 		std::string cat = *(cate.begin());

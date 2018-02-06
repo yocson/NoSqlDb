@@ -1,5 +1,39 @@
 #pragma once
+/////////////////////////////////////////////////////////////////////
+// PayLoad.h - Implements user-defined Payload Class               //
+// ver 1.0                                                         //
+// Cheng Wang, CSE687 - Object Oriented Design, Spring 2018        //
+/////////////////////////////////////////////////////////////////////
+/*
+* Package Operations:
+* -------------------
+* This package provides payload base class and a use-defined FileInfo
+* class dereived from base payload class:
+* - Base class Payload is an abstract class. It asks every derived calss
+*	to implement two functions, fromXML and toXML to interact with XML file
+*	, and compare function to realize the general querybyPayload function.
+*	toString is essential too because we want to use it in the cout. Also 
+*	we want to take the payload as a second parameter of makeTaggedElement,
+*	so the cast to string function must be implemented by the derived class.
+* - FileInfo class is the class defined in requirement 9, derived from
+*	payload class. It has a filepath string and a vector of categories.
+*	FileInfo implemented all functions from Payload class so it can be
+*	manipulated in dbcore regardless of its inner structures.
+*
 
+* Required Files:
+* ---------------
+* DbCore.h, DbCore.cpp
+* DateTime.h, DateTime.cpp
+* Utilities.h, Utilities.cpp
+*
+* Maintenance History:
+* --------------------
+* ver 1.1 : 19 Jan 2018
+* - added code to throw exception in index operators if input key is not in database
+* ver 1.0 : 10 Jan 2018
+* - first release
+*/
 #include <string>
 #include <vector>
 #include <iostream>
@@ -12,9 +46,14 @@ namespace PAYLOAD {
 	{
 	public:
 		using Sptr = std::shared_ptr<XmlProcessing::AbstractXmlElement>;
+		// deal with XML format
+		virtual void fromXML(Sptr payloadTag) = 0;
 		virtual Sptr toXML() = 0;
+		// used in querywithpayload function
 		virtual bool compare(const PayLoad & p) = 0;
+		// for cout overloading and for compatibility with saveToXML function
 		virtual std::string toString() const = 0;
+		virtual operator std::string() = 0;
 	};
 
 
@@ -28,11 +67,13 @@ namespace PAYLOAD {
 		FileInfo() {}
 		FileInfo(std::shared_ptr<XmlProcessing::AbstractXmlElement> payloadTag);
 		FileInfo(std::string str);
-		std::string toString() const;
+
 		void fromXML(Sptr payloadTag);
 		Sptr toXML();
-		operator std::string();
 
+		std::string toString() const;
+		operator std::string();
+		// for showDb
 		friend std::ostream& operator<<(std::ostream& out, const FileInfo& f);
 
 		bool compare(const PayLoad & p);
@@ -48,6 +89,7 @@ namespace PAYLOAD {
 	private:
 		FilePath filePath_;
 		Category category_;
+		// for compare, it match the filepath and category respectively
 		bool matchFilePath(const FilePath &fp);
 		bool matchCategory(const Category &cate);
 	};

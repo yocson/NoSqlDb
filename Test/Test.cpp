@@ -304,7 +304,11 @@ bool Test::testR8()
 
 bool TEST::Test::testR9()
 {
-	Utilities::title("Demonstrating Requirement #9 - query payload");
+	Utilities::title("Demonstrating Requirement #9 - Query payload");
+
+	Query<std::string> q3(db);
+	std::cout << "\n  Query string payload" << std::endl;
+	q3.selectWithPayLoad("Addison-Wesley Professional").show();
 
 	Query<PAYLOAD::FileInfo> q1(testDb);
 	PAYLOAD::FileInfo f1;

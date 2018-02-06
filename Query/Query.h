@@ -154,11 +154,26 @@ Query<T>& Query<T>::select(const Condition &c)
 	return *this;
 }
 
+template<>
+Query<std::string>& Query<std::string>::selectWithPayLoad(std::string re)
+{
+	if (re.length() == 0) return *this;
+	std::regex e(re);
+	Keys selectRes;
+	for (Key key : keys_) {
+		if (std::regex_match(db_[key].payLoad(), e)) {
+			selectRes.push_back(key);
+		}
+	}
+	keys_ = selectRes;
+	return *this;
+}
+
 //----< select by payload type >----------------------
 // Use a payload instance as a select template
 // fields to be match are determined by payload itself
 // every uesr-defined payload type should implement 
-// a compare function, this also supports string match
+// a compare function
 template<typename T>
 Query<T> & Query<T>::selectWithPayLoad(T t)
 {
