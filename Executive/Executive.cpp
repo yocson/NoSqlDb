@@ -18,8 +18,6 @@ int main()
 
 	TestExecutive ex;
 	Test tt;
-	//NoSqlDb::DbCore<FileInfo> testDb;
-	//NoSqlDb::DbCore<std::string> db;
 
 	// define test structures with test function and message
 

@@ -1,0 +1,23 @@
+
+  <db>
+    <dbRecord>
+      <key>
+        EMCPP
+      </key>
+      <value name="Modern CPP" description="Scott Meyers" dateTime="Wed Jan 31 22:52:40 2018">
+        <payLoad>
+          O'Reilly Media
+        </payLoad>
+      </value>
+    </dbRecord>
+    <dbRecord>
+      <key>
+        TC
+      </key>
+      <value name="A Tour of CPP 2" description="Bjarne Stroustrup 2" dateTime="Mon Feb  5 23:48:19 2018">
+        <payLoad>
+          Addison-Wesley
+        </payLoad>
+      </value>
+    </dbRecord>
+  </db>

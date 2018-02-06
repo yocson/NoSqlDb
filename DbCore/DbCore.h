@@ -136,6 +136,8 @@ namespace NoSqlDb
 	void ReadFromXML(const std::string& src);
 	void SaveToXML(const std::string& src);
 
+	void checkChildren(DbElement<T>& elem);
+
   private:
     DbStore dbStore_;
     bool doThrow_ = false;
@@ -441,6 +443,17 @@ namespace NoSqlDb
     }
     return dbStore_[key];
   }
+
+  template<typename T>
+  void DbCore<T>::checkChildren(DbElement<T>& elem) {
+	  Keys newChildKeys;
+	  for (auto child : elem.children()) {
+		  if (contains(child)) {
+			  newChildKeys.push_back(child);
+		  }
+	  }
+	  elem.children() = newChildKeys;
+  }
   
   /////////////////////////////////////////////////////////////////////
   // display functions
@@ -492,15 +505,16 @@ namespace NoSqlDb
     }
   }
   //----< display all records in database >----------------------------
-
+  // check children exsitence before show element
   template<typename T>
-  void showDb(const DbCore<T>& db, std::ostream& out = std::cout)
+  void showDb(DbCore<T>& db, std::ostream& out = std::cout)
   {
     showHeader(out);
     typename DbCore<T>::DbStore dbs = db.dbStore();
     for (auto item : dbs)
     {
-      showElem(item.second, out);
+		db.checkChildren(item.second);
+		showElem(item.second, out);
     }
   }
 }
