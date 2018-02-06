@@ -85,6 +85,11 @@ bool FileInfo::compare(const PayLoad & p)
 	return matchFilePath(f->filePath()) && matchCategory(f->category());
 }
 
+void FileInfo::addCate(const std::string & cat)
+{
+	category_.insert(cat);
+}
+
 //----< match the filepath using regular expression >-----------
 bool FileInfo::matchFilePath(const FilePath &fp) {
 	if (fp.length() > 0) {
@@ -107,3 +112,37 @@ bool FileInfo::matchCategory(const Category &cate) {
 	}
 	return true;
 }
+
+#ifdef TEST_PAYLOAD
+using namespace PAYLOAD;
+
+int main() {
+	FileInfo f1;
+	f1.filePath() = "testPath";
+	f1.addCate("cat1");
+	f1.addCate("cat2");
+	std::cout << "\n  Show f1:" << std::endl;
+	std::cout << f1 << std::endl;
+	FileInfo f2;
+	f2.filePath() = "testPath";
+	f1.addCate("cat2");
+	std::cout << "\n  match f1 with f2:" << std::endl;
+	bool match = f1.compare(f2);
+
+	if (match) {
+		std::cout << "match!" << std::endl;
+	}
+	else {
+		std::cout << "not match!" << std::endl;
+	}
+	FileInfo::Sptr sptr = f1.toXML();
+	std::cout << "\n transfer f1 to xml: " << std::endl;
+	std::cout << sptr->toString() << std::endl;
+	f2.fromXML(sptr);
+	std::cout << "\n restore f2 from xml f1 generated: " << std::endl;
+	std::cout << f2 << std::endl;
+	getchar();
+	getchar();
+	return 0;
+}
+#endif // TEST_PAYLOAD

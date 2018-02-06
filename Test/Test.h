@@ -47,8 +47,8 @@ namespace TEST
 		bool testR9();
 
 	private:
-		static NoSqlDb::DbCore<PAYLOAD::FileInfo> testDb;
-		static NoSqlDb::DbCore<std::string> db;
+		static NoSqlDb::DbCore<PAYLOAD::FileInfo> fileDb;
+		static NoSqlDb::DbCore<std::string> strDb;
 	};
 
 }

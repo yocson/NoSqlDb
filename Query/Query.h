@@ -96,7 +96,7 @@ public:
 	Query& selectName(const std::string &re);
 	Query& selectDescription(const std::string &re);
 	Query& selectDate(const DateTime &startTime, const DateTime &endTime = DateTime().now());
-	Query& selectChildren(const Key &key) const;
+	Query& selectChildren(const Key &key);
 	Query& selectKeysWithChild(const Key &key);
 	
 	//union query
@@ -154,20 +154,20 @@ Query<T>& Query<T>::select(const Condition &c)
 	return *this;
 }
 
-template<>
-Query<std::string>& Query<std::string>::selectWithPayLoad(std::string re)
-{
-	if (re.length() == 0) return *this;
-	std::regex e(re);
-	Keys selectRes;
-	for (Key key : keys_) {
-		if (std::regex_match(db_[key].payLoad(), e)) {
-			selectRes.push_back(key);
-		}
-	}
-	keys_ = selectRes;
-	return *this;
-}
+//template<>
+//Query<std::string>& Query<std::string>::selectWithPayLoad(std::string re)
+//{
+//	if (re.length() == 0) return *this;
+//	std::regex e(re);
+//	Keys selectRes;
+//	for (Key key : keys_) {
+//		if (std::regex_match(db_[key].payLoad(), e)) {
+//			selectRes.push_back(key);
+//		}
+//	}
+//	keys_ = selectRes;
+//	return *this;
+//}
 
 //----< select by payload type >----------------------
 // Use a payload instance as a select template
@@ -251,8 +251,8 @@ Query<T>& Query<T>::selectDate(const DateTime &startTime, const DateTime &endTim
 
 //----< select by children relationship, return children of the key >----------------------
 template<typename T>
-Query<T>& Query<T>::selectChildren(const Key &key) const {
-	keys_ =  db_[key].children();
+Query<T>& Query<T>::selectChildren(const Key &key) {
+	keys_ = db_[key].children();
 	return *this;
 }
 

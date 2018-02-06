@@ -17,8 +17,8 @@ auto putLine = [](size_t n = 1, std::ostream& out = std::cout)
 };
 
 // declare static members
-NoSqlDb::DbCore<PAYLOAD::FileInfo> Test::testDb;
-NoSqlDb::DbCore<std::string> Test::db;
+NoSqlDb::DbCore<PAYLOAD::FileInfo> Test::fileDb;
+NoSqlDb::DbCore<std::string> Test::strDb;
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -73,7 +73,7 @@ bool Test::testR3a()
 	showHeader();
 	showElem(demoElem);
 
-	db["CPPL"] = demoElem;
+	strDb["CPPL"] = demoElem;
 	putLine();
 	return true;
 }
@@ -88,46 +88,46 @@ bool Test::testR3b()
 	demoElem.name("Modern CPP");
 	demoElem.descrip("Scott Meyers");
 	demoElem.payLoad("O'Reilly Media");
-	db["EMCPP"] = demoElem;
-	if (!db.contains("EMCPP"))
+	strDb["EMCPP"] = demoElem;
+	if (!strDb.contains("EMCPP"))
 		return false;
 
 	demoElem.name("SICP");
 	demoElem.descrip("Harold Abelson");
 	demoElem.payLoad("The MIT Press");
-	db["SICP"] = demoElem;
+	strDb["SICP"] = demoElem;
 
 
 	demoElem.payLoad("Addison-Wesley Professional");
 	demoElem.descrip("Stanley B. Lippman");
 	demoElem.name("CPP Primer");
-	db["CPPP"] = demoElem;
+	strDb["CPPP"] = demoElem;
 
-	if (db.size() != 4)
+	if (strDb.size() != 4)
 		return false;
 
 	std::cout << "\n  after adding elements with keys: ";
-	DbCore<std::string>::Keys keys = db.keys();
-	showKeys(db);
+	DbCore<std::string>::Keys keys = strDb.keys();
+	showKeys(strDb);
 	putLine();
 
 	std::cout << "\n  make all the new elements children of element with key \"CPPL\"";
-	db["CPPL"].children().push_back("CPPP");
-	db["CPPL"].children().push_back("EMCPP");
+	strDb["CPPL"].children().push_back("CPPP");
+	strDb["CPPL"].children().push_back("EMCPP");
 
 
 	showHeader();
-	showElem(db["CPPL"]);
+	showElem(strDb["CPPL"]);
 
 	// display the results
 
 	putLine();
 	std::cout << "\n  showing all the database elements:";
-	showDb(db);
+	showDb(strDb);
 	putLine();
 
 	std::cout << "\n  database keys are: ";
-	showKeys(db);
+	showKeys(strDb);
 
 	putLine();
 	return true;
@@ -142,17 +142,17 @@ bool Test::testR4a()
 	demoElem.name("Comp Arch");
 	demoElem.descrip("John L. Hennessy");
 	demoElem.payLoad("Morgan Kaufmann");
-	db.addElem("CA", demoElem);
-	if (!db.contains("CA"))
+	strDb.addElem("CA", demoElem);
+	if (!strDb.contains("CA"))
 		return false;
 
-	db.addElem("TC", "A Tour of CPP", "Bjarne Stroustrup", "Addison-Wesley");
-	if (!db.contains("TC"))
+	strDb.addElem("TC", "A Tour of CPP", "Bjarne Stroustrup", "Addison-Wesley");
+	if (!strDb.contains("TC"))
 		return false;
 	putLine();
 	std::cout << "\n  showing all the database elements:";
 	std::cout << "\n  two elems added:";
-	showDb(db);
+	showDb(strDb);
 	putLine();
 
 	return true;
@@ -163,13 +163,13 @@ bool Test::testR4b()
 {
 	Utilities::title("Demonstrating Requirement #4b - Delete pairs");
 
-	db.deleteElem("CA");
+	strDb.deleteElem("CA");
 
-	if (db.contains("CA")) return false;
+	if (strDb.contains("CA")) return false;
 
 	std::cout << "\n  showing all the database elements:";
 	std::cout << "\n  CA deleted:";
-	showDb(db);
+	showDb(strDb);
 	putLine();
 	return true;
 }
@@ -178,38 +178,38 @@ bool Test::testR5()
 {
 	Utilities::title("Demonstrating Requirement #5 - Edit");
 
-	db.editTextMata("TC", "name", "A Tour of CPP 2");
-	db.editTextMata("TC", "descrip", "Bjarne Stroustrup 2");
-	if (db["TC"].name() != "A Tour of CPP 2") return false;
-	if (db["TC"].descrip() != "Bjarne Stroustrup 2") return false;
+	strDb.editTextMata("TC", "name", "A Tour of CPP 2");
+	strDb.editTextMata("TC", "descrip", "Bjarne Stroustrup 2");
+	if (strDb["TC"].name() != "A Tour of CPP 2") return false;
+	if (strDb["TC"].descrip() != "Bjarne Stroustrup 2") return false;
 	putLine();
 	std::cout << "\n  showing all the database elements:";
 	std::cout << "\n  Element TC's name and description have been changed:";
-	showDb(db);
+	showDb(strDb);
 	putLine();
 
 	DateTime date("Wed Jan 31 22:52:40 2018");
-	db.editDatetime("CPPL", date);
+	strDb.editDatetime("CPPL", date);
 	std::cout << "\n  Element CPPL's dateTime edited";
-	showElem(db["CPPL"]);
+	showElem(strDb["CPPL"]);
 
 	std::cout << "\n  add child TC to CPPL";
-	db.addChild("CPPL", "TC");
-	showElem(db["CPPL"]);
+	strDb.addChild("CPPL", "TC");
+	showElem(strDb["CPPL"]);
 	std::cout << "\n  delete child EMCPP from CPPL";
-	db.deleteChild("CPPL", "EMCPP");
-	showElem(db["CPPL"]);
+	strDb.deleteChild("CPPL", "EMCPP");
+	showElem(strDb["CPPL"]);
 	putLine();
 
 	DbElement<std::string> demoElem2;
 	demoElem2.name("CPP Templates");
 	demoElem2.descrip("David Vandevoorde");
 	demoElem2.payLoad("Addison-Wesley Professional");
-	db.replaceElem("TC", demoElem2);
+	strDb.replaceElem("TC", demoElem2);
 	putLine();
 	std::cout << "\n  showing all the database elements:";
 	std::cout << "\n  TC replaced by element whose name is CPP Templates";
-	showDb(db);
+	showDb(strDb);
 	putLine();
 
 	return true;
@@ -219,9 +219,9 @@ bool Test::testR6()
 {
 	Utilities::title("Demonstrating Requirement #6 - Basic Query");
 
-	db.addElem("OCPP", "Optimized CPP", "Kurt Guntheroth", "O'Reilly Media");
+	strDb.addElem("OCPP", "Optimized CPP", "Kurt Guntheroth", "O'Reilly Media");
 
-	Query<std::string> q1(db);
+	Query<std::string> q1(strDb);
 	std::cout << "\n  Showing selected key whose key is OCPP:" << std::endl;
 	q1.selectKey("OCPP").show();
 	Condition c1;
@@ -234,19 +234,19 @@ bool Test::testR6()
 	c2.name("Modern CPP");
 	Condition c3;
 	c3.description(".*Bjarne Stroustrup.*");
-	Query<std::string> q2(db);
+	Query<std::string> q2(strDb);
 	Condition c4;
 	c4.key(".*CPP.*");
 
 	std::cout << "\n  selecte all keys with CPP inside" << std::endl;
 	q2.select(c4).show();
 
-	Query<std::string> q3(db);
+	Query<std::string> q3(strDb);
 
 	std::cout << "\n  Union select name is SICP and description with Bjarne Stroustrup" << std::endl;
 	q3.unionSelect(c1, c3).show();
 
-	Query<std::string> q4(db);
+	Query<std::string> q4(strDb);
 	std::cout << "\n  Query child TC" << std::endl;
 	q4.selectKeysWithChild("TC").show();
 
@@ -266,16 +266,16 @@ bool TEST::Test::testR7()
 	c1.name(".*CPP.*");
 	Condition c2;
 	c2.description(".*Bjarne Stroustrup.*");
-	Query<std::string> q1(db);
+	Query<std::string> q1(strDb);
 	q1.select(c1);
-	Query<std::string> q2(db);
+	Query<std::string> q2(strDb);
 	q2.from(q1.keys());
 	std::cout << "\n  AND query with name with CPP and descrip with Bjarne Stroustrup" << std::endl;
 	q2.select(c2).show();
 
-	Query<std::string> q3(db);
+	Query<std::string> q3(strDb);
 	q3.select(c1);
-	Query<std::string> q4(db);
+	Query<std::string> q4(strDb);
 	q4.select(c2);
 	std::cout << "\n  OR query with name with CPP or descrip with Bjarne Stroustrup" << std::endl;
 	q4.unionFrom(q3.keys(), q4.keys()).show();
@@ -288,16 +288,16 @@ bool Test::testR8()
 	Utilities::title("Demonstrating Requirement #8 - Persistence");
 
 	std::cout << "\n  Save DB to books.xml" << std::endl;
-	db.SaveToXML("../books.xml");
+	strDb.SaveToXML("../books.xml");
 
 	std::cout << "\n  Read from withFileInfo.xml" << std::endl;
-	testDb.ReadFromXML("../withFileInfo.xml");
-	showDb(testDb);
-	showKeys(testDb);
+	fileDb.ReadFromXML("../withFileInfo.xml");
+	showDb(fileDb);
+	showKeys(fileDb);
 
-	testDb.SaveToXML("../withFileInfo2.xml");
-	testDb.ReadFromXML("../withFileInfo2.xml");
-	showDb(testDb);
+	fileDb.SaveToXML("../withFileInfo2.xml");
+	fileDb.ReadFromXML("../withFileInfo2.xml");
+	showDb(fileDb);
 	putLine();
 	return true;
 }
@@ -306,11 +306,11 @@ bool TEST::Test::testR9()
 {
 	Utilities::title("Demonstrating Requirement #9 - Query payload");
 
-	Query<std::string> q3(db);
+	Query<std::string> q3(strDb);
 	std::cout << "\n  Query string payload" << std::endl;
 	q3.selectWithPayLoad("Addison-Wesley Professional").show();
 
-	Query<PAYLOAD::FileInfo> q1(testDb);
+	Query<PAYLOAD::FileInfo> q1(fileDb);
 	PAYLOAD::FileInfo f1;
 	f1.category().insert("CPP");
 	Utilities::putline(1);
@@ -324,3 +324,21 @@ bool TEST::Test::testR9()
 	putLine();
 	return true;
 }
+
+#ifdef TEST_TEST
+int main() {
+	TEST::Test t;
+	t.testR1();
+	t.testR2();
+	t.testR3a();
+	t.testR3b();
+	t.testR4a();
+	t.testR4b();
+	t.testR5();
+	t.testR6();
+	t.testR7();
+	t.testR8();
+	t.testR9();
+	return 0;
+}
+#endif // TEST_TEST

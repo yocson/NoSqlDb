@@ -85,6 +85,7 @@ namespace PAYLOAD {
 		Category& category() { return category_; }
 		Category category() const { return category_; }
 		void category(const Category& cate) { category_ = cate; }
+		void addCate(const std::string &cat);
 
 	private:
 		FilePath filePath_;
