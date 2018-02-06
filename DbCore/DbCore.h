@@ -25,9 +25,19 @@
 * DbCore.h, DbCore.cpp
 * DateTime.h, DateTime.cpp
 * Utilities.h, Utilities.cpp
+* XmlParser.h, XmlParser.cpp
+* XmlDocument.h, XmlDocument.cpp
 *
 * Maintenance History:
 * --------------------
+* ver 1.5 : Jan 31, 2018
+* - added persistence
+* ver 1.4 : Jan 29, 2018
+* - added edition operations
+* ver 1.3 : Jan 28, 2018
+* - added children operation
+* ver 1.2 : Jan 26, 2018
+* - added addtion and deletion of element
 * ver 1.1 : 19 Jan 2018
 * - added code to throw exception in index operators if input key is not in database
 * ver 1.0 : 10 Jan 2018
@@ -61,23 +71,23 @@ namespace NoSqlDb
 
     std::string& name() { return name_; }
     std::string name() const { return name_; }
-    void name(const std::string& name) { name_ = name; }
+	DbElement& name(const std::string& name) { name_ = name; return *this; }
 
     std::string& descrip() { return descrip_; }
     std::string descrip() const { return descrip_; }
-    void descrip(const std::string& name) { descrip_ = name; }
+	DbElement& descrip(const std::string& name) { descrip_ = name; return *this; }
     
     DateTime& dateTime() { return dateTime_; }
     DateTime dateTime() const { return dateTime_; }
-    void dateTime(const DateTime& dateTime) { dateTime_ = dateTime; }
+	DbElement& dateTime(const DateTime& dateTime) { dateTime_ = dateTime; return *this;}
 
     Children& children() { return children_; }
     Children children() const { return children_; }
-    void children(const Children& children) { children_ = children; }
+	DbElement& children(const Children& children) { children_ = children; return *this;}
 
     T& payLoad() { return payLoad_; }
     T payLoad() const { return payLoad_; }
-    void payLoad(const T& payLoad) { payLoad_ = payLoad; }
+	DbElement& payLoad(const T& payLoad) { payLoad_ = payLoad; return *this; }
 
   private:
     std::string name_;
@@ -136,6 +146,7 @@ namespace NoSqlDb
 	void ReadFromXML(const std::string& src);
 	void SaveToXML(const std::string& src);
 
+	// check children relationship when demostrate the element
 	void checkChildren(DbElement<T>& elem);
 
   private:
@@ -367,7 +378,6 @@ namespace NoSqlDb
 		  else
 			  return;
 	  }
-	  std::cout << Xml << std::endl;
 	  file << Xml << std::endl;
 	  file.close();
   }
@@ -444,6 +454,7 @@ namespace NoSqlDb
     return dbStore_[key];
   }
 
+  //----< check children relationship when demostrate the element >----------------------------
   template<typename T>
   void DbCore<T>::checkChildren(DbElement<T>& elem) {
 	  Keys newChildKeys;

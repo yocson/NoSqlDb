@@ -56,10 +56,7 @@ bool Test::testR3a()
 
 	DbElement<std::string> demoElem;
 
-	demoElem.name("CPP Language");
-	demoElem.descrip("Bjarne Stroustrup");
-	demoElem.dateTime(DateTime().now());
-	demoElem.payLoad("Addison-Wesley Professional");
+	demoElem.name("CPP Language").descrip("Bjarne Stroustrup").dateTime(DateTime().now()).payLoad("Addison-Wesley Professional");
 
 	if (demoElem.name() != "CPP Language")
 		return false;
@@ -82,53 +79,48 @@ bool Test::testR3a()
 bool Test::testR3b()
 {
 	Utilities::title("Demonstrating Requirement #3b - creating DbCore");
-
+	putLine();
+	std::cout << "\n  showing all the database elements:";
+	showDb(strDb);
 	DbElement<std::string> demoElem;
 
 	// add element EMCPP
-	demoElem.name("Modern CPP");
-	demoElem.descrip("Scott Meyers");
-	demoElem.payLoad("O'Reilly Media");
+	demoElem.name("Modern CPP").descrip("Scott Meyers").payLoad("O'Reilly Media");
 	strDb["EMCPP"] = demoElem;
 	if (!strDb.contains("EMCPP"))
 		return false;
 
 	// add element SICP
-	demoElem.name("SICP");
-	demoElem.descrip("Harold Abelson");
-	demoElem.payLoad("The MIT Press");
+	demoElem.name("SICP").descrip("Harold Abelson").payLoad("The MIT Press");
 	strDb["SICP"] = demoElem;
 
 	// add element CPPP
-	demoElem.payLoad("Addison-Wesley Professional");
-	demoElem.descrip("Stanley B. Lippman");
-	demoElem.name("CPP Primer");
+	demoElem.payLoad("Addison-Wesley Professional").descrip("Stanley B. Lippman").name("CPP Primer");
 	strDb["CPPP"] = demoElem;
 
 	if (strDb.size() != 4)
 		return false;
 
+	putLine();
 	std::cout << "\n  after adding elements with keys: ";
-	DbCore<std::string>::Keys keys = strDb.keys();
-	showKeys(strDb);
-	putLine();
-
-	// add children
-	std::cout << "\n  make all the new elements children of element with key \"CPPL\"";
-	strDb["CPPL"].children().push_back("CPPP");
-	strDb["CPPL"].children().push_back("EMCPP");
-
-
-	showHeader();
-	showElem(strDb["CPPL"]);
-
-	// display the results
-
-	putLine();
 	std::cout << "\n  showing all the database elements:";
 	showDb(strDb);
 	putLine();
 
+	// add children
+	std::cout << "\n  make two new elements children of element with key \"CPPL\"";
+	strDb["CPPL"].children().push_back("CPPP");
+	strDb["CPPL"].children().push_back("EMCPP");
+
+	std::cout << "\n  show element CPPL";
+	showHeader();
+	showElem(strDb["CPPL"]);
+
+	// display the results
+	putLine();
+	std::cout << "\n  showing all the database elements:";
+	showDb(strDb);
+	putLine();
 	std::cout << "\n  database keys are: ";
 	showKeys(strDb);
 
@@ -142,9 +134,7 @@ bool Test::testR4a()
 
 	// add element CA
 	DbElement<std::string> demoElem;
-	demoElem.name("Comp Arch");
-	demoElem.descrip("John L. Hennessy");
-	demoElem.payLoad("Morgan Kaufmann");
+	demoElem.name("Comp Arch").descrip("John L. Hennessy").payLoad("Morgan Kaufmann");
 	strDb.addElem("CA", demoElem);
 	if (!strDb.contains("CA"))
 		return false;
@@ -154,7 +144,7 @@ bool Test::testR4a()
 		return false;
 	putLine();
 	std::cout << "\n  showing all the database elements:";
-	std::cout << "\n  two elems added:";
+	std::cout << "\n  two elems(CA & TC) added:";
 	showDb(strDb);
 	putLine();
 
@@ -166,6 +156,7 @@ bool Test::testR4b()
 {
 	Utilities::title("Demonstrating Requirement #4b - Delete pairs");
 	strDb.addChild("TC", "CA");
+	std::cout << "\n  showing all the database elements:";
 	showDb(strDb);
 	// delete element CA
 	strDb.deleteElem("CA");
@@ -198,23 +189,26 @@ bool Test::testR5()
 	// edit element CPPL by date
 	DateTime date("Wed Jan 31 22:52:40 2018");
 	strDb.editDatetime("CPPL", date);
+	putLine();
 	std::cout << "\n  Element CPPL's dateTime edited";
+	showHeader();
 	showElem(strDb["CPPL"]);
 
 	// add child TC to CPPL and detele child EMCPP from CPPL
+	putLine();
 	std::cout << "\n  add child TC to CPPL";
 	strDb.addChild("CPPL", "TC");
-	showElem(strDb["CPPL"]);
-	std::cout << "\n  delete child EMCPP from CPPL";
-	strDb.deleteChild("CPPL", "EMCPP");
+	showHeader();
 	showElem(strDb["CPPL"]);
 	putLine();
+	std::cout << "\n  delete child EMCPP from CPPL";
+	strDb.deleteChild("CPPL", "EMCPP");
+	showHeader();
+	showElem(strDb["CPPL"]);
 
 	// replace TC element with a new element
 	DbElement<std::string> demoElem2;
-	demoElem2.name("CPP Templates");
-	demoElem2.descrip("David Vandevoorde");
-	demoElem2.payLoad("Addison-Wesley Professional");
+	demoElem2.name("CPP Templates").descrip("David Vandevoorde").payLoad("Addison-Wesley Professional");
 	strDb.replaceElem("TC", demoElem2);
 	putLine();
 	std::cout << "\n  showing all the database elements:";
@@ -229,6 +223,8 @@ bool Test::testR6()
 {
 	Utilities::title("Demonstrating Requirement #6 - Basic Query");
 	std::cout << "\n  * Query payload is after requirement 9 " << std::endl;
+	std::cout << "\n  showing all the database elements:";
+	showDb(strDb);
 	strDb.addElem("OCPP", "Optimized CPP", "Kurt Guntheroth", "O'Reilly Media");
 
 	//query exact key
@@ -272,7 +268,8 @@ bool Test::testR6()
 bool TEST::Test::testR7()
 {
 	Utilities::title("Demonstrating Requirement #7 - Query AND and OR");
-
+	std::cout << "\n  showing all the database elements:";
+	showDb(strDb);
 	Condition c1;
 	c1.name(".*CPP.*");
 	Condition c2;
@@ -324,14 +321,15 @@ bool TEST::Test::testR9()
 {
 	Utilities::title("Demonstrating Requirement #9 - Query payload");
 
+
 	Query<std::string> q3(strDb);
 	// query payload(string)
 	std::cout << "\n  Query string payload" << std::endl;
-	q3.selectWithPayLoad("Addison-Wesley Professional").show();
+	q3.selectWithPayLoad(".*Addison.*").show();
 
 	Query<PAYLOAD::FileInfo> q1(fileDb);
 	PAYLOAD::FileInfo f1;
-	f1.category().insert("CPP");
+	f1.addCate("CPP");
 	Utilities::putline(1);
 	std::cout << "\n  Query payload with category CPP" << std::endl;
 	q1.selectWithPayLoad(f1).show();

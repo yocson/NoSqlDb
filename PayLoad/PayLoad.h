@@ -26,12 +26,18 @@
 * DbCore.h, DbCore.cpp
 * DateTime.h, DateTime.cpp
 * Utilities.h, Utilities.cpp
+* XmlParser.h, XmlParser.cpp
+* XmlDocument.h, XmlDocument.cpp
 *
 * Maintenance History:
 * --------------------
-* ver 1.1 : 19 Jan 2018
-* - added code to throw exception in index operators if input key is not in database
-* ver 1.0 : 10 Jan 2018
+* ver 1.3 :Feb 5, 2018
+* - added cast operator to string
+* ver 1.2 :Feb 4, 2018
+* - added abstract payload class
+* ver 1.1 : Feb 3, 2018
+* - overload <<
+* ver 1.0 : Feb 2, 2018
 * - first release
 */
 #include <string>

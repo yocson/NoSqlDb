@@ -29,12 +29,19 @@
 * DbCore.h, DbCore.cpp
 * DateTime.h, DateTime.cpp
 * Utilities.h, Utilities.cpp
+* DbCore.h, DbCore.cpp
 *
 * Maintenance History:
 * --------------------
+* ver 1.4 : Feb 1, 2018
+* - added select with children relationship
+* ver 1.3 : Jan 30, 2018
+* - added select with payload function
+* ver 1.2 : Jan 29, 2018
+* - added union condition
 * ver 1.1 : 19 Jan 2018
 * - added code to throw exception in index operators if input key is not in database
-* ver 1.0 : 10 Jan 2018
+* ver 1.0 : Jan 27, 2018
 * - first release
 */
 
@@ -91,7 +98,7 @@ public:
 	Query& select(const Condition &c);
 
 	//specific seletion
-	Query& selectWithPayLoad(T t);
+	Query<T>& selectWithPayLoad(T t);
 	Query& selectKey(const std::string &re);
 	Query& selectName(const std::string &re);
 	Query& selectDescription(const std::string &re);
@@ -154,20 +161,20 @@ Query<T>& Query<T>::select(const Condition &c)
 	return *this;
 }
 
-//template<>
-//Query<std::string>& Query<std::string>::selectWithPayLoad(std::string re)
-//{
-//	if (re.length() == 0) return *this;
-//	std::regex e(re);
-//	Keys selectRes;
-//	for (Key key : keys_) {
-//		if (std::regex_match(db_[key].payLoad(), e)) {
-//			selectRes.push_back(key);
-//		}
-//	}
-//	keys_ = selectRes;
-//	return *this;
-//}
+template<>
+inline Query<std::string>& Query<std::string>::selectWithPayLoad(std::string re)
+{
+	if (re.length() == 0) return *this;
+	std::regex e(re);
+	Keys selectRes;
+	for (Key key : keys_) {
+		if (std::regex_match(db_[key].payLoad(), e)) {
+			selectRes.push_back(key);
+		}
+	}
+	keys_ = selectRes;
+	return *this;
+}
 
 //----< select by payload type >----------------------
 // Use a payload instance as a select template
@@ -311,6 +318,7 @@ inline Query<T> & Query<T>::unionSelect(const Condition & c1, const Condition & 
 template<typename T>
 void Query<T>::show(std::ostream& out)
 {
+	out << "    ";
 	for (Key key : keys_) {
 		out << key;
 		out << "  ";

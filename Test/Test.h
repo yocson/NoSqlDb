@@ -18,12 +18,17 @@
 * DbCore.h, DbCore.cpp
 * DateTime.h, DateTime.cpp
 * Utilities.h, Utilities.cpp
+* PayLoad.h, PayLoad.cpp
 *
 * Maintenance History:
 * --------------------
-* ver 1.1 : 19 Jan 2018
-* - added code to throw exception in index operators if input key is not in database
-* ver 1.0 : 10 Jan 2018
+* ver 2.2 : Feb 4, 2018
+* - add a bunch of test functions
+* ver 2.1 : Feb 3, 2018
+* - add static database 
+* ver 2.0 : Feb 2, 2018
+* - classize Test
+* ver 1.0 : Jan 30, 2018
 * - first release
 */
 
