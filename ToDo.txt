@@ -1,3 +1,0 @@
-  ToDo
-=========================
-1. add copy, move, and assignments to DateTime

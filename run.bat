@@ -1,2 +1,1 @@
-cd "Debug"
-start Executive.exe
+start %~dp0\Debug\Executive.exe

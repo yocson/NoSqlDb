@@ -1,9 +1,10 @@
 #pragma once
 /////////////////////////////////////////////////////////////////////
 // DbCore.h - Implements NoSql database prototype                  //
-// ver 1.0														   //
+// ver 2.0														   //
 // Cheng Wang													   //	
-// Source: Jim Fawcett, CSE687 - Object Oriented Design, Spring 2018//
+// cwang76@syr.edu												   //
+// Source: Jim Fawcett, CSE687, Object Oriented Design, Spring 2018//
 /////////////////////////////////////////////////////////////////////
 /*
 * Package Operations:
@@ -30,6 +31,8 @@
 *
 * Maintenance History:
 * --------------------
+* ver 2.0 : Feb 5, 2018
+* - final release
 * ver 1.5 : Jan 31, 2018
 * - added persistence
 * ver 1.4 : Jan 29, 2018
@@ -294,7 +297,8 @@ namespace NoSqlDb
 	  XmlProcessing::XmlDocument* pDoc = parser.buildDocument();
 	  std::vector<XmlProcessing::XmlDocument::sPtr> records = pDoc->descendents("dbRecord").select();
 	  bool skip = false;
-	  for (auto record : records) {
+	  std::string trimedStr = "";
+;	  for (auto record : records) {
 		  DbElement<T> tempElem;
 		  Key key;
 		  skip = false;
@@ -317,8 +321,9 @@ namespace NoSqlDb
 						  tempElem.dateTime(attr.second);
 				  }
 				  for (auto value : content->children()) {
-					  if (value->tag() == "payLoad") 
-						  tempElem.payLoad(value->toString());
+					  if (value->tag() == "payLoad")
+						  trimedStr = value->children()[0]->toString().substr(3);
+						  tempElem.payLoad(trimedStr);
 					  if (value->tag() == "children") {
 						  Children children;
 						  for (auto child : value->children())
@@ -488,12 +493,12 @@ namespace NoSqlDb
     out << std::setw(26) << std::left << "DateTime";
     out << std::setw(15) << std::left << "Name";
     out << std::setw(25) << std::left << "Description";
-    out << std::setw(25) << std::left << "Payload";
+    out << std::setw(40) << std::left << "Payload";
     out << "\n  ";
     out << std::setw(26) << std::left << "------------------------";
     out << std::setw(15) << std::left << "------------";
     out << std::setw(25) << std::left << "-----------------------";
-    out << std::setw(25) << std::left << "-----------------------";
+    out << std::setw(40) << std::left << "-----------------------";
   }
   //----< display DbElements >-----------------------------------------
 
@@ -504,7 +509,7 @@ namespace NoSqlDb
     out << std::setw(26) << std::left << std::string(el.dateTime());
     out << std::setw(15) << std::left << el.name();
     out << std::setw(25) << std::left << el.descrip();
-    out << std::setw(25) << std::left << el.payLoad();
+    out << std::setw(40) << std::left << el.payLoad();
     typename DbElement<T>::Children children = el.children();
     if (children.size() > 0)
     {

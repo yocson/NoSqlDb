@@ -1,8 +1,9 @@
 #pragma once
 /////////////////////////////////////////////////////////////////////
 // PayLoad.h - Implements user-defined Payload Class               //
-// ver 1.0                                                         //
+// ver 1.3                                                         //
 // Cheng Wang, CSE687 - Object Oriented Design, Spring 2018        //
+// cwang76@syr.edu												   //
 /////////////////////////////////////////////////////////////////////
 /*
 * Package Operations:

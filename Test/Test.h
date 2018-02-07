@@ -1,8 +1,9 @@
 #pragma once
 /////////////////////////////////////////////////////////////////////
 // Test.h - NoSql Test Functions                                   //
-// ver 1.0                                                         //
+// ver 2.2                                                         //
 // Cheng Wang, CSE687 - Object Oriented Design, Spring 2018        //
+// cwang76@syr.edu												   //
 /////////////////////////////////////////////////////////////////////
 /*
 * Package Operations:
@@ -50,6 +51,9 @@ namespace TEST
 		bool testR7();
 		bool testR8();
 		bool testR9();
+		bool testR10();
+		bool testR11();
+		bool testR13();
 
 	private:
 		static NoSqlDb::DbCore<PAYLOAD::FileInfo> fileDb;

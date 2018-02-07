@@ -1,7 +1,7 @@
 
                                       CodeAnalysis - Version 1.4
     ==============================================================================================
-     Tue Feb  6 12:52:10 2018
+     Tue Feb  6 18:33:45 2018
      Path: "\\Mac\Dropbox\CSE687OOD\NoSqlDb"
      Args: *.h, *.cpp, *.cs, /m, /r, /f
                                                                                
@@ -10,7 +10,7 @@
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
-                             namespace                   Global Namespace       1       1     556
+                             namespace                   Global Namespace       1       1     562
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
@@ -68,7 +68,7 @@
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
-                  DbCore.h   namespace                            NoSqlDb      58     475      79
+                  DbCore.h   namespace                            NoSqlDb      58     474      79
                   DbCore.h       class                          DbElement      65      34      23
                   DbCore.h    function                               name      71       2       1
                   DbCore.h    function                               name      72       2       1
@@ -87,7 +87,7 @@
                   DbCore.h    function                            payLoad      89       2       1
                   DbCore.h    function                            addElem     160       8       2
                   DbCore.h    function                        replaceElem     278      10       2
-                  DbCore.h    function                      checkChildren     460       9       3
+                  DbCore.h    function                      checkChildren     459       9       3
                   DbCore.h       class                             DbCore     107      49      47
                   DbCore.h    function               throwOnIndexNotFound     119       2       1
                   DbCore.h    function                              begin     122       2       1
@@ -102,16 +102,16 @@
                   DbCore.h    function                           addChild     242      17       3
                   DbCore.h    function                        deleteChild     263      11       2
                   DbCore.h    function                        ReadFromXML     292      42       9
-                  DbCore.h    function                          SaveToXML     338      47       7
-                  DbCore.h    function                           contains     393       4       1
-                  DbCore.h    function                               keys     401      11       2
-                  DbCore.h    function                               size     416       3       1
-                  DbCore.h    function                         operator[]     434      10       2
-                  DbCore.h    function                         operator[]     450       7       2
-                  DbCore.h    function                           showKeys     477       7       2
-                  DbCore.h    function                         showHeader     487      12       1
-                  DbCore.h    function                           showElem     503      16       3
-                  DbCore.h    function                             showDb     523       9       2
+                  DbCore.h    function                          SaveToXML     338      46       7
+                  DbCore.h    function                           contains     392       4       1
+                  DbCore.h    function                               keys     400      11       2
+                  DbCore.h    function                               size     415       3       1
+                  DbCore.h    function                         operator[]     433      10       2
+                  DbCore.h    function                         operator[]     449       7       2
+                  DbCore.h    function                           showKeys     476       7       2
+                  DbCore.h    function                         showHeader     486      12       1
+                  DbCore.h    function                           showElem     502      16       3
+                  DbCore.h    function                             showDb     522       9       2
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
@@ -119,7 +119,7 @@
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
-             Executive.cpp    function                               main      15      50      12
+             Executive.cpp    function                               main      15      56      15
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
@@ -142,12 +142,12 @@
                PayLoad.cpp    function                           toString      37       9       2
                PayLoad.cpp    function                            fromXML      49      10       3
                PayLoad.cpp    function                              toXML      62      12       2
-               PayLoad.cpp    function                            compare      83       4       1
-               PayLoad.cpp    function                            addCate      89       3       1
-               PayLoad.cpp    function                      matchFilePath      94       8       2
-               PayLoad.cpp    function                      matchCategory     104      11       3
+               PayLoad.cpp    function                            compare      83       5       1
+               PayLoad.cpp    function                            addCate      90       3       1
+               PayLoad.cpp    function                      matchFilePath      95       8       2
+               PayLoad.cpp    function                      matchCategory     105      11       3
                PayLoad.cpp    function                         operator<<      76       4       1
-               PayLoad.cpp    function                               main     119      29       3
+               PayLoad.cpp    function                               main     120      29       3
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
@@ -168,7 +168,7 @@
                    Query.h    function                selectKeysWithChild     269       9       2
                    Query.h    function                          unionFrom     285      16       4
                    Query.h    function                        unionSelect     305       9       1
-                   Query.h    function                               show     320       5       2
+                   Query.h    function                               show     320       6       2
                    Query.h    function                              Query     131       2       1
 
                  file name        type                               name    line    size    cplx
@@ -195,24 +195,27 @@
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
-                    Test.h   namespace                               TEST      38      22      13
-                    Test.h       class                               Test      40      18      12
+                    Test.h   namespace                               TEST      38      25      16
+                    Test.h       class                               Test      40      21      15
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
-                  Test.cpp    function                             testR1      30       8       1
-                  Test.cpp    function                             testR2      42       7       1
-                  Test.cpp    function                            testR3a      53      27       1
-                  Test.cpp    function                            testR3b      83      55       1
-                  Test.cpp    function                            testR4a     140      24       1
-                  Test.cpp    function                            testR4b     166      16       1
-                  Test.cpp    function                             testR5     184      43       1
-                  Test.cpp    function                             testR6     229      42       1
-                  Test.cpp    function                             testR7     273      25       1
-                  Test.cpp    function                             testR8     300      22       1
-                  Test.cpp    function                             testR9     324      24       1
-                  Test.cpp    function                                  ]      15       2       1
-                  Test.cpp    function                               main     350      15       1
+                  Test.cpp    function                             testR1      29       8       1
+                  Test.cpp    function                             testR2      41       7       1
+                  Test.cpp    function                            testR3a      52      24       1
+                  Test.cpp    function                            testR3b      79      50       1
+                  Test.cpp    function                            testR4a     131      22       1
+                  Test.cpp    function                            testR4b     155      17       1
+                  Test.cpp    function                             testR5     174      46       1
+                  Test.cpp    function                             testR6     222      47       1
+                  Test.cpp    function                             testR7     271      27       1
+                  Test.cpp    function                             testR8     300      25       1
+                  Test.cpp    function                             testR9     327      38       1
+                  Test.cpp    function                            testR10     367       8       1
+                  Test.cpp    function                            testR11     377       8       1
+                  Test.cpp    function                            testR13     387       8       1
+                  Test.cpp    function                                  ]      14       2       1
+                  Test.cpp    function                               main     397      15       1
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
@@ -458,8 +461,7 @@
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
               DateTime.cpp    function                           DateTime      57      28      15
-             Executive.cpp    function                               main      15      50      12
-                  Test.cpp    function                            testR3b      83      55       1
+             Executive.cpp    function                               main      15      56      15
              Tokenizer.cpp    function                               main     329      61       8
 
               public data: TestUtilities.h : 92 - struct {
@@ -468,5 +470,5 @@
                 std :: string testName ; 
 
 
-    searched   300 dirs
+    searched   305 dirs
    processed    32 files

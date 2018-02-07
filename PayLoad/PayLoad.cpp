@@ -81,6 +81,7 @@ std::ostream& PAYLOAD::operator<<(std::ostream& out, const FileInfo& f) {
 //----< match the fields, call two private match functions respectively >-----------
 bool FileInfo::compare(const PayLoad & p)
 {
+	// need to down cast payload to fileinfo
 	const FileInfo *f = dynamic_cast<const FileInfo *>(&p);
 	return matchFilePath(f->filePath()) && matchCategory(f->category());
 }

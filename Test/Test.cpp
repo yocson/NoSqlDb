@@ -2,7 +2,6 @@
 #include <iomanip>
 #include <functional>
 #include "../Utilities/StringUtilities/StringUtilities.h"
-#include "../Utilities/TestUtilities/TestUtilities.h"
 #include "../DbCore/DbCore.h"
 #include "../Query/Query.h"
 #include "Test.h"
@@ -29,9 +28,9 @@ NoSqlDb::DbCore<std::string> Test::strDb;
 bool Test::testR1()
 {
 	Utilities::title("Demonstrating Requirement #1");
-	std::cout << "\n  " << typeid(std::function<bool()>).name()
+	std::cout << "\n   *" << typeid(std::function<bool()>).name()
 		<< ", declared in this function, "
-		<< "\n  is only valid for C++11 and later versions.";
+		<< "\n   *is only valid for C++11 and later versions.";
 	putLine();
 	return true; // would not compile unless C++11
 }
@@ -41,8 +40,8 @@ bool Test::testR1()
 bool Test::testR2()
 {
 	Utilities::title("Demonstrating Requirement #2");
-	std::cout << "\n  A visual examination of all the submitted code "
-		<< "will show only\n  use of streams and operators new and delete.";
+	std::cout << "\n   *A visual examination of all the submitted code "
+		<< "will show only\n   *use of streams and operators new and delete.";
 	putLine();
 	return true;
 }
@@ -52,7 +51,7 @@ bool Test::testR2()
 bool Test::testR3a()
 {
 	Utilities::title("Demonstrating Requirement #3a - creating DbElement");
-	std::cout << "\n  Creating a db element with key \"CPP Language\":";
+	std::cout << "\n   *Creating a db element with key \"CPP Language\":";
 
 	DbElement<std::string> demoElem;
 
@@ -78,9 +77,9 @@ bool Test::testR3a()
 
 bool Test::testR3b()
 {
-	Utilities::title("Demonstrating Requirement #3b - creating DbCore");
+	Utilities::title("Demonstrating Requirement #3b - creating DbCore <std::string>");
 	putLine();
-	std::cout << "\n  showing all the database elements:";
+	std::cout << "\n   *showing all the database elements:";
 	showDb(strDb);
 	DbElement<std::string> demoElem;
 
@@ -102,26 +101,26 @@ bool Test::testR3b()
 		return false;
 
 	putLine();
-	std::cout << "\n  after adding elements with keys: ";
-	std::cout << "\n  showing all the database elements:";
+	std::cout << "\n   *after adding elements with keys: ";
+	std::cout << "\n   *showing all the database elements:";
 	showDb(strDb);
 	putLine();
 
 	// add children
-	std::cout << "\n  make two new elements children of element with key \"CPPL\"";
+	std::cout << "\n   *make two new elements children of element with key \"CPPL\"";
 	strDb["CPPL"].children().push_back("CPPP");
 	strDb["CPPL"].children().push_back("EMCPP");
 
-	std::cout << "\n  show element CPPL";
+	std::cout << "\n   *show element CPPL";
 	showHeader();
 	showElem(strDb["CPPL"]);
 
 	// display the results
 	putLine();
-	std::cout << "\n  showing all the database elements:";
+	std::cout << "\n   *showing all the database elements:";
 	showDb(strDb);
 	putLine();
-	std::cout << "\n  database keys are: ";
+	std::cout << "\n   *database keys are: ";
 	showKeys(strDb);
 
 	putLine();
@@ -143,8 +142,8 @@ bool Test::testR4a()
 	if (!strDb.contains("TC"))
 		return false;
 	putLine();
-	std::cout << "\n  showing all the database elements:";
-	std::cout << "\n  two elems(CA & TC) added:";
+	std::cout << "\n   *showing all the database elements:";
+	std::cout << "\n   *two elems(CA & TC) added:";
 	showDb(strDb);
 	putLine();
 
@@ -156,16 +155,16 @@ bool Test::testR4b()
 {
 	Utilities::title("Demonstrating Requirement #4b - Delete pairs");
 	strDb.addChild("TC", "CA");
-	std::cout << "\n  showing all the database elements:";
+	std::cout << "\n   *showing all the database elements:";
 	showDb(strDb);
 	// delete element CA
 	strDb.deleteElem("CA");
 
 	if (strDb.contains("CA")) return false;
 
-	std::cout << "\n  showing all the database elements:";
-	std::cout << "\n  CA deleted:";
-	std::cout << "\n  CA child relationship is checked while showing, CA is no more child of TC:";
+	std::cout << "\n   *showing all the database elements:";
+	std::cout << "\n   *CA deleted:";
+	std::cout << "\n   *CA child relationship is checked while showing, CA is no more child of TC:";
 	showDb(strDb);
 	putLine();
 	return true;
@@ -173,7 +172,7 @@ bool Test::testR4b()
 
 bool Test::testR5()
 {
-	Utilities::title("Demonstrating Requirement #5 - Edit");
+	Utilities::title("Demonstrating Requirement #5 - Edit text matadata, Edit relationships, replacement");
 
 	// edit element TC by name and description
 	strDb.editTextMata("TC", "name", "A Tour of CPP 2");
@@ -181,8 +180,8 @@ bool Test::testR5()
 	if (strDb["TC"].name() != "A Tour of CPP 2") return false;
 	if (strDb["TC"].descrip() != "Bjarne Stroustrup 2") return false;
 	putLine();
-	std::cout << "\n  showing all the database elements:";
-	std::cout << "\n  Element TC's name and description have been changed:";
+	std::cout << "\n   *showing all the database elements:";
+	std::cout << "\n   *Element TC's name and description have been changed:";
 	showDb(strDb);
 	putLine();
 
@@ -190,18 +189,18 @@ bool Test::testR5()
 	DateTime date("Wed Jan 31 22:52:40 2018");
 	strDb.editDatetime("CPPL", date);
 	putLine();
-	std::cout << "\n  Element CPPL's dateTime edited";
+	std::cout << "\n   *Element CPPL's dateTime edited";
 	showHeader();
 	showElem(strDb["CPPL"]);
 
 	// add child TC to CPPL and detele child EMCPP from CPPL
 	putLine();
-	std::cout << "\n  add child TC to CPPL";
+	std::cout << "\n   *add child TC to CPPL";
 	strDb.addChild("CPPL", "TC");
 	showHeader();
 	showElem(strDb["CPPL"]);
 	putLine();
-	std::cout << "\n  delete child EMCPP from CPPL";
+	std::cout << "\n   *delete child EMCPP from CPPL";
 	strDb.deleteChild("CPPL", "EMCPP");
 	showHeader();
 	showElem(strDb["CPPL"]);
@@ -211,8 +210,8 @@ bool Test::testR5()
 	demoElem2.name("CPP Templates").descrip("David Vandevoorde").payLoad("Addison-Wesley Professional");
 	strDb.replaceElem("TC", demoElem2);
 	putLine();
-	std::cout << "\n  showing all the database elements:";
-	std::cout << "\n  TC replaced by element whose name is CPP Templates";
+	std::cout << "\n   *showing all the database elements:";
+	std::cout << "\n   *TC replaced by element whose name is CPP Templates";
 	showDb(strDb);
 	putLine();
 
@@ -221,21 +220,21 @@ bool Test::testR5()
 
 bool Test::testR6()
 {
-	Utilities::title("Demonstrating Requirement #6 - Basic Query");
-	std::cout << "\n  * Query payload is after requirement 9 " << std::endl;
-	std::cout << "\n  showing all the database elements:";
+	Utilities::title("Demonstrating Requirement #6 - Basic Query: key, children, matatext, time interval");
+	std::cout << "\n   ** Query payload is after requirement 9 " << std::endl;
+	std::cout << "\n   *showing all the database elements:";
 	showDb(strDb);
 	strDb.addElem("OCPP", "Optimized CPP", "Kurt Guntheroth", "O'Reilly Media");
 
 	//query exact key
 	Query<std::string> q1(strDb);
-	std::cout << "\n  Showing selected key whose key is OCPP:" << std::endl;
+	std::cout << "\n   *query key: showing selected key whose key is OCPP:" << std::endl;
 	q1.selectKey("OCPP").show();
 	Condition c1;
 	c1.name("SICP");
 	q1.reset();
 	//query name
-	std::cout << "\n  Showing selected name which is SICP:" << std::endl;
+	std::cout << "\n   *query name: showing selected name which is SICP:" << std::endl;
 	q1.select(c1).show();
 	Condition c2;
 	c2.name("Modern CPP");
@@ -243,22 +242,25 @@ bool Test::testR6()
 	c3.description(".*Bjarne Stroustrup.*");
 	Query<std::string> q2(strDb);
 
+	std::cout << "\n   *query description: showing selected key with Bjarne Stroustrup inside description:" << std::endl;
+	q1.select(c1).show();
+
 	Condition c4;
 	c4.key(".*CPP.*");
 
 	//query key using regular expression
-	std::cout << "\n  selecte all keys with CPP inside" << std::endl;
+	std::cout << "\n   *query key inside: selecte all keys with CPP inside" << std::endl;
 	q2.select(c4).show();
 
 	// query key with some child
 	Query<std::string> q4(strDb);
-	std::cout << "\n  Query child TC" << std::endl;
+	std::cout << "\n   *Query child TC" << std::endl;
 	q4.selectKeysWithChild("TC").show();
 
 	q4.reset();
 
 	//query key within a time interval
-	std::cout << "\n  select date bewteen two time" << std::endl;
+	std::cout << "\n   *query time interval: select date bewteen two time" << std::endl;
 	q4.selectDate(DateTime("Wed Jan 31 22:52:00 2018"), DateTime("Wed Jan 31 22:53:40 2018")).show();
 	
 	putLine();
@@ -268,7 +270,7 @@ bool Test::testR6()
 bool TEST::Test::testR7()
 {
 	Utilities::title("Demonstrating Requirement #7 - Query AND and OR");
-	std::cout << "\n  showing all the database elements:";
+	std::cout << "\n   *showing all the database elements:";
 	showDb(strDb);
 	Condition c1;
 	c1.name(".*CPP.*");
@@ -279,7 +281,8 @@ bool TEST::Test::testR7()
 	Query<std::string> q2(strDb);
 	q2.from(q1.keys());
 	//AND query
-	std::cout << "\n  AND query with name with CPP and descrip with Bjarne Stroustrup" << std::endl;
+	putLine();
+	std::cout << "\n   *AND query with name with CPP and descrip with Bjarne Stroustrup" << std::endl;
 	q2.select(c2).show();
 
 	Query<std::string> q3(strDb);
@@ -287,7 +290,7 @@ bool TEST::Test::testR7()
 	Query<std::string> q4(strDb);
 	q4.select(c2);
 	//OR query
-	std::cout << "\n  OR query with name with CPP or descrip with Bjarne Stroustrup" << std::endl;
+	std::cout << "\n   *OR query with name with CPP or descrip with Bjarne Stroustrup" << std::endl;
 	q4.unionFrom(q3.keys(), q4.keys()).show();
 	putLine();
 	return true;
@@ -297,21 +300,24 @@ bool Test::testR8()
 {
 	Utilities::title("Demonstrating Requirement #8 - Persistence");
 
+	std::cout << "\n   *showing all the database elements:";
+	showDb(strDb);
+	putLine();
 	// save db to xml
-	std::cout << "\n  Save DB to books.xml" << std::endl;
-	strDb.SaveToXML("../books.xml");
+	std::cout << "\n   *Save DB to books.xml" << std::endl;
+	strDb.SaveToXML("../XMLFiles/books.xml");
 
 	// read from xml
-	std::cout << "\n  Read from withFileInfo.xml" << std::endl;
-	fileDb.ReadFromXML("../withFileInfo.xml");
-	std::cout << "\n  show database from xml file with payload of fileInfo" << std::endl;
+	std::cout << "\n   *Read from withFileInfo.xml" << std::endl;
+	fileDb.ReadFromXML("../XMLFiles/withFileInfo.xml");
+	std::cout << "\n   *show database from xml file with payload of fileInfo" << std::endl;
 	showDb(fileDb);
-
+	putLine();
 	// save db to xml
-	fileDb.SaveToXML("../withFileInfo2.xml");
+	fileDb.SaveToXML("../XMLFiles/withFileInfo2.xml");
 	// augment
-	fileDb.ReadFromXML("../withFileInfo3.xml");
-	std::cout << "\n  augment the database from xml file, one new item added" << std::endl;
+	fileDb.ReadFromXML("../XMLFiles/withFileInfo3.xml");
+	std::cout << "\n   *augment the database from withFileInfo3.xml, one new item added" << std::endl;
 	showDb(fileDb);
 	putLine();
 	return true;
@@ -319,27 +325,76 @@ bool Test::testR8()
 
 bool TEST::Test::testR9()
 {
-	Utilities::title("Demonstrating Requirement #9 - Query payload");
+	Utilities::title("Demonstrating Requirement #9 - Implement FileInfo payload and Query payload");
 
+	PAYLOAD::FileInfo f0;
+	f0.filePath() = "DEMO PATH";
+	f0.addCate("DEMO CAT1");
+	f0.addCate("DEMP CAT2");
 
-	Query<std::string> q3(strDb);
-	// query payload(string)
-	std::cout << "\n  Query string payload" << std::endl;
-	q3.selectWithPayLoad(".*Addison.*").show();
+	std::cout << "\n   *showing new payload: fileinfo with filepath and categories" << std::endl;
+	std::cout << f0 << std::endl;
+
+	std::cout << "\n   *query payload FileInfo: showing all the database<PAYLOAD::FileInfo> elements:";
+	showDb(fileDb);
+	putLine();
 
 	Query<PAYLOAD::FileInfo> q1(fileDb);
 	PAYLOAD::FileInfo f1;
 	f1.addCate("CPP");
-	Utilities::putline(1);
-	std::cout << "\n  Query payload with category CPP" << std::endl;
+	std::cout << "\n   *query payload with category CPP" << std::endl;
 	q1.selectWithPayLoad(f1).show();
 	q1.reset();
 	PAYLOAD::FileInfo f2;
 	f2.filePath() = ".*cpp.*";
 	// query payload(fileInfo)
-	std::cout << "\n  Query payload with path containing cpp" << std::endl;
+	std::cout << "\n   *query payload with path containing cpp" << std::endl;
 	q1.selectWithPayLoad(f2).show();
+
+	std::cout << "\n   *query payload string: showing all the database<std::string> elements:";
+	showDb(strDb);
 	putLine();
+	Query<std::string> q3(strDb);
+	// query payload(string)
+	std::cout << "\n   *query string payload, all keys with Addison inside payload" << std::endl;
+	q3.selectWithPayLoad(".*Addison.*").show();
+
+	putLine();
+	return true;
+}
+
+bool TEST::Test::testR10()
+{
+	Utilities::title("Demonstrating Requirement #10 - Packages");
+	putLine();
+	std::cout << "   This projects includes following packages: \n"
+		<< "    Executvie, DBcore, Query, Test, Payload, DateTime, XmlDocument(Persistence)" << std::endl;
+
+	return true;
+}
+
+bool TEST::Test::testR11()
+{
+	Utilities::title("Demonstrating Requirement #11 - Project structure in XML");
+	putLine();
+
+	std::cout << "   The structure XML file is loacted in the root of the project, named as \"GradingFiles(Requirement#11&13)/project.xml" << std::endl;
+
+	NoSqlDb::DbCore<std::string> structDB;
+	structDB.ReadFromXML("../GradingFiles(Requirement#11&13)/project.xml");
+	std::cout << "\n   *showing all the database elements:";
+	showDb(structDB);
+	putLine();
+	return true;
+}
+
+bool TEST::Test::testR13()
+{
+	Utilities::title("Demonstrating Requirement #13 - Package Diagram");
+	putLine();
+
+	std::cout << "   The package Diagram is loacted in the root of the project, named as \"GradingFiles(Requirement#11&13)/PackageDiagram.pdf\" " << std::endl;
+
 	return true;
 }
 

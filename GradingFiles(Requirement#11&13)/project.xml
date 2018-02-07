@@ -1,0 +1,50 @@
+<db>
+    <dbRecord>
+        <key>Excutive</key>
+        <value name="Excutive">
+            <payLoad>Dependency: Test, TestUtilities</payLoad>
+        </value>
+    </dbRecord>
+    <dbRecord>
+        <key>DBCore</key>
+        <value name="DBCore">
+            <payLoad>Dependency: DateTime, XmlDocument</payLoad>
+        </value>
+    </dbRecord>
+    <dbRecord>
+        <key>Query</key>
+        <value name="Query">
+            <payLoad>Dependency: DateTime, DBCore</payLoad>
+        </value>
+    </dbRecord>
+    <dbRecord>
+        <key>Test</key>
+        <value name="Test">
+            <payLoad>Dependency: DateTime, DBCore, XmlDocument, PayLoad,Query</payLoad>
+        </value>
+    </dbRecord>
+    <dbRecord>
+        <key>PayLoad</key>
+        <value name="PayLoad">
+            <payLoad>Dependency: XmlDocument</payLoad>
+        </value>
+    </dbRecord>
+    <dbRecord>
+        <key>DateTime</key>
+        <value name="DateTime">
+            <payLoad>Dependency: StringUtilities</payLoad>
+        </value>
+    </dbRecord>
+    <dbRecord>
+        <key>XmlDocument(Persistence)</key>
+        <value name="XmlDocument(Persistence)"></value>
+    </dbRecord>
+    <dbRecord>
+        <key>TestUtilities</key>
+        <value name="TestUtilities"></value>
+    </dbRecord>
+    <dbRecord>
+        <key>StringUtilities</key>
+        <value name="StringUtilities"></value>
+    </dbRecord>
+</db>

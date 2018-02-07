@@ -1,1 +1,1 @@
-devenv NoSqlDb.sln rebuild debug
+devenv %~dp0\NoSqlDb.sln /rebuild debug
