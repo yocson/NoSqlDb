@@ -412,6 +412,12 @@ int main() {
 	t.testR7();
 	t.testR8();
 	t.testR9();
+	t.testR10();
+	t.testR11();
+	t.testR13();
+	std::cout << "test sucseed" << std::endl;
+	getchar();
+	getchar();
 	return 0;
 }
 #endif // TEST_TEST
