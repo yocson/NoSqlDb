@@ -40,20 +40,20 @@ namespace TEST
 	class Test 
 	{
 	public:
-		bool testR1();
-		bool testR2();
-		bool testR3a();
-		bool testR3b();
-		bool testR4a();
-		bool testR4b();
-		bool testR5();
-		bool testR6();
-		bool testR7();
-		bool testR8();
-		bool testR9();
-		bool testR10();
-		bool testR11();
-		bool testR13();
+		static bool testR1();
+		static bool testR2();
+		static bool testR3a();
+		static bool testR3b();
+		static bool testR4a();
+		static bool testR4b();
+		static bool testR5();
+		static bool testR6();
+		static bool testR7();
+		static bool testR8();
+		static bool testR9();
+		static bool testR10();
+		static bool testR11();
+		static bool testR13();
 
 	private:
 		static NoSqlDb::DbCore<PAYLOAD::FileInfo> fileDb;

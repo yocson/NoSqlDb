@@ -221,46 +221,46 @@ bool Test::testR5()
 bool Test::testR6()
 {
 	Utilities::title("Demonstrating Requirement #6 - Basic Query: key, children, matatext, time interval");
-	std::cout << "\n   ** Query payload is after requirement 9 " << std::endl;
+	std::cout << "\n   ** Query payload is in requirement 9 " << std::endl;
 	std::cout << "\n   *showing all the database elements:";
 	showDb(strDb);
 	strDb.addElem("OCPP", "Optimized CPP", "Kurt Guntheroth", "O'Reilly Media");
 
 	//query exact key
 	Query<std::string> q1(strDb);
-	std::cout << "\n   *query key: showing selected key whose key is OCPP:" << std::endl;
+	std::cout << "\n   *query key: showing selected key whose key is OCPP, shall return OCPP:" << std::endl;
 	q1.selectKey("OCPP").show();
 	Condition c1;
 	c1.name("SICP");
 	q1.reset();
 	//query name
-	std::cout << "\n   *query name: showing selected name which is SICP:" << std::endl;
+	std::cout << "\n   *query name: showing selected name which is Modern CPP, shall return EMCPP:" << std::endl;
 	q1.select(c1).show();
 	Condition c2;
 	c2.name("Modern CPP");
 	Condition c3;
-	c3.description(".*Bjarne Stroustrup.*");
+	c3.description(".*St.*");
 	Query<std::string> q2(strDb);
-
-	std::cout << "\n   *query description: showing selected key with Bjarne Stroustrup inside description:" << std::endl;
-	q1.select(c1).show();
+	q1.reset();
+	std::cout << "\n   *query description: showing selected key with \'St\' inside description, shall return CPPL CPPP:" << std::endl;
+	q1.select(c3).show();
 
 	Condition c4;
 	c4.key(".*CPP.*");
 
 	//query key using regular expression
-	std::cout << "\n   *query key inside: selecte all keys with CPP inside" << std::endl;
+	std::cout << "\n   *query key inside: selecte all keys with CPP inside, shall return CPPL EMCPP CPPP OCPP" << std::endl;
 	q2.select(c4).show();
 
 	// query key with some child
 	Query<std::string> q4(strDb);
-	std::cout << "\n   *Query child TC" << std::endl;
+	std::cout << "\n   *Query child TC, shall return its parent CPPL" << std::endl;
 	q4.selectKeysWithChild("TC").show();
 
 	q4.reset();
 
 	//query key within a time interval
-	std::cout << "\n   *query time interval: select date bewteen two time" << std::endl;
+	std::cout << "\n   *query time interval: select date bewteen two time: Wed Jan 31 22:52:00 2018 and Wed Jan 31 22:53:40 2018, shall return CPPL" << std::endl;
 	q4.selectDate(DateTime("Wed Jan 31 22:52:00 2018"), DateTime("Wed Jan 31 22:53:40 2018")).show();
 	
 	putLine();
@@ -282,7 +282,7 @@ bool TEST::Test::testR7()
 	q2.from(q1.keys());
 	//AND query
 	putLine();
-	std::cout << "\n   *AND query with name with CPP and descrip with Bjarne Stroustrup" << std::endl;
+	std::cout << "\n   *AND query with name with CPP inside and descrip with Bjarne Stroustrup, shall return CPPL" << std::endl;
 	q2.select(c2).show();
 
 	Query<std::string> q3(strDb);
@@ -290,7 +290,7 @@ bool TEST::Test::testR7()
 	Query<std::string> q4(strDb);
 	q4.select(c2);
 	//OR query
-	std::cout << "\n   *OR query with name with CPP or descrip with Bjarne Stroustrup" << std::endl;
+	std::cout << "\n   *OR query with name with CPP inside or descrip with Bjarne Stroustrup, shall return CPPL CPPP EMCPP OCPP TC" << std::endl;
 	q4.unionFrom(q3.keys(), q4.keys()).show();
 	putLine();
 	return true;
@@ -341,14 +341,14 @@ bool TEST::Test::testR9()
 
 	Query<PAYLOAD::FileInfo> q1(fileDb);
 	PAYLOAD::FileInfo f1;
-	f1.addCate("CPP");
-	std::cout << "\n   *query payload with category CPP" << std::endl;
+	f1.addCate("cpp");
+	std::cout << "\n   *query payload with category CPP, shall return CPPL EMCPP TC OCPP CPPP" << std::endl;
 	q1.selectWithPayLoad(f1).show();
 	q1.reset();
 	PAYLOAD::FileInfo f2;
 	f2.filePath() = ".*cpp.*";
 	// query payload(fileInfo)
-	std::cout << "\n   *query payload with path containing cpp" << std::endl;
+	std::cout << "\n   *query payload with path containing cpp, shall return EMCPP TC OCPP CPPP" << std::endl;
 	q1.selectWithPayLoad(f2).show();
 
 	std::cout << "\n   *query payload string: showing all the database<std::string> elements:";
@@ -356,7 +356,7 @@ bool TEST::Test::testR9()
 	putLine();
 	Query<std::string> q3(strDb);
 	// query payload(string)
-	std::cout << "\n   *query string payload, all keys with Addison inside payload" << std::endl;
+	std::cout << "\n   *query string payload, all keys with Addison inside payload, shall return CPPL CPPP TC" << std::endl;
 	q3.selectWithPayLoad(".*Addison.*").show();
 
 	putLine();
@@ -378,10 +378,10 @@ bool TEST::Test::testR11()
 	Utilities::title("Demonstrating Requirement #11 - Project structure in XML");
 	putLine();
 
-	std::cout << "   The structure XML file is loacted in the root of the project, named as \"GradingFiles(Requirement#11&13)/project.xml" << std::endl;
+	std::cout << "   The structure XML file is loacted in the  \"GradingFiles(Require11n13)/project.xml" << std::endl;
 
 	NoSqlDb::DbCore<std::string> structDB;
-	structDB.ReadFromXML("../GradingFiles(Requirement#11&13)/project.xml");
+	structDB.ReadFromXML("../GradingFiles(Require11n13)/project.xml");
 	std::cout << "\n   *showing all the database elements:";
 	showDb(structDB);
 	putLine();
@@ -393,7 +393,7 @@ bool TEST::Test::testR13()
 	Utilities::title("Demonstrating Requirement #13 - Package Diagram");
 	putLine();
 
-	std::cout << "   The package Diagram is loacted in the root of the project, named as \"GradingFiles(Requirement#11&13)/PackageDiagram.pdf\" " << std::endl;
+	std::cout << "   The package Diagram is loacted in the \"GradingFiles(Require11n13)/PackageDiagram.pdf\" " << std::endl;
 
 	return true;
 }
